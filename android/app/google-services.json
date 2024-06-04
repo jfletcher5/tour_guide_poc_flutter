@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "612706604302",
+    "project_id": "tour-guide-p-o-c-pm6sgs",
+    "storage_bucket": "tour-guide-p-o-c-pm6sgs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612706604302:android:2cd1f526c7a9fd68f5f35f",
+        "android_client_info": {
+          "package_name": "com.llastmile.tourguidepoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612706604302-qhlgkmi1ed3cvt45bhckgkd2ebhf34kk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.llastmile.tourguidepoc",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "612706604302-qr4a6a3rvsnfiu57u4benb2ljmumlv9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlCgPOra8CSdnrvJrEOstqGkOxs01SNR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612706604302-qr4a6a3rvsnfiu57u4benb2ljmumlv9e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "612706604302-6a0a4qa1scf8m7tlf5c81bleglesqc34.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.llastmile.tourguidepoc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
