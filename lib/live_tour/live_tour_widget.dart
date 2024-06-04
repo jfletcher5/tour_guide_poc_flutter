@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -117,24 +119,32 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                               }
                               final listViewGetChainEndpointServicesGetChainByConversationIDGetResponse =
                                   snapshot.data!;
+                              final jsonBody =
+                                  listViewGetChainEndpointServicesGetChainByConversationIDGetResponse
+                                      .jsonBody;
+                              List<dynamic> jsonList;
+                              if (jsonBody is String) {
+                                jsonList = json.decode(jsonBody);
+                              } else if (jsonBody is List) {
+                                jsonList = jsonBody;
+                              } else {
+                                throw Exception(
+                                    'Unexpected type for jsonBody: ${jsonBody.runtimeType}');
+                              }
                               return ListView(
                                 padding: EdgeInsets.zero,
                                 scrollDirection: Axis.vertical,
-                                children: [
-                                  Text(
-                                    getJsonField(
-                                      listViewGetChainEndpointServicesGetChainByConversationIDGetResponse
-                                          .jsonBody,
-                                      r'''$[1].content''',
-                                    ).toString(),
+                                children: jsonList.map((item) {
+                                  return Text(
+                                    item['content'].toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Readex Pro',
                                           letterSpacing: 0.0,
                                         ),
-                                  ),
-                                ],
+                                  );
+                                }).toList(),
                               );
                             },
                           ),
