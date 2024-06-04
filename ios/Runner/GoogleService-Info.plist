@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>612706604302-6a0a4qa1scf8m7tlf5c81bleglesqc34.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.612706604302-6a0a4qa1scf8m7tlf5c81bleglesqc34</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>612706604302-qhlgkmi1ed3cvt45bhckgkd2ebhf34kk.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDoZ3DE3_AeYdsQYHjkzZuea3pO1b2XWTU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>612706604302</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.llastmile.tourguidepoc</string>
+	<key>PROJECT_ID</key>
+	<string>tour-guide-p-o-c-pm6sgs</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tour-guide-p-o-c-pm6sgs.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:612706604302:ios:1be14a54b5ae7c94f5f35f</string>
+</dict>
+</plist>
