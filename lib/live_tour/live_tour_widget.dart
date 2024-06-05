@@ -32,9 +32,13 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
         conversationId: 'default conversation2',
       );
       if ((_model.chatMessages?.succeeded ?? true)) {
-        _model.messages = getJsonField(
+        _model.aiMessages = getJsonField(
           (_model.chatMessages?.jsonBody ?? ''),
-          r'''$.content''',
+          r'''$[?(@.type == 'ai')].content''',
+        ).toString().toString();
+        _model.humanMessage = getJsonField(
+          (_model.chatMessages?.jsonBody ?? ''),
+          r'''$[?(@.type == 'human')].content''',
         ).toString().toString();
         setState(() {});
       }
@@ -89,7 +93,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
-                      flex: 4,
+                      flex: 3,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -110,21 +114,138 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                             ],
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: ListView(
-                            padding: EdgeInsets.zero,
-                            scrollDirection: Axis.vertical,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
                             children: [
-                              Text(
-                                valueOrDefault<String>(
-                                  _model.messages,
-                                  'Hi how are you',
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 100.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                                  child: Card(
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    elevation: 4.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(-1.0, 0.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Text(
+                                              'Human Message:',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(-1.0, 0.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Text(
+                                              valueOrDefault<String>(
+                                                _model.humanMessage,
+                                                'no human message',
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 100.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                                  child: Card(
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    elevation: 4.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(-1.0, 0.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Text(
+                                              'Tour Guide Response:',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(-1.0, 0.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Text(
+                                              valueOrDefault<String>(
+                                                _model.aiMessages,
+                                                'no ai message',
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -219,7 +340,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                 conversationId: 'default conversation2',
                               );
                               if ((_model.apiResultpct?.succeeded ?? true)) {
-                                _model.messages = getJsonField(
+                                _model.aiMessages = getJsonField(
                                   (_model.apiResultpct?.jsonBody ?? ''),
                                   r'''$.content''',
                                 ).toString();

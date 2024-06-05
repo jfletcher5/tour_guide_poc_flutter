@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 class LiveTourModel extends FlutterFlowModel<LiveTourWidget> {
   ///  Local state fields for this page.
 
-  String? messages;
+  String? aiMessages;
+
+  String? humanMessage;
 
   ///  State fields for stateful widgets in this page.
 
