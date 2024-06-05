@@ -220,7 +220,8 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                               );
                               if ((_model.apiResultpct?.succeeded ?? true)) {
                                 _model.messages =
-                                    (_model.chatMessages?.bodyText ?? '');
+                                    (_model.apiResultpct?.jsonBody ?? '')
+                                        .toString();
                                 setState(() {});
                               } else {
                                 await showDialog(
