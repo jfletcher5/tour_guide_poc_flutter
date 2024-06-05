@@ -219,9 +219,10 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                 conversationId: 'default conversation2',
                               );
                               if ((_model.apiResultpct?.succeeded ?? true)) {
-                                _model.messages =
-                                    (_model.apiResultpct?.jsonBody ?? '')
-                                        .toString();
+                                _model.messages = getJsonField(
+                                  (_model.apiResultpct?.jsonBody ?? ''),
+                                  r'''$[:].content''',
+                                ).toString();
                                 setState(() {});
                               } else {
                                 await showDialog(
