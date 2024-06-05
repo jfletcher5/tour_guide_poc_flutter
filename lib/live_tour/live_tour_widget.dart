@@ -221,7 +221,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                               if ((_model.apiResultpct?.succeeded ?? true)) {
                                 _model.messages = getJsonField(
                                   (_model.apiResultpct?.jsonBody ?? ''),
-                                  r'''$[:].content''',
+                                  r'''$.content''',
                                 ).toString();
                                 setState(() {});
                               } else {
