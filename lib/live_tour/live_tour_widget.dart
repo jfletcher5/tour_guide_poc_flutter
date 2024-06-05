@@ -32,10 +32,10 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
         conversationId: 'default conversation2',
       );
       if ((_model.chatMessages?.succeeded ?? true)) {
-        _model.messages = valueOrDefault<String>(
-          (_model.chatMessages?.jsonBody ?? '').toString(),
-          '\$[:].content',
-        );
+        _model.messages = getJsonField(
+          (_model.chatMessages?.jsonBody ?? ''),
+          r'''$.content''',
+        ).toString().toString();
         setState(() {});
       }
     });
