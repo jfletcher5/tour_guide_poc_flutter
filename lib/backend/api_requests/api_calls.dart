@@ -8,38 +8,43 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
-/// Start FastAPI Group Code
+/// Start Chat Services Group Code
 
-class FastAPIGroup {
+class ChatServicesGroup {
   static String getBaseUrl() => 'https://tour-guide-poc.uk.r.appspot.com/';
-  static Map<String, String> headers = {};
-  static CreateChainMessageServicesAddMessageToChainPostCall
-      createChainMessageServicesAddMessageToChainPostCall =
-      CreateChainMessageServicesAddMessageToChainPostCall();
-  static GetChainEndpointServicesGetChainByConversationIDGetCall
-      getChainEndpointServicesGetChainByConversationIDGetCall =
-      GetChainEndpointServicesGetChainByConversationIDGetCall();
+  static Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    'accept': 'application/json',
+  };
+  static AddNewMessageCall addNewMessageCall = AddNewMessageCall();
+  static GetChainMessagesCall getChainMessagesCall = GetChainMessagesCall();
 }
 
-class CreateChainMessageServicesAddMessageToChainPostCall {
+class AddNewMessageCall {
   Future<ApiCallResponse> call({
-    String? newMessage = '',
-    dynamic chatArgsJson,
+    String? newMessage = 'default message',
+    String? tourID = '24352fcc-cecd-45e0-821d-105437274172',
+    String? conversationId = 'default conversation',
   }) async {
-    final baseUrl = FastAPIGroup.getBaseUrl();
+    final baseUrl = ChatServicesGroup.getBaseUrl();
 
-    final chatArgs = _serializeJson(chatArgsJson);
-
+    final ffApiRequestBody = '''
+{
+  "conversation_id": "$conversationId",
+  "tourID": "$tourID",
+  "newMessage": "$newMessage"
+}''';
     return ApiManager.instance.makeApiCall(
-      callName: 'create_chain_message_services_add_message_to_chain_post',
-      apiUrl: '$baseUrl/services/add_message_to_chain',
+      callName: 'Add New Message',
+      apiUrl: '${baseUrl}services/add_message_to_chain',
       callType: ApiCallType.POST,
-      headers: {},
-      params: {
-        'newMessage': newMessage,
-        'chat_args': chatArgs,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
       },
-      bodyType: BodyType.MULTIPART,
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -49,17 +54,20 @@ class CreateChainMessageServicesAddMessageToChainPostCall {
   }
 }
 
-class GetChainEndpointServicesGetChainByConversationIDGetCall {
+class GetChainMessagesCall {
   Future<ApiCallResponse> call({
     String? conversationId = '',
   }) async {
-    final baseUrl = FastAPIGroup.getBaseUrl();
+    final baseUrl = ChatServicesGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
-      callName: 'get_chain_endpoint_services_get_chain_by_conversationID_get',
+      callName: 'Get Chain Messages',
       apiUrl: '$baseUrl/services/get_chain_by_conversationID',
       callType: ApiCallType.GET,
-      headers: {},
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
       params: {
         'conversation_id': conversationId,
       },
@@ -72,7 +80,7 @@ class GetChainEndpointServicesGetChainByConversationIDGetCall {
   }
 }
 
-/// End FastAPI Group Code
+/// End Chat Services Group Code
 
 class ApiPagingParams {
   int nextPageNumber = 0;

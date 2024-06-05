@@ -2,7 +2,9 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'live_tour_model.dart';
 export 'live_tour_model.dart';
@@ -24,8 +26,22 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
     super.initState();
     _model = createModel(context, () => LiveTourModel());
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.chatMessages = await ChatServicesGroup.getChainMessagesCall.call(
+        conversationId: 'default conversation2',
+      );
+      if ((_model.chatMessages?.succeeded ?? true)) {
+        _model.messages = valueOrDefault<String>(
+          (_model.chatMessages?.jsonBody ?? '').toString(),
+          '\$[:].content',
+        );
+        setState(() {});
+      }
+    });
+
+    _model.chatInputTextController ??= TextEditingController();
+    _model.chatInputFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -94,49 +110,23 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                             ],
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: FutureBuilder<ApiCallResponse>(
-                            future: FastAPIGroup
-                                .getChainEndpointServicesGetChainByConversationIDGetCall
-                                .call(
-                              conversationId: 'test2',
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
-                                      ),
+                          child: ListView(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            children: [
+                              Text(
+                                valueOrDefault<String>(
+                                  _model.messages,
+                                  'Hi how are you',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
                                     ),
-                                  ),
-                                );
-                              }
-                              final listViewGetChainEndpointServicesGetChainByConversationIDGetResponse =
-                                  snapshot.data!;
-                              return ListView(
-                                padding: EdgeInsets.zero,
-                                scrollDirection: Axis.vertical,
-                                children: [
-                                  Text(
-                                    getJsonField(
-                                      listViewGetChainEndpointServicesGetChainByConversationIDGetResponse
-                                          .jsonBody,
-                                      r'''$[1].content''',
-                                    ).toString(),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                ],
-                              );
-                            },
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -166,8 +156,8 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
-                              controller: _model.textController,
-                              focusNode: _model.textFieldFocusNode,
+                              controller: _model.chatInputTextController,
+                              focusNode: _model.chatInputFocusNode,
                               autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -200,18 +190,12 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                               maxLength: 250,
                               maxLengthEnforcement:
                                   MaxLengthEnforcement.enforced,
-                              validator: _model.textControllerValidator
+                              validator: _model.chatInputTextControllerValidator
                                   .asValidator(context),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: const [],
                     ),
                   ],
                 ),
@@ -228,8 +212,36 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              _model.apiResultpct = await ChatServicesGroup
+                                  .getChainMessagesCall
+                                  .call(
+                                conversationId: 'default conversation2',
+                              );
+                              if ((_model.apiResultpct?.succeeded ?? true)) {
+                                _model.messages =
+                                    (_model.chatMessages?.bodyText ?? '');
+                                setState(() {});
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('boo'),
+                                      content: const Text('boo'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+
+                              setState(() {});
                             },
                             text: 'Back',
                             options: FFButtonOptions(
@@ -261,8 +273,42 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              _model.apiResult8ke = await ChatServicesGroup
+                                  .addNewMessageCall
+                                  .call(
+                                newMessage: valueOrDefault<String>(
+                                  _model.chatInputTextController.text,
+                                  'default message',
+                                ),
+                                tourID: '24352fcc-cecd-45e0-821d-105437274172',
+                                conversationId: 'default conversation2',
+                              );
+                              if (!(_model.apiResult8ke?.succeeded ?? true)) {
+                                unawaited(
+                                  () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: const Text('New Message Failure'),
+                                          content: const Text(
+                                              'Failed to send the new message'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: const Text('Ok'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }(),
+                                );
+                              }
+
+                              setState(() {});
                             },
                             text: 'Send',
                             options: FFButtonOptions(
