@@ -6,8 +6,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'live_tour_model.dart';
 export 'live_tour_model.dart';
 
@@ -33,18 +31,26 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
       _model.chatMessagesLoad =
           await ChatServicesGroup.getChainMessagesCall.call(
         conversationId: 'default',
-        speaker: -1,
+        speaker: 0,
       );
       if ((_model.chatMessagesLoad?.succeeded ?? true)) {
-        _model.aiMessages = getJsonField(
-          (_model.chatMessagesLoad?.jsonBody ?? ''),
-          r'''$[?(@.type == 'ai')].content''',
-        ).toString().toString();
-        _model.humanMessage = getJsonField(
-          (_model.chatMessagesLoad?.jsonBody ?? ''),
-          r'''$[?(@.type == 'human')].content''',
-        ).toString().toString();
+        _model.aiMessages = valueOrDefault<String>(
+          (_model.chatMessagesRefreshAi?.bodyText ?? ''),
+          'test',
+        );
         setState(() {});
+        _model.humanMessageOut =
+            await ChatServicesGroup.getChainMessagesCall.call(
+          conversationId: 'default',
+          speaker: 1,
+        );
+        if ((_model.humanMessageOut?.succeeded ?? true)) {
+          _model.humanMessage = valueOrDefault<String>(
+            (_model.humanMessageOut?.bodyText ?? ''),
+            'test',
+          );
+          setState(() {});
+        }
       }
     });
 
@@ -82,7 +88,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -99,14 +105,14 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                     Expanded(
                       flex: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Container(
                           width: double.infinity,
                           height: 100.0,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 4.0,
                                 color: Color(0x33000000),
@@ -143,9 +149,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                       children: [
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
+                                              const AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
-                                            padding: EdgeInsets.all(4.0),
+                                            padding: const EdgeInsets.all(4.0),
                                             child: Text(
                                               'Human Message:',
                                               style: FlutterFlowTheme.of(
@@ -162,9 +168,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
+                                              const AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
-                                            padding: EdgeInsets.all(4.0),
+                                            padding: const EdgeInsets.all(4.0),
                                             child: Text(
                                               valueOrDefault<String>(
                                                 _model.humanMessage,
@@ -208,9 +214,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                       children: [
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
+                                              const AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
-                                            padding: EdgeInsets.all(4.0),
+                                            padding: const EdgeInsets.all(4.0),
                                             child: Text(
                                               'Tour Guide Response:',
                                               style: FlutterFlowTheme.of(
@@ -227,9 +233,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
+                                              const AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
-                                            padding: EdgeInsets.all(4.0),
+                                            padding: const EdgeInsets.all(4.0),
                                             child: Text(
                                               valueOrDefault<String>(
                                                 _model.aiMessages,
@@ -259,14 +265,14 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                     Expanded(
                       flex: 1,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Container(
                           width: double.infinity,
                           height: 100.0,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 4.0,
                                 color: Color(0x33000000),
@@ -279,7 +285,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
                               controller: _model.chatInputTextController,
                               focusNode: _model.chatInputFocusNode,
@@ -328,32 +334,47 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: EdgeInsets.all(4.0),
+                          padding: const EdgeInsets.all(4.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              _model.chatMessagesRefresh =
+                              _model.chatMessagesRefreshAi =
                                   await ChatServicesGroup.getChainMessagesCall
                                       .call(
                                 conversationId: 'default',
-                                speaker: -1,
+                                speaker: 0,
                               );
-                              if ((_model.apiResult8ke?.succeeded ?? true)) {
-                                _model.aiMessages = getJsonField(
-                                  (_model.chatMessagesRefresh?.jsonBody ?? ''),
-                                  r'''$[?(@.type == 'ai')].content''',
-                                ).toString();
-                                _model.humanMessage = getJsonField(
-                                  (_model.chatMessagesRefresh?.jsonBody ?? ''),
-                                  r'''$[?(@.type == 'human')].content''',
-                                ).toString();
+                              if ((_model.chatMessagesRefreshAi?.succeeded ??
+                                  true)) {
+                                _model.aiMessages = valueOrDefault<String>(
+                                  (_model.chatMessagesRefreshAi?.bodyText ??
+                                      ''),
+                                  'test',
+                                );
                                 setState(() {});
+                                _model.chatMessagesRefreshHuman =
+                                    await ChatServicesGroup.getChainMessagesCall
+                                        .call(
+                                  conversationId: 'default',
+                                  speaker: 1,
+                                );
+                                if ((_model
+                                        .chatMessagesRefreshHuman?.succeeded ??
+                                    true)) {
+                                  _model.humanMessage = valueOrDefault<String>(
+                                    (_model.chatMessagesRefreshHuman
+                                            ?.bodyText ??
+                                        ''),
+                                    'test',
+                                  );
+                                  setState(() {});
+                                }
                               }
 
                               setState(() {});
@@ -361,9 +382,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                             text: 'Back',
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
@@ -374,7 +395,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 3.0,
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),
@@ -386,7 +407,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: EdgeInsets.all(4.0),
+                          padding: const EdgeInsets.all(4.0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               _model.apiResult8ke = await ChatServicesGroup
@@ -396,43 +417,24 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                   _model.chatInputTextController.text,
                                   'default message',
                                 ),
-                                tourID: '24352fcc-cecd-45e0-821d-105437274172',
+                                tourID: 'nwIL3EK0Bk60Ptozwn7d',
                                 conversationId: 'default',
                               );
-                              if ((_model.apiResult8ke?.succeeded ?? true)) {
-                                _model.chatMessagesNew = await ChatServicesGroup
-                                    .getChainMessagesCall
-                                    .call(
-                                  conversationId: 'default',
-                                  speaker: -1,
-                                );
-                                if ((_model.chatMessagesLoad?.succeeded ??
-                                    true)) {
-                                  _model.aiMessages = getJsonField(
-                                    (_model.chatMessagesNew?.jsonBody ?? ''),
-                                    r'''$[?(@.type == 'ai')].content''',
-                                  ).toString();
-                                  _model.humanMessage = getJsonField(
-                                    (_model.chatMessagesNew?.jsonBody ?? ''),
-                                    r'''$[?(@.type == 'human')].content''',
-                                  ).toString();
-                                  setState(() {});
-                                }
-                              } else {
+                              if (!(_model.apiResult8ke?.succeeded ?? true)) {
                                 unawaited(
                                   () async {
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
                                         return AlertDialog(
-                                          title: Text('New Message Failure'),
-                                          content: Text(
+                                          title: const Text('New Message Failure'),
+                                          content: const Text(
                                               'Failed to send the new message'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
                                                   alertDialogContext),
-                                              child: Text('Ok'),
+                                              child: const Text('Ok'),
                                             ),
                                           ],
                                         );
@@ -447,9 +449,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                             text: 'Send',
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
@@ -460,7 +462,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 3.0,
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),

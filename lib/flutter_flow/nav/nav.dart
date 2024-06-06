@@ -1,20 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
-import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/lat_lng.dart';
-import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -79,28 +72,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? LandingPageWidget() : SigninWidget(),
+          appStateNotifier.loggedIn ? const LandingPageWidget() : const SigninWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? LandingPageWidget() : SigninWidget(),
+              appStateNotifier.loggedIn ? const LandingPageWidget() : const SigninWidget(),
         ),
         FFRoute(
           name: 'Signin',
           path: '/signin',
-          builder: (context, params) => SigninWidget(),
+          builder: (context, params) => const SigninWidget(),
         ),
         FFRoute(
           name: 'LandingPage',
           path: '/landingPage',
-          builder: (context, params) => LandingPageWidget(),
+          builder: (context, params) => const LandingPageWidget(),
         ),
         FFRoute(
           name: 'LiveTour',
           path: '/liveTour',
-          builder: (context, params) => LiveTourWidget(),
+          builder: (context, params) => const LiveTourWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -338,7 +331,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

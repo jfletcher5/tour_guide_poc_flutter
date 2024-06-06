@@ -1,14 +1,8 @@
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'live_tour_widget.dart' show LiveTourWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class LiveTourModel extends FlutterFlowModel<LiveTourWidget> {
   ///  Local state fields for this page.
@@ -22,16 +16,18 @@ class LiveTourModel extends FlutterFlowModel<LiveTourWidget> {
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in LiveTour widget.
   ApiCallResponse? chatMessagesLoad;
+  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in LiveTour widget.
+  ApiCallResponse? humanMessageOut;
   // State field(s) for chatInput widget.
   FocusNode? chatInputFocusNode;
   TextEditingController? chatInputTextController;
   String? Function(BuildContext, String?)? chatInputTextControllerValidator;
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in Button widget.
-  ApiCallResponse? chatMessagesRefresh;
+  ApiCallResponse? chatMessagesRefreshAi;
+  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in Button widget.
+  ApiCallResponse? chatMessagesRefreshHuman;
   // Stores action output result for [Backend Call - API (Add New Message)] action in Button widget.
   ApiCallResponse? apiResult8ke;
-  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in Button widget.
-  ApiCallResponse? chatMessagesNew;
 
   @override
   void initState(BuildContext context) {}

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
@@ -25,17 +24,19 @@ class ChatServicesGroup {
 
 class AddNewMessageCall {
   Future<ApiCallResponse> call({
-    String? newMessage = 'default message',
-    String? tourID = '24352fcc-cecd-45e0-821d-105437274172',
-    String? conversationId = 'default conversation',
+    String? newMessage = 'new api',
+    String? tourID = 'nwIL3EK0Bk60Ptozwn7d',
+    String? conversationId = 'default',
+    String? userID = 'jon',
   }) async {
     final baseUrl = ChatServicesGroup.getBaseUrl();
 
     final ffApiRequestBody = '''
 {
-  "conversation_id": "${conversationId}",
-  "tourID": "${tourID}",
-  "newMessage": "${newMessage}"
+  "conversation_id": "$conversationId",
+  "tourID": "$tourID",
+  "newMessage": "$newMessage",
+  "userID": "$userID"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Add New Message',
@@ -55,6 +56,25 @@ class AddNewMessageCall {
       alwaysAllowBody: false,
     );
   }
+
+  List<String>? chatMessages(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].content''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? messageType(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].type''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class GetChainMessagesCall {
@@ -66,7 +86,7 @@ class GetChainMessagesCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Chain Messages',
-      apiUrl: '${baseUrl}/services/get_chain_by_conversationID',
+      apiUrl: '$baseUrl/services/get_chain_by_conversationID',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -145,7 +165,7 @@ class GetConversationsCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Conversations',
-      apiUrl: '${baseUrl}/services/get_conversations',
+      apiUrl: '$baseUrl/services/get_conversations',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
