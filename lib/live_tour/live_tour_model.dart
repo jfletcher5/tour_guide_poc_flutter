@@ -15,17 +15,17 @@ class LiveTourModel extends FlutterFlowModel<LiveTourWidget> {
 
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in LiveTour widget.
-  ApiCallResponse? chatMessagesAi;
+  ApiCallResponse? chatMessagesLoad;
   // State field(s) for chatInput widget.
   FocusNode? chatInputFocusNode;
   TextEditingController? chatInputTextController;
   String? Function(BuildContext, String?)? chatInputTextControllerValidator;
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in Button widget.
-  ApiCallResponse? chatMessages;
+  ApiCallResponse? chatMessagesRefresh;
   // Stores action output result for [Backend Call - API (Add New Message)] action in Button widget.
   ApiCallResponse? apiResult8ke;
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in Button widget.
-  ApiCallResponse? chatMessagesAi;
+  ApiCallResponse? chatMessagesNew;
 
   @override
   void initState(BuildContext context) {}

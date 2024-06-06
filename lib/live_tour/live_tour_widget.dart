@@ -28,17 +28,18 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.chatMessagesAi = await ChatServicesGroup.getChainMessagesCall.call(
+      _model.chatMessagesLoad =
+          await ChatServicesGroup.getChainMessagesCall.call(
         conversationId: 'default',
         speaker: -1,
       );
-      if ((_model.chatMessagesAi?.succeeded ?? true)) {
+      if ((_model.chatMessagesLoad?.succeeded ?? true)) {
         _model.aiMessages = getJsonField(
-          (_model.chatMessagesAi?.jsonBody ?? ''),
+          (_model.chatMessagesLoad?.jsonBody ?? ''),
           r'''$[?(@.type == 'ai')].content''',
         ).toString().toString();
         _model.humanMessage = getJsonField(
-          (_model.chatMessagesAi?.jsonBody ?? ''),
+          (_model.chatMessagesLoad?.jsonBody ?? ''),
           r'''$[?(@.type == 'human')].content''',
         ).toString().toString();
         setState(() {});
@@ -335,22 +336,21 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                           padding: const EdgeInsets.all(4.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              _model.chatMessages = await ChatServicesGroup
-                                  .getChainMessagesCall
-                                  .call(
+                              _model.chatMessagesRefresh =
+                                  await ChatServicesGroup.getChainMessagesCall
+                                      .call(
                                 conversationId: 'default',
                                 speaker: -1,
                               );
                               if ((_model.apiResult8ke?.succeeded ?? true)) {
                                 _model.aiMessages = getJsonField(
-                                  (_model.apiResult8ke?.jsonBody ?? ''),
+                                  (_model.chatMessagesRefresh?.jsonBody ?? ''),
                                   r'''$[?(@.type == 'ai')].content''',
                                 ).toString();
                                 _model.humanMessage = getJsonField(
-                                  (_model.apiResult8ke?.jsonBody ?? ''),
+                                  (_model.chatMessagesRefresh?.jsonBody ?? ''),
                                   r'''$[?(@.type == 'human')].content''',
                                 ).toString();
-                                setState(() {});
                               }
 
                               setState(() {});
@@ -397,20 +397,20 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                 conversationId: 'default',
                               );
                               if ((_model.apiResult8ke?.succeeded ?? true)) {
-                                _model.chatMessagesAi = await ChatServicesGroup
+                                _model.chatMessagesNew = await ChatServicesGroup
                                     .getChainMessagesCall
                                     .call(
                                   conversationId: 'default',
                                   speaker: -1,
                                 );
-                                if ((_model.chatMessagesAi?.succeeded ??
+                                if ((_model.chatMessagesLoad?.succeeded ??
                                     true)) {
                                   _model.aiMessages = getJsonField(
-                                    (_model.chatMessagesAi?.jsonBody ?? ''),
+                                    (_model.chatMessagesNew?.jsonBody ?? ''),
                                     r'''$[?(@.type == 'ai')].content''',
                                   ).toString();
                                   _model.humanMessage = getJsonField(
-                                    (_model.chatMessagesAi?.jsonBody ?? ''),
+                                    (_model.chatMessagesNew?.jsonBody ?? ''),
                                     r'''$[?(@.type == 'human')].content''',
                                   ).toString();
                                   setState(() {});
