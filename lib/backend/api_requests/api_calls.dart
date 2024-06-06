@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
@@ -32,9 +33,9 @@ class AddNewMessageCall {
 
     final ffApiRequestBody = '''
 {
-  "conversation_id": "$conversationId",
-  "tourID": "$tourID",
-  "newMessage": "$newMessage"
+  "conversation_id": "${conversationId}",
+  "tourID": "${tourID}",
+  "newMessage": "${newMessage}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Add New Message',
@@ -65,7 +66,7 @@ class GetChainMessagesCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Chain Messages',
-      apiUrl: '$baseUrl/services/get_chain_by_conversationID',
+      apiUrl: '${baseUrl}/services/get_chain_by_conversationID',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +145,7 @@ class GetConversationsCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Conversations',
-      apiUrl: '$baseUrl/services/get_conversations',
+      apiUrl: '${baseUrl}/services/get_conversations',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',

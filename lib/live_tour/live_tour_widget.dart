@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'live_tour_model.dart';
 export 'live_tour_model.dart';
 
@@ -80,7 +82,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -97,14 +99,14 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                     Expanded(
                       flex: 3,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Container(
                           width: double.infinity,
                           height: 100.0,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
                                 blurRadius: 4.0,
                                 color: Color(0x33000000),
@@ -141,9 +143,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                       children: [
                                         Align(
                                           alignment:
-                                              const AlignmentDirectional(-1.0, 0.0),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(4.0),
+                                            padding: EdgeInsets.all(4.0),
                                             child: Text(
                                               'Human Message:',
                                               style: FlutterFlowTheme.of(
@@ -160,9 +162,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                         ),
                                         Align(
                                           alignment:
-                                              const AlignmentDirectional(-1.0, 0.0),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(4.0),
+                                            padding: EdgeInsets.all(4.0),
                                             child: Text(
                                               valueOrDefault<String>(
                                                 _model.humanMessage,
@@ -206,9 +208,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                       children: [
                                         Align(
                                           alignment:
-                                              const AlignmentDirectional(-1.0, 0.0),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(4.0),
+                                            padding: EdgeInsets.all(4.0),
                                             child: Text(
                                               'Tour Guide Response:',
                                               style: FlutterFlowTheme.of(
@@ -225,9 +227,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                         ),
                                         Align(
                                           alignment:
-                                              const AlignmentDirectional(-1.0, 0.0),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(4.0),
+                                            padding: EdgeInsets.all(4.0),
                                             child: Text(
                                               valueOrDefault<String>(
                                                 _model.aiMessages,
@@ -257,14 +259,14 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                     Expanded(
                       flex: 1,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Container(
                           width: double.infinity,
                           height: 100.0,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
                                 blurRadius: 4.0,
                                 color: Color(0x33000000),
@@ -277,7 +279,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: TextFormField(
                               controller: _model.chatInputTextController,
                               focusNode: _model.chatInputFocusNode,
@@ -326,14 +328,14 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: const EdgeInsets.all(4.0),
+                          padding: EdgeInsets.all(4.0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               _model.chatMessagesRefresh =
@@ -359,9 +361,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                             text: 'Back',
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
@@ -372,7 +374,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 3.0,
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),
@@ -384,7 +386,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: const EdgeInsets.all(4.0),
+                          padding: EdgeInsets.all(4.0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               _model.apiResult8ke = await ChatServicesGroup
@@ -423,14 +425,14 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                       context: context,
                                       builder: (alertDialogContext) {
                                         return AlertDialog(
-                                          title: const Text('New Message Failure'),
-                                          content: const Text(
+                                          title: Text('New Message Failure'),
+                                          content: Text(
                                               'Failed to send the new message'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
                                                   alertDialogContext),
-                                              child: const Text('Ok'),
+                                              child: Text('Ok'),
                                             ),
                                           ],
                                         );
@@ -445,9 +447,9 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                             text: 'Send',
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
@@ -458,7 +460,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 3.0,
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),

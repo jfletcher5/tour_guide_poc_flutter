@@ -5,6 +5,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'landing_page_model.dart';
 export 'landing_page_model.dart';
 
@@ -77,7 +79,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                       letterSpacing: 0.0,
                     ),
               ),
-              actions: const [],
+              actions: [],
               centerTitle: false,
               elevation: 2.0,
             ),
@@ -86,9 +88,19 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  Text(
+                    valueOrDefault<String>(
+                      _model.dropDownValue1,
+                      'Not Selected',
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
                   Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -125,7 +137,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                   FlutterFlowTheme.of(context).alternate,
                               borderWidth: 2.0,
                               borderRadius: 8.0,
-                              margin: const EdgeInsetsDirectional.fromSTEB(
+                              margin: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 4.0, 16.0, 4.0),
                               hidesUnderline: true,
                               isOverButton: true,
@@ -139,7 +151,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                   ),
                   Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -147,7 +159,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                             child: FlutterFlowDropDown<String>(
                               controller: _model.dropDownValueController2 ??=
                                   FormFieldController<String>(null),
-                              options: const ['Option 1'],
+                              options: ['Option 1'],
                               onChanged: (val) =>
                                   setState(() => _model.dropDownValue2 = val),
                               width: 300.0,
@@ -172,7 +184,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                   FlutterFlowTheme.of(context).alternate,
                               borderWidth: 2.0,
                               borderRadius: 8.0,
-                              margin: const EdgeInsetsDirectional.fromSTEB(
+                              margin: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 4.0, 16.0, 4.0),
                               hidesUnderline: true,
                               isOverButton: true,
@@ -185,14 +197,14 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           flex: 1,
                           child: Padding(
-                            padding: const EdgeInsets.all(2.0),
+                            padding: EdgeInsets.all(2.0),
                             child: FFButtonWidget(
                               onPressed: () {
                                 print('Button pressed ...');
@@ -200,9 +212,9 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                               text: 'Start New',
                               options: FFButtonOptions(
                                 height: 40.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).primary,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -213,7 +225,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                                 elevation: 3.0,
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
@@ -225,7 +237,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                         Expanded(
                           flex: 1,
                           child: Padding(
-                            padding: const EdgeInsets.all(2.0),
+                            padding: EdgeInsets.all(2.0),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 context.pushNamed('LiveTour');
@@ -233,9 +245,9 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                               text: 'Start Chatting',
                               options: FFButtonOptions(
                                 height: 40.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).primary,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -246,7 +258,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                                 elevation: 3.0,
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
