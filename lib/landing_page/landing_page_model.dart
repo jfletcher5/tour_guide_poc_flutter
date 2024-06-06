@@ -4,6 +4,20 @@ import 'landing_page_widget.dart' show LandingPageWidget;
 import 'package:flutter/material.dart';
 
 class LandingPageModel extends FlutterFlowModel<LandingPageWidget> {
+  ///  Local state fields for this page.
+
+  bool enableConversations = true;
+
+  List<String> conversations = [];
+  void addToConversations(String item) => conversations.add(item);
+  void removeFromConversations(String item) => conversations.remove(item);
+  void removeAtIndexFromConversations(int index) =>
+      conversations.removeAt(index);
+  void insertAtIndexInConversations(int index, String item) =>
+      conversations.insert(index, item);
+  void updateConversationsAtIndex(int index, Function(String) updateFn) =>
+      conversations[index] = updateFn(conversations[index]);
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

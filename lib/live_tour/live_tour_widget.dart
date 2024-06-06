@@ -351,6 +351,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                   (_model.chatMessagesRefresh?.jsonBody ?? ''),
                                   r'''$[?(@.type == 'human')].content''',
                                 ).toString();
+                                setState(() {});
                               }
 
                               setState(() {});

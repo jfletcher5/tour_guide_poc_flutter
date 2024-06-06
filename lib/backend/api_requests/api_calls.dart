@@ -18,6 +18,8 @@ class ChatServicesGroup {
   };
   static AddNewMessageCall addNewMessageCall = AddNewMessageCall();
   static GetChainMessagesCall getChainMessagesCall = GetChainMessagesCall();
+  static GetToursCall getToursCall = GetToursCall();
+  static GetConversationsCall getConversationsCall = GetConversationsCall();
 }
 
 class AddNewMessageCall {
@@ -93,6 +95,76 @@ class GetChainMessagesCall {
   List<String>? aIMessages(dynamic response) => (getJsonField(
         response,
         r'''$[?(@.type == 'ai')].content''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetToursCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Tours',
+      apiUrl: '${baseUrl}services/get_tours',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? tourList(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].tourName''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetConversationsCall {
+  Future<ApiCallResponse> call({
+    String? userID = 'jon',
+    String? tourID = 'nwIL3EK0Bk60Ptozwn7d',
+  }) async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Conversations',
+      apiUrl: '$baseUrl/services/get_conversations',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'userID': userID,
+        'tourID': tourID,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? conversations(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].Conversation''',
         true,
       ) as List?)
           ?.withoutNulls
