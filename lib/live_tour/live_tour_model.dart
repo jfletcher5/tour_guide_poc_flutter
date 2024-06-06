@@ -1,5 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:async';
 import 'live_tour_widget.dart' show LiveTourWidget;
 import 'package:flutter/material.dart';
 
@@ -20,9 +21,11 @@ class LiveTourModel extends FlutterFlowModel<LiveTourWidget> {
   TextEditingController? chatInputTextController;
   String? Function(BuildContext, String?)? chatInputTextControllerValidator;
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in Button widget.
-  ApiCallResponse? apiResultpct;
+  ApiCallResponse? chatMessages;
   // Stores action output result for [Backend Call - API (Add New Message)] action in Button widget.
   ApiCallResponse? apiResult8ke;
+  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in Button widget.
+  ApiCallResponse? chatMessagesAi;
 
   @override
   void initState(BuildContext context) {}
@@ -33,4 +36,7 @@ class LiveTourModel extends FlutterFlowModel<LiveTourWidget> {
     chatInputFocusNode?.dispose();
     chatInputTextController?.dispose();
   }
+
+  /// Action blocks.
+  Future refresh(BuildContext context) async {}
 }

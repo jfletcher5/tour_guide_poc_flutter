@@ -335,34 +335,22 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                           padding: const EdgeInsets.all(4.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              _model.apiResultpct = await ChatServicesGroup
+                              _model.chatMessages = await ChatServicesGroup
                                   .getChainMessagesCall
                                   .call(
                                 conversationId: 'default',
+                                speaker: -1,
                               );
-                              if ((_model.apiResultpct?.succeeded ?? true)) {
+                              if ((_model.apiResult8ke?.succeeded ?? true)) {
                                 _model.aiMessages = getJsonField(
-                                  (_model.apiResultpct?.jsonBody ?? ''),
-                                  r'''$.content''',
+                                  (_model.apiResult8ke?.jsonBody ?? ''),
+                                  r'''$[?(@.type == 'ai')].content''',
+                                ).toString();
+                                _model.humanMessage = getJsonField(
+                                  (_model.apiResult8ke?.jsonBody ?? ''),
+                                  r'''$[?(@.type == 'human')].content''',
                                 ).toString();
                                 setState(() {});
-                              } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('boo'),
-                                      content: const Text('boo'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
                               }
 
                               setState(() {});
@@ -406,9 +394,28 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                   'default message',
                                 ),
                                 tourID: '24352fcc-cecd-45e0-821d-105437274172',
-                                conversationId: 'default conversation2',
+                                conversationId: 'default',
                               );
-                              if (!(_model.apiResult8ke?.succeeded ?? true)) {
+                              if ((_model.apiResult8ke?.succeeded ?? true)) {
+                                _model.chatMessagesAi = await ChatServicesGroup
+                                    .getChainMessagesCall
+                                    .call(
+                                  conversationId: 'default',
+                                  speaker: -1,
+                                );
+                                if ((_model.chatMessagesAi?.succeeded ??
+                                    true)) {
+                                  _model.aiMessages = getJsonField(
+                                    (_model.chatMessagesAi?.jsonBody ?? ''),
+                                    r'''$[?(@.type == 'ai')].content''',
+                                  ).toString();
+                                  _model.humanMessage = getJsonField(
+                                    (_model.chatMessagesAi?.jsonBody ?? ''),
+                                    r'''$[?(@.type == 'human')].content''',
+                                  ).toString();
+                                  setState(() {});
+                                }
+                              } else {
                                 unawaited(
                                   () async {
                                     await showDialog(
