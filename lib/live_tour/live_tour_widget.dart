@@ -28,16 +28,17 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.chatMessages = await ChatServicesGroup.getChainMessagesCall.call(
-        conversationId: 'default conversation2',
+      _model.chatMessagesAi = await ChatServicesGroup.getChainMessagesCall.call(
+        conversationId: 'default',
+        speaker: -1,
       );
-      if ((_model.chatMessages?.succeeded ?? true)) {
+      if ((_model.chatMessagesAi?.succeeded ?? true)) {
         _model.aiMessages = getJsonField(
-          (_model.chatMessages?.jsonBody ?? ''),
+          (_model.chatMessagesAi?.jsonBody ?? ''),
           r'''$[?(@.type == 'ai')].content''',
         ).toString().toString();
         _model.humanMessage = getJsonField(
-          (_model.chatMessages?.jsonBody ?? ''),
+          (_model.chatMessagesAi?.jsonBody ?? ''),
           r'''$[?(@.type == 'human')].content''',
         ).toString().toString();
         setState(() {});
@@ -337,7 +338,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                               _model.apiResultpct = await ChatServicesGroup
                                   .getChainMessagesCall
                                   .call(
-                                conversationId: 'default conversation2',
+                                conversationId: 'default',
                               );
                               if ((_model.apiResultpct?.succeeded ?? true)) {
                                 _model.aiMessages = getJsonField(

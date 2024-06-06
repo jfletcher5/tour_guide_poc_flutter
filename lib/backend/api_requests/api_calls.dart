@@ -57,6 +57,7 @@ class AddNewMessageCall {
 class GetChainMessagesCall {
   Future<ApiCallResponse> call({
     String? conversationId = '',
+    int? speaker,
   }) async {
     final baseUrl = ChatServicesGroup.getBaseUrl();
 
@@ -70,6 +71,7 @@ class GetChainMessagesCall {
       },
       params: {
         'conversation_id': conversationId,
+        'speaker': speaker,
       },
       returnBody: true,
       encodeBodyUtf8: false,
@@ -78,6 +80,25 @@ class GetChainMessagesCall {
       alwaysAllowBody: false,
     );
   }
+
+  List<String>? humanMessages(dynamic response) => (getJsonField(
+        response,
+        r'''$[?(@.type == 'human')].content''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? aIMessages(dynamic response) => (getJsonField(
+        response,
+        r'''$[?(@.type == 'ai')].content''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 /// End Chat Services Group Code

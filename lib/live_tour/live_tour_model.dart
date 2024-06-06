@@ -14,7 +14,7 @@ class LiveTourModel extends FlutterFlowModel<LiveTourWidget> {
 
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in LiveTour widget.
-  ApiCallResponse? chatMessages;
+  ApiCallResponse? chatMessagesAi;
   // State field(s) for chatInput widget.
   FocusNode? chatInputFocusNode;
   TextEditingController? chatInputTextController;
