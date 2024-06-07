@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -79,6 +80,20 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: const Icon(
+              Icons.arrow_left,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
+          ),
           title: Text(
             'Live Tour!',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -89,7 +104,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                 ),
           ),
           actions: const [],
-          centerTitle: false,
+          centerTitle: true,
           elevation: 2.0,
         ),
         body: SafeArea(
@@ -132,10 +147,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                 child: Container(
                                   width: double.infinity,
                                   height: 100.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                  ),
+                                  decoration: const BoxDecoration(),
                                   child: Card(
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
                                     color: FlutterFlowTheme.of(context)
@@ -197,10 +209,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                 child: Container(
                                   width: double.infinity,
                                   height: 100.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                  ),
+                                  decoration: const BoxDecoration(),
                                   child: Card(
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
                                     color: FlutterFlowTheme.of(context)
@@ -379,7 +388,7 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
 
                               setState(() {});
                             },
-                            text: 'Back',
+                            text: 'Refresh chat',
                             options: FFButtonOptions(
                               height: 40.0,
                               padding: const EdgeInsetsDirectional.fromSTEB(
