@@ -620,7 +620,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           await Future.delayed(
                               const Duration(milliseconds: 800));
                           await _model.listViewController?.animateTo(
-                            _model.listViewController!.position.maxScrollExtent,
+                            0,
                             duration: const Duration(milliseconds: 100),
                             curve: Curves.ease,
                           );
