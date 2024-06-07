@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -71,15 +70,11 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 
   @override
   Widget build(BuildContext context) => _loading
-      ? Center(
-          child: SizedBox(
-            width: 50.0,
-            height: 50.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                FlutterFlowTheme.of(context).primary,
-              ),
-            ),
+      ? Container(
+          color: Colors.transparent,
+          child: Image.asset(
+            'assets/images/tourguideicon.png',
+            fit: BoxFit.cover,
           ),
         )
       : widget.child;
@@ -110,6 +105,7 @@ final parametersBuilderMap =
   'LandingPage': ParameterData.none(),
   'LiveTour': ParameterData.none(),
   'profile': ParameterData.none(),
+  'chat_ai_Screen': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

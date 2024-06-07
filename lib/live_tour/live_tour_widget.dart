@@ -113,7 +113,6 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                flex: 8,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -123,7 +122,6 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           width: double.infinity,
-                          height: 100.0,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -146,7 +144,6 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                                 flex: 1,
                                 child: Container(
                                   width: double.infinity,
-                                  height: 100.0,
                                   decoration: const BoxDecoration(),
                                   child: Card(
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -277,7 +274,6 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           width: double.infinity,
-                          height: 100.0,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -340,148 +336,141 @@ class _LiveTourWidgetState extends State<LiveTourWidget> {
                   ],
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              _model.chatMessagesRefreshAi =
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            _model.chatMessagesRefreshAi =
+                                await ChatServicesGroup.getChainMessagesCall
+                                    .call(
+                              conversationId: 'default',
+                              speaker: 0,
+                            );
+                            if ((_model.chatMessagesRefreshAi?.succeeded ??
+                                true)) {
+                              _model.aiMessages = valueOrDefault<String>(
+                                (_model.chatMessagesRefreshAi?.bodyText ?? ''),
+                                'test',
+                              );
+                              setState(() {});
+                              _model.chatMessagesRefreshHuman =
                                   await ChatServicesGroup.getChainMessagesCall
                                       .call(
                                 conversationId: 'default',
-                                speaker: 0,
+                                speaker: 1,
                               );
-                              if ((_model.chatMessagesRefreshAi?.succeeded ??
+                              if ((_model.chatMessagesRefreshHuman?.succeeded ??
                                   true)) {
-                                _model.aiMessages = valueOrDefault<String>(
-                                  (_model.chatMessagesRefreshAi?.bodyText ??
+                                _model.humanMessage = valueOrDefault<String>(
+                                  (_model.chatMessagesRefreshHuman?.bodyText ??
                                       ''),
                                   'test',
                                 );
                                 setState(() {});
-                                _model.chatMessagesRefreshHuman =
-                                    await ChatServicesGroup.getChainMessagesCall
-                                        .call(
-                                  conversationId: 'default',
-                                  speaker: 1,
-                                );
-                                if ((_model
-                                        .chatMessagesRefreshHuman?.succeeded ??
-                                    true)) {
-                                  _model.humanMessage = valueOrDefault<String>(
-                                    (_model.chatMessagesRefreshHuman
-                                            ?.bodyText ??
-                                        ''),
-                                    'test',
-                                  );
-                                  setState(() {});
-                                }
                               }
+                            }
 
-                              setState(() {});
-                            },
-                            text: 'Refresh chat',
-                            options: FFButtonOptions(
-                              height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              _model.apiResult8ke = await ChatServicesGroup
-                                  .addNewMessageCall
-                                  .call(
-                                newMessage: valueOrDefault<String>(
-                                  _model.chatInputTextController.text,
-                                  'default message',
+                            setState(() {});
+                          },
+                          text: 'Refresh chat',
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
                                 ),
-                                tourID: 'nwIL3EK0Bk60Ptozwn7d',
-                                conversationId: 'default',
-                              );
-                              if (!(_model.apiResult8ke?.succeeded ?? true)) {
-                                unawaited(
-                                  () async {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: const Text('New Message Failure'),
-                                          content: const Text(
-                                              'Failed to send the new message'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: const Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  }(),
-                                );
-                              }
-
-                              setState(() {});
-                            },
-                            text: 'Send',
-                            options: FFButtonOptions(
-                              height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
+                            elevation: 3.0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
                             ),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            _model.apiResult8ke =
+                                await ChatServicesGroup.addNewMessageCall.call(
+                              newMessage: valueOrDefault<String>(
+                                _model.chatInputTextController.text,
+                                'default message',
+                              ),
+                              tourID: 'nwIL3EK0Bk60Ptozwn7d',
+                              conversationId: 'default',
+                            );
+                            if (!(_model.apiResult8ke?.succeeded ?? true)) {
+                              unawaited(
+                                () async {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('New Message Failure'),
+                                        content: const Text(
+                                            'Failed to send the new message'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }(),
+                              );
+                            }
+
+                            setState(() {});
+                          },
+                          text: 'Send',
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
