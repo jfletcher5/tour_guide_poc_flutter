@@ -24,8 +24,6 @@ class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
 
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in aiChat_Component widget.
   ApiCallResponse? apiResult9hv;
-  // State field(s) for ListView widget.
-  ScrollController? listViewController;
   // Model for writingIndicator component.
   late WritingIndicatorModel writingIndicatorModel;
   // State field(s) for TextField widget.
@@ -37,13 +35,11 @@ class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
 
   @override
   void initState(BuildContext context) {
-    listViewController = ScrollController();
     writingIndicatorModel = createModel(context, () => WritingIndicatorModel());
   }
 
   @override
   void dispose() {
-    listViewController?.dispose();
     writingIndicatorModel.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();

@@ -44,11 +44,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
         setState(() {});
       }
       await Future.delayed(const Duration(milliseconds: 10));
-      await _model.listViewController?.animateTo(
-        _model.listViewController!.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 10),
-        curve: Curves.ease,
-      );
     });
 
     _model.textController ??= TextEditingController();
@@ -450,8 +445,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                                 ),
                                               );
                                             },
-                                            controller:
-                                                _model.listViewController,
                                           );
                                         },
                                       ),
@@ -630,11 +623,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                   .toList()
                                   .cast<dynamic>();
                           setState(() {});
-                          await _model.listViewController?.animateTo(
-                            _model.listViewController!.position.maxScrollExtent,
-                            duration: const Duration(milliseconds: 100),
-                            curve: Curves.ease,
-                          );
 
                           setState(() {});
                         },
