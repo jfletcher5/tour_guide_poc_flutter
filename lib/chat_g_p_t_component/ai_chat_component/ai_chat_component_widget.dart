@@ -135,6 +135,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                               0,
                                               16.0,
                                             ),
+                                            reverse: true,
                                             primary: false,
                                             scrollDirection: Axis.vertical,
                                             itemCount: chat.length,
