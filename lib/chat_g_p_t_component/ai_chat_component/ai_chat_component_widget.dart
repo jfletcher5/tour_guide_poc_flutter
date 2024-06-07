@@ -41,12 +41,12 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
       if ((_model.apiResult9hv?.succeeded ?? true)) {
         _model.chatHistory = (_model.apiResult9hv?.jsonBody ?? '');
         setState(() {});
-        await _model.listViewController?.animateTo(
-          _model.listViewController!.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.ease,
-        );
       }
+      await _model.listViewController?.animateTo(
+        _model.listViewController!.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.ease,
+      );
     });
 
     _model.textController ??= TextEditingController();

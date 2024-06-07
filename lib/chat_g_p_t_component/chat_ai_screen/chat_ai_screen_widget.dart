@@ -85,15 +85,21 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                   size: 24.0,
                 ),
                 onPressed: () async {
+                  if (Navigator.of(context).canPop()) {
+                    context.pop();
+                  }
                   context.pushNamed(
                     'chat_ai_Screen',
                     extra: <String, dynamic>{
                       kTransitionInfoKey: const TransitionInfo(
                         hasTransition: true,
                         transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
                       ),
                     },
                   );
+
+                  setState(() {});
                 },
               ),
             ),
