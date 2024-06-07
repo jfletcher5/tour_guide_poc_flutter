@@ -66,9 +66,9 @@ class AddNewMessageCall {
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
-  List<String>? messageType(dynamic response) => (getJsonField(
+  List<String>? chatRole(dynamic response) => (getJsonField(
         response,
-        r'''$[:].type''',
+        r'''$[:].role''',
         true,
       ) as List?)
           ?.withoutNulls

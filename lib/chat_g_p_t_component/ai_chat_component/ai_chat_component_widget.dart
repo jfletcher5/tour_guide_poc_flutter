@@ -35,16 +35,18 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.apiResult9hv = await ChatServicesGroup.getChainMessagesCall.call(
-        conversationId: 'default',
         speaker: -1,
+        conversationId: 'default',
       );
       if ((_model.apiResult9hv?.succeeded ?? true)) {
-        _model.chatHistory = (_model.apiResult9hv?.jsonBody ?? '');
+        _model.chatHistory =
+            (_model.apiResult9hv?.jsonBody ?? '').toList().cast<dynamic>();
         setState(() {});
       }
+      await Future.delayed(const Duration(milliseconds: 10));
       await _model.listViewController?.animateTo(
         _model.listViewController!.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 10),
         curve: Curves.ease,
       );
     });
@@ -125,8 +127,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                       child: Builder(
                                         builder: (context) {
                                           final chat =
-                                              _model.chatHistory?.toList() ??
-                                                  [];
+                                              _model.chatHistory.toList();
                                           return ListView.builder(
                                             padding: const EdgeInsets.fromLTRB(
                                               0,
@@ -134,6 +135,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                               0,
                                               16.0,
                                             ),
+                                            primary: false,
                                             scrollDirection: Axis.vertical,
                                             itemCount: chat.length,
                                             itemBuilder: (context, chatIndex) {
@@ -589,7 +591,9 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
                             _model.aiResponding = false;
                             _model.chatHistory =
-                                (_model.chatGPTResponse?.jsonBody ?? '');
+                                (_model.chatGPTResponse?.jsonBody ?? '')
+                                    .toList()
+                                    .cast<dynamic>();
                             setState(() {});
                             setState(() {
                               _model.textController?.clear();
@@ -619,8 +623,14 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
 
                           await Future.delayed(
                               const Duration(milliseconds: 800));
+                          _model.aiResponding = false;
+                          _model.chatHistory =
+                              (_model.chatGPTResponse?.jsonBody ?? '')
+                                  .toList()
+                                  .cast<dynamic>();
+                          setState(() {});
                           await _model.listViewController?.animateTo(
-                            0,
+                            _model.listViewController!.position.maxScrollExtent,
                             duration: const Duration(milliseconds: 100),
                             curve: Curves.ease,
                           );

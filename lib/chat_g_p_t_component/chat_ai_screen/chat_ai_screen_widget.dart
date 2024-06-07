@@ -85,6 +85,8 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                   size: 24.0,
                 ),
                 onPressed: () async {
+                  _model.aiResponding = false;
+                  setState(() {});
                   if (Navigator.of(context).canPop()) {
                     context.pop();
                   }
@@ -94,12 +96,10 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                       kTransitionInfoKey: const TransitionInfo(
                         hasTransition: true,
                         transitionType: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 0),
+                        duration: Duration(milliseconds: 100),
                       ),
                     },
                   );
-
-                  setState(() {});
                 },
               ),
             ),
