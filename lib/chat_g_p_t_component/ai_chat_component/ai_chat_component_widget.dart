@@ -584,10 +584,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           );
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
                             _model.aiResponding = false;
-                            _model.chatHistory =
-                                (_model.chatGPTResponse?.jsonBody ?? '')
-                                    .toList()
-                                    .cast<dynamic>();
                             setState(() {});
                             setState(() {
                               _model.textController?.clear();
@@ -617,12 +613,39 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
 
                           await Future.delayed(
                               const Duration(milliseconds: 800));
-                          _model.aiResponding = false;
-                          _model.chatHistory =
-                              (_model.chatGPTResponse?.jsonBody ?? '')
-                                  .toList()
-                                  .cast<dynamic>();
-                          setState(() {});
+                          _model.refresh =
+                              await ChatServicesGroup.getChainMessagesCall.call(
+                            conversationId: 'default',
+                            speaker: -1,
+                          );
+                          if ((_model.refresh?.succeeded ?? true)) {
+                            _model.aiResponding = false;
+                            _model.chatHistory = getJsonField(
+                              (_model.refresh?.jsonBody ?? ''),
+                              r'''$[0].content''',
+                              true,
+                            )!
+                                .toList()
+                                .cast<dynamic>();
+                            _model.updatePage(() {});
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: const Text('chathistory'),
+                                  content: Text((_model.refresh?.jsonBody ?? '')
+                                      .toString()),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
 
                           setState(() {});
                         },

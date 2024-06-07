@@ -27,6 +27,8 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
   ApiCallResponse? apiResultef2;
   // Model for aiChat_Component component.
   late AiChatComponentModel aiChatComponentModel;
+  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in IconButton widget.
+  ApiCallResponse? apiResult5ey;
 
   @override
   void initState(BuildContext context) {

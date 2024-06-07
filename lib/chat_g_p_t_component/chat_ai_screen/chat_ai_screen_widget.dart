@@ -87,19 +87,19 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                 onPressed: () async {
                   _model.aiResponding = false;
                   setState(() {});
-                  if (Navigator.of(context).canPop()) {
-                    context.pop();
-                  }
-                  context.pushNamed(
-                    'chat_ai_Screen',
-                    extra: <String, dynamic>{
-                      kTransitionInfoKey: const TransitionInfo(
-                        hasTransition: true,
-                        transitionType: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 100),
-                      ),
-                    },
+                  _model.apiResult5ey =
+                      await ChatServicesGroup.getChainMessagesCall.call(
+                    conversationId: 'default',
+                    speaker: -1,
                   );
+                  if ((_model.apiResult5ey?.succeeded ?? true)) {
+                    _model.chatHistory = (_model.apiResult5ey?.jsonBody ?? '')
+                        .toList()
+                        .cast<dynamic>();
+                    setState(() {});
+                  }
+
+                  setState(() {});
                 },
               ),
             ),

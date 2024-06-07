@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/selector/create_conversation/create_conversation_widget.dart';
 import 'package:flutter/material.dart';
 import 'landing_page_model.dart';
 export 'landing_page_model.dart';
@@ -208,16 +209,37 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                 padding: const EdgeInsets.all(2.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('chat_ai_Screen');
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () => _model
+                                                  .unfocusNode.canRequestFocus
+                                              ? FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _model.unfocusNode)
+                                              : FocusScope.of(context)
+                                                  .unfocus(),
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: const CreateConversationWidget(),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
                                   },
-                                  text: 'Start New',
+                                  text: 'New Conversation',
                                   options: FFButtonOptions(
                                     height: 60.0,
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         24.0, 0.0, 24.0, 0.0),
                                     iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context).primary,
+                                    color: FlutterFlowTheme.of(context).accent1,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
@@ -241,9 +263,9 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                 padding: const EdgeInsets.all(2.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('LiveTour');
+                                    context.pushNamed('chat_ai_Screen');
                                   },
-                                  text: 'Start Chatting',
+                                  text: 'Go To Conversation',
                                   options: FFButtonOptions(
                                     height: 60.0,
                                     padding: const EdgeInsetsDirectional.fromSTEB(

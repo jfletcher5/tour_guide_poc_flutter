@@ -32,6 +32,8 @@ class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
   String? Function(BuildContext, String?)? textControllerValidator;
   // Stores action output result for [Backend Call - API (Add New Message)] action in IconButton widget.
   ApiCallResponse? chatGPTResponse;
+  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in IconButton widget.
+  ApiCallResponse? refresh;
 
   @override
   void initState(BuildContext context) {
