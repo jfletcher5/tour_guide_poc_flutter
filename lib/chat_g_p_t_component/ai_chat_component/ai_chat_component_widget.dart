@@ -580,9 +580,11 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           setState(() {});
                           // The "chatHistory" is the generated JSON -- we send the whole chat history to AI in order for it to understand context.
                           _model.chatGPTResponse =
-                              await ChatServicesGroup.getChainMessagesCall.call(
+                              await ChatServicesGroup.addNewMessageCall.call(
+                            newMessage: _model.textController.text,
+                            tourID: '24352fcc-cecd-45e0-821d-105437274172',
                             conversationId: 'default',
-                            speaker: -1,
+                            userID: 'jon',
                           );
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
                             _model.aiResponding = false;
