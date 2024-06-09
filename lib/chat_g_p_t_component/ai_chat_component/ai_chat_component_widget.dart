@@ -130,7 +130,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                               0,
                                               16.0,
                                             ),
-                                            reverse: true,
                                             primary: false,
                                             scrollDirection: Axis.vertical,
                                             itemCount: chat.length,
@@ -497,7 +496,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                       child: TextFormField(
                         controller: _model.textController,
                         focusNode: _model.textFieldFocusNode,
-                        autofocus: true,
+                        autofocus: false,
                         textCapitalization: TextCapitalization.sentences,
                         obscureText: false,
                         decoration: InputDecoration(

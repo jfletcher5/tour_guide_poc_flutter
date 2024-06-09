@@ -95,11 +95,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const LandingPageWidget(),
         ),
         FFRoute(
-          name: 'LiveTour',
-          path: '/liveTour',
-          builder: (context, params) => const LiveTourWidget(),
-        ),
-        FFRoute(
           name: 'profile',
           path: '/profile',
           builder: (context, params) => params.isEmpty

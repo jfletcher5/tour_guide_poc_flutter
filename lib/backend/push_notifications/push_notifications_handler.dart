@@ -103,7 +103,6 @@ final parametersBuilderMap =
     <String, Future<ParameterData> Function(Map<String, dynamic>)>{
   'Signin': ParameterData.none(),
   'LandingPage': ParameterData.none(),
-  'LiveTour': ParameterData.none(),
   'profile': ParameterData.none(),
   'chat_ai_Screen': ParameterData.none(),
 };
