@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
+import '/main.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -72,13 +72,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const LandingPageWidget() : const SigninWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const SigninWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const LandingPageWidget() : const SigninWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const SigninWidget(),
         ),
         FFRoute(
           name: 'Signin',
@@ -88,12 +88,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'LandingPage',
           path: '/landingPage',
-          builder: (context, params) => const LandingPageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'LandingPage')
+              : const LandingPageWidget(),
         ),
         FFRoute(
-          name: 'LiveTour',
-          path: '/liveTour',
-          builder: (context, params) => const LiveTourWidget(),
+          name: 'profile',
+          path: '/profile',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'profile')
+              : const ProfileWidget(),
+        ),
+        FFRoute(
+          name: 'chat_ai_Screen',
+          path: '/chatAiScreen',
+          builder: (context, params) => ChatAiScreenWidget(
+            tourID: params.getParam(
+              'tourID',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -278,15 +292,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
-                    ),
+              ? Container(
+                  color: Colors.transparent,
+                  child: Image.asset(
+                    'assets/images/tourguideicon.png',
+                    fit: BoxFit.cover,
                   ),
                 )
               : page;
