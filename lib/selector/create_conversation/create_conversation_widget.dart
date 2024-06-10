@@ -279,7 +279,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                               newMessage:
                                   _model.firstMessageTextController.text,
                               tourID: widget.selectedTour,
-                              conversationId: FFAppState().activeConvoID,
+                              conversationId: FFAppState().appActiveConvoID,
                               userID: currentUserUid,
                             );
                             if ((_model.apiResultomg?.succeeded ?? true)) {

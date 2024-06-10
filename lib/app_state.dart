@@ -20,22 +20,22 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _activeConvoID = '';
-  String get activeConvoID => _activeConvoID;
-  set activeConvoID(String value) {
-    _activeConvoID = value;
+  String _appActiveConvoID = '';
+  String get appActiveConvoID => _appActiveConvoID;
+  set appActiveConvoID(String value) {
+    _appActiveConvoID = value;
   }
 
-  String _activeTourName = '';
-  String get activeTourName => _activeTourName;
-  set activeTourName(String value) {
-    _activeTourName = value;
+  String _appActiveTourName = '';
+  String get appActiveTourName => _appActiveTourName;
+  set appActiveTourName(String value) {
+    _appActiveTourName = value;
   }
 
-  String _activeTourID = '';
-  String get activeTourID => _activeTourID;
-  set activeTourID(String value) {
-    _activeTourID = value;
+  String _appActiveTourID = '';
+  String get appActiveTourID => _appActiveTourID;
+  set appActiveTourID(String value) {
+    _appActiveTourID = value;
   }
 
   List<String> _appTourList = [];

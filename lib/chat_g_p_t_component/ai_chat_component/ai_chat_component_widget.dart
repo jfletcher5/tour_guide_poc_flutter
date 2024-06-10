@@ -41,7 +41,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
       _model.activeConvoLoad =
           await ChatServicesGroup.getChainMessagesCall.call(
         speaker: -1,
-        conversationId: FFAppState().activeConvoID,
+        conversationId: FFAppState().appActiveConvoID,
       );
       if ((_model.activeConvoLoad?.succeeded ?? true)) {
         _model.chatHistory =
@@ -584,7 +584,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                               await ChatServicesGroup.addNewMessageCall.call(
                             newMessage: _model.textController.text,
                             tourID: _model.tourID,
-                            conversationId: FFAppState().activeConvoID,
+                            conversationId: FFAppState().appActiveConvoID,
                             userID: currentUserUid,
                           );
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {

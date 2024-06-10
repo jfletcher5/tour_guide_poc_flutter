@@ -138,11 +138,6 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                 if ((_model
                                         .getConvosOnDropdownSelect?.succeeded ??
                                     true)) {
-                                  _model.selectedTourName =
-                                      _model.dropDownValue1;
-                                  _model.selectedTourID = functions.getTourID(
-                                      FFAppState().appTourListJSON,
-                                      _model.selectedTourName);
                                   _model.enableConversations = true;
                                   _model.conversations =
                                       ChatServicesGroup.getConversationsCall
@@ -153,6 +148,13 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                           )!
                                           .toList()
                                           .cast<String>();
+                                  setState(() {});
+                                  FFAppState().appActiveTourName =
+                                      _model.dropDownValue1!;
+                                  FFAppState().appActiveTourID =
+                                      functions.getTourID(
+                                          FFAppState().appTourListJSON,
+                                          FFAppState().appActiveTourName)!;
                                   setState(() {});
                                 }
 
@@ -196,7 +198,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                               options: _model.conversations,
                               onChanged: (val) async {
                                 setState(() => _model.dropDownValue2 = val);
-                                FFAppState().activeConvoID =
+                                FFAppState().appActiveConvoID =
                                     _model.dropDownValue2!;
                                 setState(() {});
                               },
@@ -242,30 +244,21 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                 scrollDirection: Axis.vertical,
                 children: [
                   Text(
-                    valueOrDefault<String>(
-                      _model.selectedTourName,
-                      'tour name',
-                    ),
+                    FFAppState().appActiveTourName,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
                         ),
                   ),
                   Text(
-                    valueOrDefault<String>(
-                      _model.selectedTourID,
-                      'tour ID',
-                    ),
+                    FFAppState().appActiveTourID,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
                         ),
                   ),
                   Text(
-                    valueOrDefault<String>(
-                      _model.selectedConvo,
-                      'convo name',
-                    ),
+                    FFAppState().appActiveConvoID,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
