@@ -23,6 +23,8 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
   late LandingPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  // add variable for tour index selected
+  int tourIndex = 0;
 
   @override
   void initState() {
@@ -125,6 +127,8 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                               options: FFAppState().appTourList,
                               onChanged: (val) async {
                                 setState(() => _model.dropDownValue1 = val);
+                                //set index to selected tour
+                                tourIndex = FFAppState().appTourList.indexOf(val!);
                                 _model.getConvosOnDropdownSelect =
                                     await ChatServicesGroup.getConversationsCall
                                         .call(
