@@ -48,6 +48,12 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
             (_model.activeConvoLoad?.jsonBody ?? '').toList().cast<dynamic>();
         setState(() {});
       }
+      await Future.delayed(const Duration(milliseconds: 250));
+      await _model.listViewController?.animateTo(
+        _model.listViewController!.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.ease,
+      );
     });
 
     _model.textController ??= TextEditingController();
@@ -450,6 +456,8 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                                 ),
                                               );
                                             },
+                                            controller:
+                                                _model.listViewController,
                                           );
                                         },
                                       ),
@@ -589,13 +597,10 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           );
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
                             _model.aiResponding = false;
-                            _model.chatHistory = getJsonField(
-                              (_model.chatGPTResponse?.jsonBody ?? ''),
-                              r'''$[:].content''',
-                              true,
-                            )!
-                                .toList()
-                                .cast<dynamic>();
+                            _model.chatHistory =
+                                (_model.chatGPTResponse?.jsonBody ?? '')
+                                    .toList()
+                                    .cast<dynamic>();
                             setState(() {});
                             setState(() {
                               _model.textController?.clear();
@@ -622,6 +627,14 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                             _model.aiResponding = false;
                             setState(() {});
                           }
+
+                          await Future.delayed(
+                              const Duration(milliseconds: 250));
+                          await _model.listViewController?.animateTo(
+                            _model.listViewController!.position.maxScrollExtent,
+                            duration: const Duration(milliseconds: 100),
+                            curve: Curves.ease,
+                          );
 
                           setState(() {});
                         },
