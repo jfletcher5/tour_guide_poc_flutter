@@ -583,11 +583,13 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           _model.chatGPTResponse =
                               await ChatServicesGroup.addNewMessageCall.call(
                             newMessage: _model.textController.text,
-                            tourID: _model.tourID,
+                            tourID: FFAppState().appActiveTourID,
                             conversationId: FFAppState().appActiveConvoID,
                             userID: currentUserUid,
                           );
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
+                            await Future.delayed(
+                                const Duration(milliseconds: 400));
                             _model.aiResponding = false;
                             _model.chatHistory = getJsonField(
                               (_model.chatGPTResponse?.jsonBody ?? ''),
@@ -622,9 +624,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                             _model.aiResponding = false;
                             setState(() {});
                           }
-
-                          await Future.delayed(
-                              const Duration(milliseconds: 800));
 
                           setState(() {});
                         },
