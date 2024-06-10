@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "612706604302-hjdqpjlqhgl68p03k87neprahuf8jk2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.llastmile.tourguidepoc",
+            "certificate_hash": "d528daa295605ef5d33812a89f87cbf2d875f6f4"
+          }
+        },
+        {
           "client_id": "612706604302-qhlgkmi1ed3cvt45bhckgkd2ebhf34kk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

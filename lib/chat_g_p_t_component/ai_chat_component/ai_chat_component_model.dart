@@ -20,10 +20,14 @@ class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
 
   String inputContent = '';
 
+  String? tourID = 'noID';
+
+  String? conversationID;
+
   ///  State fields for stateful widgets in this component.
 
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in aiChat_Component widget.
-  ApiCallResponse? apiResult9hv;
+  ApiCallResponse? activeConvoLoad;
   // Model for writingIndicator component.
   late WritingIndicatorModel writingIndicatorModel;
   // State field(s) for TextField widget.
@@ -32,8 +36,6 @@ class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
   String? Function(BuildContext, String?)? textControllerValidator;
   // Stores action output result for [Backend Call - API (Add New Message)] action in IconButton widget.
   ApiCallResponse? chatGPTResponse;
-  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in IconButton widget.
-  ApiCallResponse? refresh;
 
   @override
   void initState(BuildContext context) {

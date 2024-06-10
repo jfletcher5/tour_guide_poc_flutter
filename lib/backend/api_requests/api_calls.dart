@@ -106,7 +106,7 @@ class GetChainMessagesCall {
 
   List<String>? humanMessages(dynamic response) => (getJsonField(
         response,
-        r'''$[?(@.type == 'human')].content''',
+        r'''$[?(@.role == 'human')].content''',
         true,
       ) as List?)
           ?.withoutNulls
@@ -115,23 +115,23 @@ class GetChainMessagesCall {
           .toList();
   List<String>? aIMessages(dynamic response) => (getJsonField(
         response,
-        r'''$[?(@.type == 'ai')].content''',
+        r'''$[?(@.role == 'ai')].content''',
         true,
       ) as List?)
           ?.withoutNulls
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
-  List<String>? messageRoles(dynamic response) => (getJsonField(
+  List<String>? allmessageRoles(dynamic response) => (getJsonField(
         response,
-        r'''$[:].type''',
+        r'''$[:].role''',
         true,
       ) as List?)
           ?.withoutNulls
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
-  List<String>? messageContent(dynamic response) => (getJsonField(
+  List<String>? allMessageContent(dynamic response) => (getJsonField(
         response,
         r'''$[:]''',
         true,
@@ -140,10 +140,24 @@ class GetChainMessagesCall {
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
-  String? content(dynamic response) => castToType<String>(getJsonField(
+  List<String>? messagesOnly(dynamic response) => (getJsonField(
         response,
-        r'''$.content''',
-      ));
+        r'''$[:].content''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? rolesOnly(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].role''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class GetToursCall {
@@ -176,6 +190,19 @@ class GetToursCall {
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
+  List<String>? tourIDs(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].tourID''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  String? lastTour(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[0].tourID''',
+      ));
 }
 
 class GetConversationsCall {
@@ -217,64 +244,6 @@ class GetConversationsCall {
 }
 
 /// End Chat Services Group Code
-
-/// Start OpenAI ChatGPT Group Code
-
-class OpenAIChatGPTGroup {
-  static String getBaseUrl() => 'https://api.openai.com/v1';
-  static Map<String, String> headers = {
-    'Content-Type': 'application/json',
-  };
-  static SendFullPromptCall sendFullPromptCall = SendFullPromptCall();
-}
-
-class SendFullPromptCall {
-  Future<ApiCallResponse> call({
-    String? apiKey = '',
-    dynamic promptJson,
-  }) async {
-    final baseUrl = OpenAIChatGPTGroup.getBaseUrl();
-
-    final prompt = _serializeJson(promptJson);
-    const ffApiRequestBody = '''
-{
-  "model": "gpt-4",
-  "messages": "hi"
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'Send Full Prompt',
-      apiUrl: '$baseUrl/chat/completions',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $apiKey',
-      },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
-    );
-  }
-
-  int? createdTimestamp(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.created''',
-      ));
-  String? role(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.choices[:].message.role''',
-      ));
-  String? content(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.choices[:].message.content''',
-      ));
-}
-
-/// End OpenAI ChatGPT Group Code
 
 class ApiPagingParams {
   int nextPageNumber = 0;

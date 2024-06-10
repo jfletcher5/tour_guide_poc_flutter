@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/chat_g_p_t_component/ai_chat_component/ai_chat_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'chat_ai_screen_widget.dart' show ChatAiScreenWidget;
@@ -20,15 +19,15 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
 
   bool aiResponding = false;
 
+  String? conversationID;
+
+  String? tourID;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in chat_ai_Screen widget.
-  ApiCallResponse? apiResultef2;
   // Model for aiChat_Component component.
   late AiChatComponentModel aiChatComponentModel;
-  // Stores action output result for [Backend Call - API (Get Chain Messages)] action in IconButton widget.
-  ApiCallResponse? apiResult5ey;
 
   @override
   void initState(BuildContext context) {

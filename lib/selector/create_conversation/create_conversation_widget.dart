@@ -1,13 +1,21 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'create_conversation_model.dart';
 export 'create_conversation_model.dart';
 
 class CreateConversationWidget extends StatefulWidget {
-  const CreateConversationWidget({super.key});
+  const CreateConversationWidget({
+    super.key,
+    required this.selectedTour,
+  });
+
+  final String? selectedTour;
 
   @override
   State<CreateConversationWidget> createState() =>
@@ -28,14 +36,11 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
     super.initState();
     _model = createModel(context, () => CreateConversationModel());
 
-    _model.convoNameTextController ??= TextEditingController();
-    _model.convoNameFocusNode ??= FocusNode();
+    _model.convoIDTextController ??= TextEditingController();
+    _model.convoIDFocusNode ??= FocusNode();
 
     _model.firstMessageTextController ??= TextEditingController();
     _model.firstMessageFocusNode ??= FocusNode();
-
-    _model.userIDTextController ??= TextEditingController();
-    _model.userIDFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -49,6 +54,8 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(
@@ -136,8 +143,8 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 16.0, 0.0),
                         child: TextFormField(
-                          controller: _model.convoNameTextController,
-                          focusNode: _model.convoNameFocusNode,
+                          controller: _model.convoIDTextController,
+                          focusNode: _model.convoIDFocusNode,
                           textCapitalization: TextCapitalization.sentences,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -146,7 +153,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                       fontFamily: 'Readex Pro',
                                       letterSpacing: 0.0,
                                     ),
-                            hintText: 'Convo Name',
+                            hintText: 'Convo ID',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .labelLarge
                                 .override(
@@ -193,7 +200,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                   ),
                           maxLines: 2,
                           cursorColor: FlutterFlowTheme.of(context).primary,
-                          validator: _model.convoNameTextControllerValidator
+                          validator: _model.convoIDTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -264,84 +271,37 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 0.0),
-                        child: TextFormField(
-                          controller: _model.userIDTextController,
-                          focusNode: _model.userIDFocusNode,
-                          textCapitalization: TextCapitalization.sentences,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
-                                    ),
-                            hintText: 'UserID',
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .labelLarge
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primary,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            filled: true,
-                            fillColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            contentPadding: const EdgeInsets.all(12.0),
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
-                          maxLines: 2,
-                          cursorColor: FlutterFlowTheme.of(context).primary,
-                          validator: _model.userIDTextControllerValidator
-                              .asValidator(context),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 16.0, 44.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            context.pushNamed(
-                              'chat_ai_Screen',
-                              extra: <String, dynamic>{
-                                kTransitionInfoKey: const TransitionInfo(
-                                  hasTransition: true,
-                                  transitionType:
-                                      PageTransitionType.rightToLeft,
-                                ),
-                              },
+                            _model.apiResultomg =
+                                await ChatServicesGroup.addNewMessageCall.call(
+                              newMessage:
+                                  _model.firstMessageTextController.text,
+                              tourID: widget.selectedTour,
+                              conversationId: FFAppState().activeConvoID,
+                              userID: currentUserUid,
                             );
+                            if ((_model.apiResultomg?.succeeded ?? true)) {
+                              context.pushNamed(
+                                'chat_ai_Screen',
+                                queryParameters: {
+                                  'tourID': serializeParam(
+                                    widget.selectedTour,
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: const TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType:
+                                        PageTransitionType.rightToLeft,
+                                  ),
+                                },
+                              );
+                            }
+
+                            setState(() {});
                           },
                           text: 'Start Conversation',
                           options: FFButtonOptions(

@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/chat_g_p_t_component/ai_chat_component/ai_chat_component_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -9,7 +8,12 @@ import 'chat_ai_screen_model.dart';
 export 'chat_ai_screen_model.dart';
 
 class ChatAiScreenWidget extends StatefulWidget {
-  const ChatAiScreenWidget({super.key});
+  const ChatAiScreenWidget({
+    super.key,
+    required this.tourID,
+  });
+
+  final String? tourID;
 
   @override
   State<ChatAiScreenWidget> createState() => _ChatAiScreenWidgetState();
@@ -30,15 +34,6 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
       // showProgressDots
       _model.aiResponding = false;
       setState(() {});
-      _model.apiResultef2 = await ChatServicesGroup.getChainMessagesCall.call(
-        conversationId: 'default',
-        speaker: -1,
-      );
-      if ((_model.apiResultef2?.succeeded ?? true)) {
-        _model.chatHistory =
-            (_model.apiResultef2?.jsonBody ?? '').toList().cast<dynamic>();
-        setState(() {});
-      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -60,6 +55,9 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        endDrawer: const Drawer(
+          elevation: 16.0,
+        ),
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
@@ -80,26 +78,12 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                 buttonSize: 40.0,
                 fillColor: FlutterFlowTheme.of(context).accent1,
                 icon: Icon(
-                  Icons.refresh_rounded,
+                  Icons.menu_open,
                   color: FlutterFlowTheme.of(context).primaryText,
                   size: 24.0,
                 ),
                 onPressed: () async {
-                  _model.aiResponding = false;
-                  setState(() {});
-                  _model.apiResult5ey =
-                      await ChatServicesGroup.getChainMessagesCall.call(
-                    conversationId: 'default',
-                    speaker: -1,
-                  );
-                  if ((_model.apiResult5ey?.succeeded ?? true)) {
-                    _model.chatHistory = (_model.apiResult5ey?.jsonBody ?? '')
-                        .toList()
-                        .cast<dynamic>();
-                    setState(() {});
-                  }
-
-                  setState(() {});
+                  scaffoldKey.currentState!.openEndDrawer();
                 },
               ),
             ),

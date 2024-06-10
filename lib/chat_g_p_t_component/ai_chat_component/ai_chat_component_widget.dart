@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/chat_g_p_t_component/writing_indicator/writing_indicator_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -8,6 +9,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'ai_chat_component_model.dart';
 export 'ai_chat_component_model.dart';
 
@@ -34,16 +36,18 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.apiResult9hv = await ChatServicesGroup.getChainMessagesCall.call(
+      _model.conversationID = 'abc';
+      setState(() {});
+      _model.activeConvoLoad =
+          await ChatServicesGroup.getChainMessagesCall.call(
         speaker: -1,
-        conversationId: 'default',
+        conversationId: FFAppState().activeConvoID,
       );
-      if ((_model.apiResult9hv?.succeeded ?? true)) {
+      if ((_model.activeConvoLoad?.succeeded ?? true)) {
         _model.chatHistory =
-            (_model.apiResult9hv?.jsonBody ?? '').toList().cast<dynamic>();
+            (_model.activeConvoLoad?.jsonBody ?? '').toList().cast<dynamic>();
         setState(() {});
       }
-      await Future.delayed(const Duration(milliseconds: 10));
     });
 
     _model.textController ??= TextEditingController();
@@ -61,6 +65,8 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Align(
       alignment: const AlignmentDirectional(0.0, 0.0),
       child: Container(
@@ -577,12 +583,19 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           _model.chatGPTResponse =
                               await ChatServicesGroup.addNewMessageCall.call(
                             newMessage: _model.textController.text,
-                            tourID: '24352fcc-cecd-45e0-821d-105437274172',
-                            conversationId: 'default',
-                            userID: 'jon',
+                            tourID: _model.tourID,
+                            conversationId: FFAppState().activeConvoID,
+                            userID: currentUserUid,
                           );
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
                             _model.aiResponding = false;
+                            _model.chatHistory = getJsonField(
+                              (_model.chatGPTResponse?.jsonBody ?? ''),
+                              r'''$[:].messages''',
+                              true,
+                            )!
+                                .toList()
+                                .cast<dynamic>();
                             setState(() {});
                             setState(() {
                               _model.textController?.clear();
@@ -612,39 +625,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
 
                           await Future.delayed(
                               const Duration(milliseconds: 800));
-                          _model.refresh =
-                              await ChatServicesGroup.getChainMessagesCall.call(
-                            conversationId: 'default',
-                            speaker: -1,
-                          );
-                          if ((_model.refresh?.succeeded ?? true)) {
-                            _model.aiResponding = false;
-                            _model.chatHistory = getJsonField(
-                              (_model.refresh?.jsonBody ?? ''),
-                              r'''$[0].content''',
-                              true,
-                            )!
-                                .toList()
-                                .cast<dynamic>();
-                            _model.updatePage(() {});
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: const Text('chathistory'),
-                                  content: Text((_model.refresh?.jsonBody ?? '')
-                                      .toString()),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: const Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
 
                           setState(() {});
                         },
