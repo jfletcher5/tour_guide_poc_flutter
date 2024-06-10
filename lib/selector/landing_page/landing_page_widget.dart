@@ -242,10 +242,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                 scrollDirection: Axis.vertical,
                 children: [
                   Text(
-                    getJsonField(
-                      FFAppState().appTourListJSON,
-                      r'''$[0]''',
-                    ).toString(),
+                    FFAppState().appTourListJSON.toString(),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
