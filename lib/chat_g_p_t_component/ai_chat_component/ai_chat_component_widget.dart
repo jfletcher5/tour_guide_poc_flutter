@@ -588,12 +588,10 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                             userID: currentUserUid,
                           );
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
-                            await Future.delayed(
-                                const Duration(milliseconds: 400));
                             _model.aiResponding = false;
                             _model.chatHistory = getJsonField(
                               (_model.chatGPTResponse?.jsonBody ?? ''),
-                              r'''$[:].messages''',
+                              r'''$[:].content''',
                               true,
                             )!
                                 .toList()
