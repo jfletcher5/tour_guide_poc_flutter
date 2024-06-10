@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/selector/create_conversation/create_conversation_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -139,10 +140,9 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                     true)) {
                                   _model.selectedTourName =
                                       _model.dropDownValue1;
-                                  _model.selectedTourID = getJsonField(
-                                    (_model.getToursPageLoad?.jsonBody ?? ''),
-                                    r'''$[0].tourID''',
-                                  ).toString();
+                                  _model.selectedTourID = functions.getTourID(
+                                      FFAppState().appTourListJSON,
+                                      _model.selectedTourName);
                                   _model.enableConversations = true;
                                   _model.conversations =
                                       ChatServicesGroup.getConversationsCall
@@ -242,7 +242,30 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                 scrollDirection: Axis.vertical,
                 children: [
                   Text(
-                    FFAppState().appTourListJSON.toString(),
+                    valueOrDefault<String>(
+                      _model.selectedTourName,
+                      'tour name',
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                  Text(
+                    valueOrDefault<String>(
+                      _model.selectedTourID,
+                      'tour ID',
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                  Text(
+                    valueOrDefault<String>(
+                      _model.selectedConvo,
+                      'convo name',
+                    ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
