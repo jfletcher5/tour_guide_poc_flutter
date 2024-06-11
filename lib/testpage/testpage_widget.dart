@@ -80,110 +80,98 @@ class _TestpageWidgetState extends State<TestpageWidget> {
                           color: FlutterFlowTheme.of(context).primary,
                         ),
                       ),
-                      child: MouseRegion(
-                        opaque: false,
-                        cursor: MouseCursor.defer ?? MouseCursor.defer,
-                        onEnter: ((event) async {
-                          setState(() => _model.mouseRegionHovered = true);
-                        }),
-                        onExit: ((event) async {
-                          setState(() => _model.mouseRegionHovered = false);
-                        }),
-                        child: Builder(
-                          builder: (context) {
-                            final tourList =
-                                FFAppState().appTourListJSON.toList();
-                            return ListView.builder(
-                              padding: EdgeInsets.zero,
-                              scrollDirection: Axis.vertical,
-                              itemCount: tourList.length,
-                              itemBuilder: (context, tourListIndex) {
-                                final tourListItem = tourList[tourListIndex];
-                                return InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    FFAppState().appActiveTourName =
-                                        getJsonField(
-                                      tourListItem,
-                                      r'''$.tourName''',
-                                    ).toString();
-                                    FFAppState().appActiveTourID = getJsonField(
+                      child: Builder(
+                        builder: (context) {
+                          final tourList =
+                              FFAppState().appTourListJSON.toList();
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            itemCount: tourList.length,
+                            itemBuilder: (context, tourListIndex) {
+                              final tourListItem = tourList[tourListIndex];
+                              return InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  FFAppState().appActiveTourName = getJsonField(
+                                    tourListItem,
+                                    r'''$.tourName''',
+                                  ).toString();
+                                  FFAppState().appActiveTourID = getJsonField(
+                                    tourListItem,
+                                    r'''$.tourID''',
+                                  ).toString();
+                                  setState(() {});
+                                  _model.apiResult42z = await ChatServicesGroup
+                                      .getConversationsCall
+                                      .call(
+                                    userID: currentUserUid,
+                                    tourID: getJsonField(
                                       tourListItem,
                                       r'''$.tourID''',
-                                    ).toString();
+                                    ).toString(),
+                                  );
+                                  if ((_model.apiResult42z?.succeeded ??
+                                      true)) {
+                                    FFAppState().appConversations =
+                                        (_model.apiResult42z?.jsonBody ?? '');
                                     setState(() {});
-                                    _model.apiResult42z =
-                                        await ChatServicesGroup
-                                            .getConversationsCall
-                                            .call(
-                                      userID: currentUserUid,
-                                      tourID: getJsonField(
-                                        tourListItem,
-                                        r'''$.tourID''',
-                                      ).toString(),
-                                    );
-                                    if ((_model.apiResult42z?.succeeded ??
-                                        true)) {
-                                      FFAppState().appConversations =
-                                          (_model.apiResult42z?.jsonBody ?? '');
-                                      setState(() {});
-                                    }
+                                  }
 
-                                    context.pushNamed('testpageConvos');
+                                  context.pushNamed('testpageConvos');
 
-                                    setState(() {});
-                                  },
-                                  child: ListTile(
-                                    title: Text(
-                                      getJsonField(
-                                        tourListItem,
-                                        r'''$.tourName''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleLarge
-                                          .override(
-                                            fontFamily: 'Outfit',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    subtitle: Text(
-                                      getJsonField(
-                                        tourListItem,
-                                        r'''$.tourID''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    trailing: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 20.0,
-                                    ),
-                                    tileColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    dense: false,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(0.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(24.0),
-                                        topRight: Radius.circular(24.0),
-                                      ),
+                                  setState(() {});
+                                },
+                                child: ListTile(
+                                  title: Text(
+                                    getJsonField(
+                                      tourListItem,
+                                      r'''$.tourName''',
+                                    ).toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleLarge
+                                        .override(
+                                          fontFamily: 'Outfit',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                  subtitle: Text(
+                                    getJsonField(
+                                      tourListItem,
+                                      r'''$.tourID''',
+                                    ).toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                  trailing: Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    size: 20.0,
+                                  ),
+                                  tileColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  dense: false,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(0.0),
+                                      bottomRight: Radius.circular(0.0),
+                                      topLeft: Radius.circular(24.0),
+                                      topRight: Radius.circular(24.0),
                                     ),
                                   ),
-                                );
-                              },
-                            );
-                          },
-                        ),
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
                   ),
