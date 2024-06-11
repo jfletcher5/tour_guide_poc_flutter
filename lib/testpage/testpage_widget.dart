@@ -109,10 +109,7 @@ class _TestpageWidgetState extends State<TestpageWidget> {
                                       .getConversationsCall
                                       .call(
                                     userID: currentUserUid,
-                                    tourID: getJsonField(
-                                      tourListItem,
-                                      r'''$.tourID''',
-                                    ).toString(),
+                                    tourID: FFAppState().appActiveTourID,
                                   );
                                   if ((_model.apiResult42z?.succeeded ??
                                       true)) {
