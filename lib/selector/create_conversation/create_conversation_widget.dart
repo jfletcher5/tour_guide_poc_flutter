@@ -278,16 +278,20 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                 await ChatServicesGroup.addNewMessageCall.call(
                               newMessage:
                                   _model.firstMessageTextController.text,
-                              tourID: widget.selectedTour,
-                              conversationId: FFAppState().appActiveConvoID,
+                              tourID: FFAppState().appActiveTourID,
+                              conversationId: _model.convoIDTextController.text,
                               userID: currentUserUid,
                             );
                             if ((_model.apiResultomg?.succeeded ?? true)) {
+                              FFAppState().appActiveConvoID =
+                                  _model.convoIDTextController.text;
+                              setState(() {});
+
                               context.pushNamed(
                                 'chat_ai_Screen',
                                 queryParameters: {
                                   'tourID': serializeParam(
-                                    widget.selectedTour,
+                                    FFAppState().appActiveTourName,
                                     ParamType.String,
                                   ),
                                 }.withoutNulls,

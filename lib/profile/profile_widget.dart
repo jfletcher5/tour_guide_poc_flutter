@@ -137,7 +137,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         12.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      'Account Options',
+                                      'Account Details',
                                       textAlign: TextAlign.start,
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium
@@ -148,15 +148,6 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
-                                    ),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 0.0, 0.0, 0.0),
-                                    child: Icon(
-                                      Icons.close_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 32.0,
                                     ),
                                   ),
                                 ],
@@ -185,14 +176,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(2.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          child: Image.network(
-                                            'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnN8ZW58MHx8MHx8&auto=format&fit=crop&w=900&q=60',
-                                            width: 36.0,
-                                            height: 36.0,
-                                            fit: BoxFit.cover,
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            child: Image.network(
+                                              currentUserPhoto,
+                                              width: 36.0,
+                                              height: 36.0,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -208,24 +201,27 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'Randy Peterson',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF14181B),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            currentUserDisplayName,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
+                                                  color: const Color(0xFF14181B),
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 4.0, 0.0, 0.0),
                                           child: Text(
-                                            'randy.p@domainname.com',
+                                            currentUserEmail,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(

@@ -107,276 +107,235 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                       letterSpacing: 0.0,
                     ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: FlutterFlowDropDown<String>(
-                              controller: _model.dropDownValueController1 ??=
-                                  FormFieldController<String>(
-                                _model.dropDownValue1 ??= 'Selete Tour...',
-                              ),
-                              options: FFAppState().appTourList,
-                              onChanged: (val) async {
-                                setState(() => _model.dropDownValue1 = val);
-                                _model.getConvosOnDropdownSelect =
-                                    await ChatServicesGroup.getConversationsCall
-                                        .call(
-                                  userID: currentUserUid,
-                                  tourID: getJsonField(
-                                    (_model.getToursPageLoad?.jsonBody ?? ''),
-                                    r'''$[0].tourID''',
-                                  ).toString(),
-                                );
-                                if ((_model
-                                        .getConvosOnDropdownSelect?.succeeded ??
-                                    true)) {
-                                  _model.enableConversations = true;
-                                  _model.conversations =
-                                      ChatServicesGroup.getConversationsCall
-                                          .conversations(
-                                            (_model.getConvosOnDropdownSelect
-                                                    ?.jsonBody ??
-                                                ''),
-                                          )!
-                                          .toList()
-                                          .cast<String>();
-                                  setState(() {});
-                                  FFAppState().appActiveTourName =
-                                      _model.dropDownValue1!;
-                                  FFAppState().appActiveTourID =
-                                      functions.getTourID(
-                                          FFAppState().appTourListJSON,
-                                          FFAppState().appActiveTourName)!;
-                                  setState(() {});
-                                }
-
-                                setState(() {});
-                              },
-                              width: double.infinity,
-                              height: 56.0,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
-                              hintText: 'Select Tour...',
-                              icon: Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 24.0,
-                              ),
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              elevation: 2.0,
-                              borderColor:
-                                  FlutterFlowTheme.of(context).alternate,
-                              borderWidth: 2.0,
-                              borderRadius: 8.0,
-                              margin: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 4.0, 16.0, 4.0),
-                              hidesUnderline: true,
-                              isOverButton: true,
-                              isSearchable: false,
-                              isMultiSelect: false,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: FlutterFlowDropDown<String>(
-                              controller: _model.dropDownValueController2 ??=
-                                  FormFieldController<String>(null),
-                              options: _model.conversations,
-                              onChanged: (val) async {
-                                setState(() => _model.dropDownValue2 = val);
-                                FFAppState().appActiveConvoID =
-                                    _model.dropDownValue2!;
-                                setState(() {});
-                              },
-                              width: double.infinity,
-                              height: 56.0,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
-                              hintText: 'Please select...',
-                              icon: Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 24.0,
-                              ),
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              elevation: 2.0,
-                              borderColor:
-                                  FlutterFlowTheme.of(context).alternate,
-                              borderWidth: 2.0,
-                              borderRadius: 8.0,
-                              margin: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 4.0, 16.0, 4.0),
-                              hidesUnderline: true,
-                              isOverButton: true,
-                              isSearchable: false,
-                              isMultiSelect: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              ListView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                children: [
-                  Text(
-                    FFAppState().appActiveTourName,
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  Text(
-                    FFAppState().appActiveTourID,
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  Text(
-                    FFAppState().appActiveConvoID,
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                ],
-              ),
               Flexible(
-                child: Align(
-                  alignment: const AlignmentDirectional(0.0, 1.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  enableDrag: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FlutterFlowDropDown<String>(
+                          controller: _model.dropDownValueController1 ??=
+                              FormFieldController<String>(
+                            _model.dropDownValue1 ??= 'Selete Tour...',
+                          ),
+                          options: FFAppState().appTourList,
+                          onChanged: (val) async {
+                            setState(() => _model.dropDownValue1 = val);
+                            FFAppState().appActiveTourName =
+                                _model.dropDownValue1!;
+                            FFAppState().appActiveTourID = functions.getTourID(
+                                FFAppState().appTourListJSON,
+                                FFAppState().appActiveTourName)!;
+                            setState(() {});
+                            _model.getConvosOnDropdownSelect =
+                                await ChatServicesGroup.getConversationsCall
+                                    .call(
+                              userID: currentUserUid,
+                              tourID: FFAppState().appActiveTourID,
+                            );
+                            if ((_model.getConvosOnDropdownSelect?.succeeded ??
+                                true)) {
+                              _model.enableConversations = true;
+                              _model.conversations =
+                                  ChatServicesGroup.getConversationsCall
+                                      .conversations(
+                                        (_model.getConvosOnDropdownSelect
+                                                ?.jsonBody ??
+                                            ''),
+                                      )!
+                                      .toList()
+                                      .cast<String>();
+                              setState(() {});
+                            }
+
+                            setState(() {});
+                          },
+                          width: double.infinity,
+                          height: 56.0,
+                          textStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
+                          hintText: 'Select Tour...',
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            size: 24.0,
+                          ),
+                          fillColor:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          elevation: 2.0,
+                          borderColor: FlutterFlowTheme.of(context).alternate,
+                          borderWidth: 2.0,
+                          borderRadius: 8.0,
+                          margin: const EdgeInsetsDirectional.fromSTEB(
+                              16.0, 4.0, 16.0, 4.0),
+                          hidesUnderline: true,
+                          isOverButton: true,
+                          isSearchable: false,
+                          isMultiSelect: false,
+                        ),
+                      ),
+                      if (_model.dropDownValue1 != 'Select Tour...')
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: FlutterFlowDropDown<String>(
+                            controller: _model.dropDownValueController2 ??=
+                                FormFieldController<String>(null),
+                            options: _model.conversations,
+                            onChanged: (val) async {
+                              setState(() => _model.dropDownValue2 = val);
+                              FFAppState().appActiveConvoID =
+                                  _model.dropDownValue2!;
+                              setState(() {});
+                            },
+                            width: double.infinity,
+                            height: 56.0,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
+                            hintText: 'Please select...',
+                            icon: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
+                            ),
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            elevation: 2.0,
+                            borderColor: FlutterFlowTheme.of(context).alternate,
+                            borderWidth: 2.0,
+                            borderRadius: 8.0,
+                            margin: const EdgeInsetsDirectional.fromSTEB(
+                                16.0, 4.0, 16.0, 4.0),
+                            hidesUnderline: true,
+                            isOverButton: true,
+                            isSearchable: false,
+                            isMultiSelect: false,
+                          ),
+                        ),
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              context.pushNamed(
+                                'chat_ai_Screen',
+                                queryParameters: {
+                                  'tourID': serializeParam(
+                                    FFAppState().appActiveTourName,
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: const TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType:
+                                        PageTransitionType.rightToLeft,
+                                  ),
+                                },
+                              );
+                            },
+                            text: 'Go To Conversation',
+                            icon: const Icon(
+                              Icons.done,
+                              size: 15.0,
+                            ),
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 60.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 24.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        thickness: 1.0,
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () =>
+                                      _model.unfocusNode.canRequestFocus
                                           ? FocusScope.of(context)
                                               .requestFocus(_model.unfocusNode)
                                           : FocusScope.of(context).unfocus(),
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: CreateConversationWidget(
-                                          selectedTour: getJsonField(
-                                            (_model.getConvosOnDropdownSelect
-                                                    ?.jsonBody ??
-                                                ''),
-                                            r'''$[0].tourID''',
-                                          ).toString(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => safeSetState(() {}));
-                              },
-                              text: 'New Conversation',
-                              options: FFButtonOptions(
-                                height: 60.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).alternate,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      letterSpacing: 0.0,
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: CreateConversationWidget(
+                                      selectedTour: getJsonField(
+                                        (_model.getConvosOnDropdownSelect
+                                                ?.jsonBody ??
+                                            ''),
+                                        r'''$[0].tourID''',
+                                      ).toString(),
                                     ),
-                                elevation: 3.0,
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed(
-                                  'chat_ai_Screen',
-                                  queryParameters: {
-                                    'tourID': serializeParam(
-                                      _model.selectedTourName,
-                                      ParamType.String,
-                                    ),
-                                  }.withoutNulls,
+                                  ),
                                 );
                               },
-                              text: 'Go To Conversation',
-                              options: FFButtonOptions(
-                                height: 60.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
+                            ).then((value) => safeSetState(() {}));
+                          },
+                          text: 'New Conversation',
+                          icon: const Icon(
+                            Icons.add,
+                            size: 15.0,
+                          ),
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 60.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).alternate,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  letterSpacing: 0.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primary,
+                              width: 1.0,
                             ),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
