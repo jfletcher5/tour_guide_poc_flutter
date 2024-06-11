@@ -97,7 +97,7 @@ class _Breadcrumbs3WidgetState extends State<Breadcrumbs3Widget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Text(
-                      'Page Title',
+                      'Tour Name',
                       style: FlutterFlowTheme.of(context).labelLarge.override(
                             fontFamily: 'Readex Pro',
                             letterSpacing: 0.0,
@@ -126,7 +126,7 @@ class _Breadcrumbs3WidgetState extends State<Breadcrumbs3Widget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Text(
-                      'Page Details',
+                      'Conversation',
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                             fontFamily: 'Readex Pro',
                             letterSpacing: 0.0,

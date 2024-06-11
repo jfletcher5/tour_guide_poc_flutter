@@ -115,6 +115,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'testpage')
               : const TestpageWidget(),
+        ),
+        FFRoute(
+          name: 'componenttest',
+          path: '/componenttest',
+          builder: (context, params) => const ComponenttestWidget(),
+        ),
+        FFRoute(
+          name: 'testpageConvos',
+          path: '/testpageConvos',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'testpageConvos')
+              : const TestpageConvosWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -128,6 +128,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'LandingPage': const LandingPageWidget(),
       'profile': const ProfileWidget(),
       'testpage': const TestpageWidget(),
+      'testpageConvos': const TestpageConvosWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -165,6 +166,14 @@ class _NavBarPageState extends State<NavBarPage> {
                 size: 24.0,
               ),
               label: 'Settings',
+              tooltip: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_outlined,
+                size: 24.0,
+              ),
+              label: 'Home',
               tooltip: '',
             ),
             BottomNavigationBarItem(

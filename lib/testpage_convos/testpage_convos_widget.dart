@@ -1,26 +1,26 @@
-import '/components/tour_list/tour_list_widget.dart';
+import '/components/convo_list/convo_list_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'testpage_model.dart';
-export 'testpage_model.dart';
+import 'testpage_convos_model.dart';
+export 'testpage_convos_model.dart';
 
-class TestpageWidget extends StatefulWidget {
-  const TestpageWidget({super.key});
+class TestpageConvosWidget extends StatefulWidget {
+  const TestpageConvosWidget({super.key});
 
   @override
-  State<TestpageWidget> createState() => _TestpageWidgetState();
+  State<TestpageConvosWidget> createState() => _TestpageConvosWidgetState();
 }
 
-class _TestpageWidgetState extends State<TestpageWidget> {
-  late TestpageModel _model;
+class _TestpageConvosWidgetState extends State<TestpageConvosWidget> {
+  late TestpageConvosModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TestpageModel());
+    _model = createModel(context, () => TestpageConvosModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -66,9 +66,9 @@ class _TestpageWidgetState extends State<TestpageWidget> {
                 child: Container(
                   decoration: const BoxDecoration(),
                   child: wrapWithModel(
-                    model: _model.tourListModel,
+                    model: _model.convoListModel,
                     updateCallback: () => setState(() {}),
-                    child: const TourListWidget(),
+                    child: const ConvoListWidget(),
                   ),
                 ),
               ),

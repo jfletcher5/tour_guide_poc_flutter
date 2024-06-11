@@ -72,4 +72,10 @@ class FFAppState extends ChangeNotifier {
   set appTourListJSON(dynamic value) {
     _appTourListJSON = value;
   }
+
+  dynamic _appConversations;
+  dynamic get appConversations => _appConversations;
+  set appConversations(dynamic value) {
+    _appConversations = value;
+  }
 }

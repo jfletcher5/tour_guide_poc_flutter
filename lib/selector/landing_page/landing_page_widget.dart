@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -9,6 +10,7 @@ import '/selector/create_conversation/create_conversation_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'landing_page_model.dart';
 export 'landing_page_model.dart';
@@ -20,10 +22,13 @@ class LandingPageWidget extends StatefulWidget {
   State<LandingPageWidget> createState() => _LandingPageWidgetState();
 }
 
-class _LandingPageWidgetState extends State<LandingPageWidget> {
+class _LandingPageWidgetState extends State<LandingPageWidget>
+    with TickerProviderStateMixin {
   late LandingPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var hasColumnTriggered = false;
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -44,6 +49,41 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
             (_model.getToursPageLoad?.jsonBody ?? '');
       }
     });
+
+    animationsMap.addAll({
+      'columnOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: false,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'buttonOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -263,6 +303,8 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
+                          ).animateOnActionTrigger(
+                            animationsMap['buttonOnActionTriggerAnimation']!,
                           ),
                         ),
                         Divider(
@@ -329,7 +371,9 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                           ),
                         ),
                       ],
-                    ),
+                    ).animateOnActionTrigger(
+                        animationsMap['columnOnActionTriggerAnimation']!,
+                        hasBeenTriggered: hasColumnTriggered),
                   ),
                 ),
               ),
