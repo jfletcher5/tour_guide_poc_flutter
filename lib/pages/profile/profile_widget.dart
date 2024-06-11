@@ -174,21 +174,6 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           width: 2.0,
                                         ),
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            child: Image.network(
-                                              currentUserPhoto,
-                                              width: 36.0,
-                                              height: 36.0,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
                                     ),
                                   ),
                                   Padding(
