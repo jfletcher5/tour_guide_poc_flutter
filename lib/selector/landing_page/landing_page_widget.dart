@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/selector/create_conversation/create_conversation_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -87,6 +88,29 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 100.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(24.0),
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              StyledDivider(
+                thickness: 1.0,
+                indent: 8.0,
+                endIndent: 8.0,
+                color: FlutterFlowTheme.of(context).primary,
+                lineStyle: DividerLineStyle.dashed,
+              ),
               Flexible(
                 child: Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
@@ -266,7 +290,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                           ),
                         ),
                         Divider(
-                          thickness: 1.0,
+                          thickness: 4.0,
                           color: FlutterFlowTheme.of(context).primary,
                         ),
                         Padding(
