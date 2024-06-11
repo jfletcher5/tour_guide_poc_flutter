@@ -80,14 +80,14 @@ class _TestpageConvosWidgetState extends State<TestpageConvosWidget> {
                       ),
                       child: Builder(
                         builder: (context) {
-                          final tourList =
-                              FFAppState().appTourListJSON.toList();
+                          final conoList =
+                              FFAppState().appConversations.toList();
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             scrollDirection: Axis.vertical,
-                            itemCount: tourList.length,
-                            itemBuilder: (context, tourListIndex) {
-                              final tourListItem = tourList[tourListIndex];
+                            itemCount: conoList.length,
+                            itemBuilder: (context, conoListIndex) {
+                              final conoListItem = conoList[conoListIndex];
                               return ListTile(
                                 title: Text(
                                   getJsonField(
