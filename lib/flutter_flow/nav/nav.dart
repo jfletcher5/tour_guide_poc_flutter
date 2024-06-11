@@ -117,11 +117,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const TestpageWidget(),
         ),
         FFRoute(
-          name: 'componenttest',
-          path: '/componenttest',
-          builder: (context, params) => const ComponenttestWidget(),
-        ),
-        FFRoute(
           name: 'testpageConvos',
           path: '/testpageConvos',
           builder: (context, params) => params.isEmpty

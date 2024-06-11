@@ -1,7 +1,9 @@
-import '/components/tour_list/tour_list_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'testpage_model.dart';
 export 'testpage_model.dart';
 
@@ -34,6 +36,8 @@ class _TestpageWidgetState extends State<TestpageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -65,64 +69,121 @@ class _TestpageWidgetState extends State<TestpageWidget> {
               Expanded(
                 child: Container(
                   decoration: const BoxDecoration(),
-                  child: wrapWithModel(
-                    model: _model.tourListModel,
-                    updateCallback: () => setState(() {}),
-                    child: const TourListWidget(),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(24.0),
-                    border: Border.all(
-                      color: FlutterFlowTheme.of(context).primary,
-                    ),
-                  ),
-                  child: Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          RichText(
-                            textScaler: MediaQuery.of(context).textScaler,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Tour',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        borderRadius: BorderRadius.circular(24.0),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primary,
+                        ),
+                      ),
+                      child: MouseRegion(
+                        opaque: false,
+                        cursor: MouseCursor.defer ?? MouseCursor.defer,
+                        onEnter: ((event) async {
+                          setState(() => _model.mouseRegionHovered = true);
+                        }),
+                        onExit: ((event) async {
+                          setState(() => _model.mouseRegionHovered = false);
+                        }),
+                        child: Builder(
+                          builder: (context) {
+                            final tourList =
+                                FFAppState().appTourListJSON.toList();
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              scrollDirection: Axis.vertical,
+                              itemCount: tourList.length,
+                              itemBuilder: (context, tourListIndex) {
+                                final tourListItem = tourList[tourListIndex];
+                                return InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    FFAppState().appActiveTourName =
+                                        getJsonField(
+                                      tourListItem,
+                                      r'''$.tourName''',
+                                    ).toString();
+                                    FFAppState().appActiveTourID = getJsonField(
+                                      tourListItem,
+                                      r'''$.tourID''',
+                                    ).toString();
+                                    setState(() {});
+                                    _model.apiResult42z =
+                                        await ChatServicesGroup
+                                            .getConversationsCall
+                                            .call(
+                                      userID: currentUserUid,
+                                      tourID: getJsonField(
+                                        tourListItem,
+                                        r'''$.tourID''',
+                                      ).toString(),
+                                    );
+                                    if ((_model.apiResult42z?.succeeded ??
+                                        true)) {
+                                      FFAppState().appConversations =
+                                          (_model.apiResult42z?.jsonBody ?? '');
+                                      setState(() {});
+                                    }
+
+                                    context.pushNamed('testpageConvos');
+
+                                    setState(() {});
+                                  },
+                                  child: ListTile(
+                                    title: Text(
+                                      getJsonField(
+                                        tourListItem,
+                                        r'''$.tourName''',
+                                      ).toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleLarge
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                    subtitle: Text(
+                                      getJsonField(
+                                        tourListItem,
+                                        r'''$.tourID''',
+                                      ).toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                    trailing: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 20.0,
+                                    ),
+                                    tileColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    dense: false,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(0.0),
+                                        bottomRight: Radius.circular(0.0),
+                                        topLeft: Radius.circular(24.0),
+                                        topRight: Radius.circular(24.0),
                                       ),
-                                ),
-                                const TextSpan(
-                                  text: ' - Choose One',
-                                  style: TextStyle(),
-                                )
-                              ],
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
+                                    ),
                                   ),
-                            ),
-                          ),
-                        ],
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

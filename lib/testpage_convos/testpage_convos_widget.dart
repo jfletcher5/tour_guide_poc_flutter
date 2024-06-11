@@ -1,7 +1,7 @@
-import '/components/convo_list/convo_list_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'testpage_convos_model.dart';
 export 'testpage_convos_model.dart';
 
@@ -34,6 +34,8 @@ class _TestpageConvosWidgetState extends State<TestpageConvosWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -65,64 +67,70 @@ class _TestpageConvosWidgetState extends State<TestpageConvosWidget> {
               Expanded(
                 child: Container(
                   decoration: const BoxDecoration(),
-                  child: wrapWithModel(
-                    model: _model.convoListModel,
-                    updateCallback: () => setState(() {}),
-                    child: const ConvoListWidget(),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(24.0),
-                    border: Border.all(
-                      color: FlutterFlowTheme.of(context).primary,
-                    ),
-                  ),
-                  child: Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          RichText(
-                            textScaler: MediaQuery.of(context).textScaler,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Tour',
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        borderRadius: BorderRadius.circular(24.0),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primary,
+                        ),
+                      ),
+                      child: Builder(
+                        builder: (context) {
+                          final tourList =
+                              FFAppState().appTourListJSON.toList();
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            itemCount: tourList.length,
+                            itemBuilder: (context, tourListIndex) {
+                              final tourListItem = tourList[tourListIndex];
+                              return ListTile(
+                                title: Text(
+                                  getJsonField(
+                                    FFAppState().appConversations,
+                                    r'''$.Conversation''',
+                                  ).toString(),
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                      .titleLarge
                                       .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
+                                        fontFamily: 'Outfit',
                                         letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
                                       ),
                                 ),
-                                const TextSpan(
-                                  text: ' - Choose One',
-                                  style: TextStyle(),
-                                )
-                              ],
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
+                                subtitle: Text(
+                                  'Subtitle goes here...',
+                                  style: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 20.0,
+                                ),
+                                tileColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                dense: false,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(0.0),
+                                    bottomRight: Radius.circular(0.0),
+                                    topLeft: Radius.circular(24.0),
+                                    topRight: Radius.circular(24.0),
                                   ),
-                            ),
-                          ),
-                        ],
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
                   ),
