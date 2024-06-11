@@ -127,7 +127,7 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'profile': const ProfileWidget(),
       'LandingPage': const LandingPageWidget(),
-      'testpageConvos': const TestpageConvosWidget(),
+      'testpage': const TestpageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -169,7 +169,7 @@ class _NavBarPageState extends State<NavBarPage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.menu_outlined,
+                Icons.list,
                 size: 24.0,
               ),
               label: 'Home',
