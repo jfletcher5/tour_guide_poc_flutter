@@ -35,7 +35,7 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
             userID: currentUserUid,
           );
           if ((_model.getConvoByUserLoad?.succeeded ?? true)) {
-            FFAppState().appTourListJSON =
+            FFAppState().appConversationsJSON =
                 (_model.getConvoByUserLoad?.jsonBody ?? '');
             FFAppState().appConversationsList =
                 ChatServicesGroup.getConversationsByUserCall
@@ -49,18 +49,8 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
         Future(() async {
           _model.apiResultn00 = await ChatServicesGroup.getToursCall.call();
           if ((_model.apiResultn00?.succeeded ?? true)) {
-            FFAppState().appTourList = ChatServicesGroup.getToursCall
-                .tourList(
-                  (_model.apiResultn00?.jsonBody ?? ''),
-                )!
-                .toList()
-                .cast<String>();
-            FFAppState().appTourIDsList = ChatServicesGroup.getToursCall
-                .tourIDs(
-                  (_model.apiResultn00?.jsonBody ?? ''),
-                )!
-                .toList()
-                .cast<String>();
+            FFAppState().appTourListJSON =
+                (_model.apiResultn00?.jsonBody ?? '');
             setState(() {});
           }
         }),
@@ -165,14 +155,15 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
                       ),
                       child: Builder(
                         builder: (context) {
-                          final tourList =
-                              FFAppState().appTourListJSON.toList();
+                          final userConversations =
+                              FFAppState().appConversationsJSON.toList();
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             scrollDirection: Axis.vertical,
-                            itemCount: tourList.length,
-                            itemBuilder: (context, tourListIndex) {
-                              final tourListItem = tourList[tourListIndex];
+                            itemCount: userConversations.length,
+                            itemBuilder: (context, userConversationsIndex) {
+                              final userConversationsItem =
+                                  userConversations[userConversationsIndex];
                               return InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -180,15 +171,15 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   FFAppState().appActiveTourName = getJsonField(
-                                    tourListItem,
+                                    userConversationsItem,
                                     r'''$.tourName''',
                                   ).toString();
                                   FFAppState().appActiveTourID = getJsonField(
-                                    tourListItem,
+                                    userConversationsItem,
                                     r'''$.tourID''',
                                   ).toString();
                                   FFAppState().appActiveConvoID = getJsonField(
-                                    tourListItem,
+                                    userConversationsItem,
                                     r'''$.conversation_id''',
                                   ).toString();
                                   setState(() {});
@@ -215,8 +206,8 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
                                 child: ListTile(
                                   title: Text(
                                     getJsonField(
-                                      tourListItem,
-                                      r'''$.tourName''',
+                                      userConversationsItem,
+                                      r'''$.conversation_name''',
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .titleLarge
@@ -226,7 +217,10 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
                                         ),
                                   ),
                                   subtitle: Text(
-                                    tourListIndex.toString(),
+                                    getJsonField(
+                                      userConversationsItem,
+                                      r'''$.tourName''',
+                                    ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(

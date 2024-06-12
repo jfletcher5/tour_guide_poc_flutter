@@ -301,6 +301,15 @@ class GetConversationsByUserCall {
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
+  List<String>? conversationNames(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].conversation_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class GetTourNameByIDCall {
