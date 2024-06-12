@@ -9,12 +9,7 @@ import 'chat_ai_screen_model.dart';
 export 'chat_ai_screen_model.dart';
 
 class ChatAiScreenWidget extends StatefulWidget {
-  const ChatAiScreenWidget({
-    super.key,
-    required this.tourID,
-  });
-
-  final String? tourID;
+  const ChatAiScreenWidget({super.key});
 
   @override
   State<ChatAiScreenWidget> createState() => _ChatAiScreenWidgetState();

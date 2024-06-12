@@ -20,6 +20,8 @@ class ChatServicesGroup {
   static GetChainMessagesCall getChainMessagesCall = GetChainMessagesCall();
   static GetToursCall getToursCall = GetToursCall();
   static GetConversationsCall getConversationsCall = GetConversationsCall();
+  static GetConversationsByUserCall getConversationsByUserCall =
+      GetConversationsByUserCall();
 }
 
 class AddNewMessageCall {
@@ -235,6 +237,60 @@ class GetConversationsCall {
   List<String>? conversations(dynamic response) => (getJsonField(
         response,
         r'''$[:].Conversation''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetConversationsByUserCall {
+  Future<ApiCallResponse> call({
+    String? userID = '',
+  }) async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Conversations by User',
+      apiUrl: '$baseUrl/services/get_conversations_user',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'userID': userID,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? conversationIDs(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].conversation_id''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? tourIDs(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].tourID''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? tourNames(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].tourName''',
         true,
       ) as List?)
           ?.withoutNulls

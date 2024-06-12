@@ -102,12 +102,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'chat_ai_Screen',
           path: '/chatAiScreen',
-          builder: (context, params) => ChatAiScreenWidget(
-            tourID: params.getParam(
-              'tourID',
-              ParamType.String,
-            ),
-          ),
+          builder: (context, params) => const ChatAiScreenWidget(),
         ),
         FFRoute(
           name: 'testpage',
@@ -120,6 +115,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'testpageConvos',
           path: '/testpageConvos',
           builder: (context, params) => const TestpageConvosWidget(),
+        ),
+        FFRoute(
+          name: 'appLoader',
+          path: '/appLoader',
+          builder: (context, params) => const AppLoaderWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

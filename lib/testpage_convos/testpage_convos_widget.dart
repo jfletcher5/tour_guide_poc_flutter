@@ -80,19 +80,19 @@ class _TestpageConvosWidgetState extends State<TestpageConvosWidget> {
                       ),
                       child: Builder(
                         builder: (context) {
-                          final conoList =
-                              FFAppState().appConversations.toList();
+                          final convoList =
+                              FFAppState().appConversationsJSON.toList();
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             scrollDirection: Axis.vertical,
-                            itemCount: conoList.length,
-                            itemBuilder: (context, conoListIndex) {
-                              final conoListItem = conoList[conoListIndex];
+                            itemCount: convoList.length,
+                            itemBuilder: (context, convoListIndex) {
+                              final convoListItem = convoList[convoListIndex];
                               return ListTile(
                                 title: Text(
                                   getJsonField(
-                                    FFAppState().appConversations,
-                                    r'''$.Conversation''',
+                                    FFAppState().appConversationsJSON,
+                                    r'''$.conversation''',
                                   ).toString(),
                                   style: FlutterFlowTheme.of(context)
                                       .titleLarge

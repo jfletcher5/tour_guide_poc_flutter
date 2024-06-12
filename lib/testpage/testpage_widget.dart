@@ -113,7 +113,7 @@ class _TestpageWidgetState extends State<TestpageWidget> {
                                   );
                                   if ((_model.apiResult42z?.succeeded ??
                                       true)) {
-                                    FFAppState().appConversations =
+                                    FFAppState().appConversationsJSON =
                                         (_model.apiResult42z?.jsonBody ?? '');
                                     setState(() {});
                                   }

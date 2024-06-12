@@ -37,16 +37,26 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.getToursPageLoad = await ChatServicesGroup.getToursCall.call();
-      if ((_model.getToursPageLoad?.succeeded ?? true)) {
-        FFAppState().appTourList = ChatServicesGroup.getToursCall
-            .tourList(
-              (_model.getToursPageLoad?.jsonBody ?? ''),
+      _model.getConvoByUserLoad =
+          await ChatServicesGroup.getConversationsByUserCall.call(
+        userID: currentUserUid,
+      );
+      if ((_model.getConvoByUserLoad?.succeeded ?? true)) {
+        FFAppState().appTourList = ChatServicesGroup.getConversationsByUserCall
+            .tourNames(
+              (_model.getConvoByUserLoad?.jsonBody ?? ''),
             )!
             .toList()
             .cast<String>();
         FFAppState().appTourListJSON =
-            (_model.getToursPageLoad?.jsonBody ?? '');
+            (_model.getConvoByUserLoad?.jsonBody ?? '');
+        _model.conversations = ChatServicesGroup.getConversationsByUserCall
+            .conversationIDs(
+              (_model.getConvoByUserLoad?.jsonBody ?? ''),
+            )!
+            .toList()
+            .cast<String>();
+        setState(() {});
       }
     });
 
@@ -57,19 +67,6 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
         effectsBuilder: () => [
           MoveEffect(
             curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: const Offset(0.0, 0.0),
-            end: const Offset(0.0, 0.0),
-          ),
-        ],
-      ),
-      'buttonOnActionTriggerAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
-        effectsBuilder: () => [
-          MoveEffect(
-            curve: Curves.easeOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
             begin: const Offset(0.0, 0.0),
@@ -261,12 +258,6 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
                             onPressed: () async {
                               context.pushNamed(
                                 'chat_ai_Screen',
-                                queryParameters: {
-                                  'tourID': serializeParam(
-                                    FFAppState().appActiveTourName,
-                                    ParamType.String,
-                                  ),
-                                }.withoutNulls,
                                 extra: <String, dynamic>{
                                   kTransitionInfoKey: const TransitionInfo(
                                     hasTransition: true,
@@ -303,8 +294,6 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                          ).animateOnActionTrigger(
-                            animationsMap['buttonOnActionTriggerAnimation']!,
                           ),
                         ),
                         Divider(

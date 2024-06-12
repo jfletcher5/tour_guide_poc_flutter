@@ -37,8 +37,8 @@ class LandingPageModel extends FlutterFlowModel<LandingPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Backend Call - API (Get Tours)] action in LandingPage widget.
-  ApiCallResponse? getToursPageLoad;
+  // Stores action output result for [Backend Call - API (Get Conversations by User)] action in LandingPage widget.
+  ApiCallResponse? getConvoByUserLoad;
   // State field(s) for DropDown widget.
   String? dropDownValue1;
   FormFieldController<String>? dropDownValueController1;
