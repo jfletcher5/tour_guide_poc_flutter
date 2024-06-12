@@ -22,6 +22,7 @@ class ChatServicesGroup {
   static GetConversationsCall getConversationsCall = GetConversationsCall();
   static GetConversationsByUserCall getConversationsByUserCall =
       GetConversationsByUserCall();
+  static GetTourNameByIDCall getTourNameByIDCall = GetTourNameByIDCall();
 }
 
 class AddNewMessageCall {
@@ -30,15 +31,18 @@ class AddNewMessageCall {
     String? tourID = 'nwIL3EK0Bk60Ptozwn7d',
     String? conversationId = 'default',
     String? userID = 'jon',
+    String? conversationName = '',
   }) async {
     final baseUrl = ChatServicesGroup.getBaseUrl();
 
     final ffApiRequestBody = '''
 {
   "conversation_id": "$conversationId",
+  "conversation_name": "$conversationName",
   "tourID": "$tourID",
-  "newMessage": "$newMessage",
-  "userID": "$userID"
+  "tourName": "",
+  "userID": "$userID",
+  "message": "$newMessage"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Add New Message',
@@ -297,6 +301,32 @@ class GetConversationsByUserCall {
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
+}
+
+class GetTourNameByIDCall {
+  Future<ApiCallResponse> call({
+    String? tourID = '',
+  }) async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Tour Name by ID',
+      apiUrl: '$baseUrl/services/get_tour_name',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'tourID': tourID,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 /// End Chat Services Group Code

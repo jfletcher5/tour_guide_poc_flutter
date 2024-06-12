@@ -45,26 +45,55 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToAppTourList(String value) {
-    _appTourList.add(value);
+    appTourList.add(value);
   }
 
   void removeFromAppTourList(String value) {
-    _appTourList.remove(value);
+    appTourList.remove(value);
   }
 
   void removeAtIndexFromAppTourList(int index) {
-    _appTourList.removeAt(index);
+    appTourList.removeAt(index);
   }
 
   void updateAppTourListAtIndex(
     int index,
     String Function(String) updateFn,
   ) {
-    _appTourList[index] = updateFn(_appTourList[index]);
+    appTourList[index] = updateFn(_appTourList[index]);
   }
 
   void insertAtIndexInAppTourList(int index, String value) {
-    _appTourList.insert(index, value);
+    appTourList.insert(index, value);
+  }
+
+  List<String> _appTourIDsList = [];
+  List<String> get appTourIDsList => _appTourIDsList;
+  set appTourIDsList(List<String> value) {
+    _appTourIDsList = value;
+  }
+
+  void addToAppTourIDsList(String value) {
+    appTourIDsList.add(value);
+  }
+
+  void removeFromAppTourIDsList(String value) {
+    appTourIDsList.remove(value);
+  }
+
+  void removeAtIndexFromAppTourIDsList(int index) {
+    appTourIDsList.removeAt(index);
+  }
+
+  void updateAppTourIDsListAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    appTourIDsList[index] = updateFn(_appTourIDsList[index]);
+  }
+
+  void insertAtIndexInAppTourIDsList(int index, String value) {
+    appTourIDsList.insert(index, value);
   }
 
   dynamic _appTourListJSON;
@@ -86,25 +115,25 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToAppConversationsList(String value) {
-    _appConversationsList.add(value);
+    appConversationsList.add(value);
   }
 
   void removeFromAppConversationsList(String value) {
-    _appConversationsList.remove(value);
+    appConversationsList.remove(value);
   }
 
   void removeAtIndexFromAppConversationsList(int index) {
-    _appConversationsList.removeAt(index);
+    appConversationsList.removeAt(index);
   }
 
   void updateAppConversationsListAtIndex(
     int index,
     String Function(String) updateFn,
   ) {
-    _appConversationsList[index] = updateFn(_appConversationsList[index]);
+    appConversationsList[index] = updateFn(_appConversationsList[index]);
   }
 
   void insertAtIndexInAppConversationsList(int index, String value) {
-    _appConversationsList.insert(index, value);
+    appConversationsList.insert(index, value);
   }
 }

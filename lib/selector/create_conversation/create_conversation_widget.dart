@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +13,7 @@ import 'create_conversation_model.dart';
 export 'create_conversation_model.dart';
 
 class CreateConversationWidget extends StatefulWidget {
-  const CreateConversationWidget({
-    super.key,
-    required this.selectedTour,
-  });
-
-  final String? selectedTour;
+  const CreateConversationWidget({super.key});
 
   @override
   State<CreateConversationWidget> createState() =>
@@ -146,10 +142,18 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                             16.0, 16.0, 16.0, 0.0),
                         child: FlutterFlowDropDown<String>(
                           controller: _model.dropDownValueController ??=
-                              FormFieldController<String>(null),
-                          options: FFAppState().appTourList,
-                          onChanged: (val) =>
-                              setState(() => _model.dropDownValue = val),
+                              FormFieldController<String>(
+                            _model.dropDownValue ??= '',
+                          ),
+                          options:
+                              List<String>.from(FFAppState().appTourIDsList),
+                          optionLabels: FFAppState().appTourList,
+                          onChanged: (val) async {
+                            setState(() => _model.dropDownValue = val);
+                            FFAppState().appActiveTourName =
+                                _model.dropDownValue!;
+                            setState(() {});
+                          },
                           width: double.infinity,
                           height: 56.0,
                           textStyle:
@@ -157,7 +161,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0.0,
                                   ),
-                          hintText: 'Please select...',
+                          hintText: 'Please select a tour...',
                           icon: Icon(
                             Icons.keyboard_arrow_down_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
@@ -312,6 +316,11 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                             16.0, 16.0, 16.0, 44.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            FFAppState().appActiveTourID =
+                                _model.dropDownValue!;
+                            FFAppState().appActiveConvoID =
+                                _model.convoIDTextController.text;
+                            setState(() {});
                             _model.apiResultomg =
                                 await ChatServicesGroup.addNewMessageCall.call(
                               newMessage:
@@ -321,9 +330,20 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                               userID: currentUserUid,
                             );
                             if ((_model.apiResultomg?.succeeded ?? true)) {
-                              FFAppState().appActiveConvoID =
-                                  _model.convoIDTextController.text;
+                              FFAppState().appConversationsList =
+                                  (_model.apiResultomg?.jsonBody ?? '')
+                                      .toList()
+                                      .cast<String>();
                               setState(() {});
+                              unawaited(
+                                () async {
+                                  await ChatServicesGroup
+                                      .getConversationsByUserCall
+                                      .call(
+                                    userID: currentUserUid,
+                                  );
+                                }(),
+                              );
                               if (Navigator.of(context).canPop()) {
                                 context.pop();
                               }

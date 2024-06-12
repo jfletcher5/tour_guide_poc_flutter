@@ -86,11 +86,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SigninWidget(),
         ),
         FFRoute(
-          name: 'LandingPage',
-          path: '/landingPage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'LandingPage')
-              : const LandingPageWidget(),
+          name: 'OldLandingPage',
+          path: '/OldlandingPage',
+          requireAuth: true,
+          builder: (context, params) => const OldLandingPageWidget(),
         ),
         FFRoute(
           name: 'profile',
@@ -102,23 +101,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'chat_ai_Screen',
           path: '/chatAiScreen',
+          requireAuth: true,
           builder: (context, params) => const ChatAiScreenWidget(),
         ),
         FFRoute(
-          name: 'testpage',
-          path: '/testpage',
+          name: 'NewLandingPage',
+          path: '/NewLandingPage',
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'testpage')
-              : const TestpageWidget(),
-        ),
-        FFRoute(
-          name: 'testpageConvos',
-          path: '/testpageConvos',
-          builder: (context, params) => const TestpageConvosWidget(),
+              ? const NavBarPage(initialPage: 'NewLandingPage')
+              : const NewLandingPageWidget(),
         ),
         FFRoute(
           name: 'appLoader',
           path: '/appLoader',
+          requireAuth: true,
           builder: (context, params) => const AppLoaderWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

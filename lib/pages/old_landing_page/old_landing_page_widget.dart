@@ -9,22 +9,21 @@ import '/flutter_flow/form_field_controller.dart';
 import '/selector/create_conversation/create_conversation_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'landing_page_model.dart';
-export 'landing_page_model.dart';
+import 'old_landing_page_model.dart';
+export 'old_landing_page_model.dart';
 
-class LandingPageWidget extends StatefulWidget {
-  const LandingPageWidget({super.key});
+class OldLandingPageWidget extends StatefulWidget {
+  const OldLandingPageWidget({super.key});
 
   @override
-  State<LandingPageWidget> createState() => _LandingPageWidgetState();
+  State<OldLandingPageWidget> createState() => _OldLandingPageWidgetState();
 }
 
-class _LandingPageWidgetState extends State<LandingPageWidget>
+class _OldLandingPageWidgetState extends State<OldLandingPageWidget>
     with TickerProviderStateMixin {
-  late LandingPageModel _model;
+  late OldLandingPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var hasColumnTriggered = false;
@@ -33,32 +32,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => LandingPageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.getConvoByUserLoad =
-          await ChatServicesGroup.getConversationsByUserCall.call(
-        userID: currentUserUid,
-      );
-      if ((_model.getConvoByUserLoad?.succeeded ?? true)) {
-        FFAppState().appTourList = ChatServicesGroup.getConversationsByUserCall
-            .tourNames(
-              (_model.getConvoByUserLoad?.jsonBody ?? ''),
-            )!
-            .toList()
-            .cast<String>();
-        FFAppState().appTourListJSON =
-            (_model.getConvoByUserLoad?.jsonBody ?? '');
-        FFAppState().appConversationsList =
-            ChatServicesGroup.getConversationsByUserCall
-                .conversationIDs(
-                  (_model.getConvoByUserLoad?.jsonBody ?? ''),
-                )!
-                .toList()
-                .cast<String>();
-      }
-    });
+    _model = createModel(context, () => OldLandingPageModel());
 
     animationsMap.addAll({
       'columnOnActionTriggerAnimation': AnimationInfo(
@@ -308,14 +282,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
                                         : FocusScope.of(context).unfocus(),
                                     child: Padding(
                                       padding: MediaQuery.viewInsetsOf(context),
-                                      child: CreateConversationWidget(
-                                        selectedTour: getJsonField(
-                                          (_model.getConvosOnDropdownSelect
-                                                  ?.jsonBody ??
-                                              ''),
-                                          r'''$[0].tourID''',
-                                        ).toString(),
-                                      ),
+                                      child: const CreateConversationWidget(),
                                     ),
                                   );
                                 },

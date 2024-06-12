@@ -2,27 +2,70 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/selector/create_conversation/create_conversation_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'testpage_model.dart';
-export 'testpage_model.dart';
+import 'new_landing_page_model.dart';
+export 'new_landing_page_model.dart';
 
-class TestpageWidget extends StatefulWidget {
-  const TestpageWidget({super.key});
+class NewLandingPageWidget extends StatefulWidget {
+  const NewLandingPageWidget({super.key});
 
   @override
-  State<TestpageWidget> createState() => _TestpageWidgetState();
+  State<NewLandingPageWidget> createState() => _NewLandingPageWidgetState();
 }
 
-class _TestpageWidgetState extends State<TestpageWidget> {
-  late TestpageModel _model;
+class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
+  late NewLandingPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TestpageModel());
+    _model = createModel(context, () => NewLandingPageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await Future.wait([
+        Future(() async {
+          _model.getConvoByUserLoad =
+              await ChatServicesGroup.getConversationsByUserCall.call(
+            userID: currentUserUid,
+          );
+          if ((_model.getConvoByUserLoad?.succeeded ?? true)) {
+            FFAppState().appTourListJSON =
+                (_model.getConvoByUserLoad?.jsonBody ?? '');
+            FFAppState().appConversationsList =
+                ChatServicesGroup.getConversationsByUserCall
+                    .conversationIDs(
+                      (_model.getConvoByUserLoad?.jsonBody ?? ''),
+                    )!
+                    .toList()
+                    .cast<String>();
+          }
+        }),
+        Future(() async {
+          _model.apiResultn00 = await ChatServicesGroup.getToursCall.call();
+          if ((_model.apiResultn00?.succeeded ?? true)) {
+            FFAppState().appTourList = ChatServicesGroup.getToursCall
+                .tourList(
+                  (_model.apiResultn00?.jsonBody ?? ''),
+                )!
+                .toList()
+                .cast<String>();
+            FFAppState().appTourIDsList = ChatServicesGroup.getToursCall
+                .tourIDs(
+                  (_model.apiResultn00?.jsonBody ?? ''),
+                )!
+                .toList()
+                .cast<String>();
+            setState(() {});
+          }
+        }),
+      ]);
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -45,11 +88,51 @@ class _TestpageWidgetState extends State<TestpageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async {
+            await showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              barrierColor: FlutterFlowTheme.of(context).primary,
+              useSafeArea: true,
+              context: context,
+              builder: (context) {
+                return GestureDetector(
+                  onTap: () => _model.unfocusNode.canRequestFocus
+                      ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                      : FocusScope.of(context).unfocus(),
+                  child: Padding(
+                    padding: MediaQuery.viewInsetsOf(context),
+                    child: const CreateConversationWidget(),
+                  ),
+                );
+              },
+            ).then((value) => safeSetState(() {}));
+          },
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          icon: const Icon(
+            Icons.add,
+          ),
+          elevation: 16.0,
+          label: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                'New',
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Readex Pro',
+                      color: FlutterFlowTheme.of(context).alternate,
+                      letterSpacing: 0.0,
+                    ),
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Text(
-            'Page Title',
+            'My Conversations',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Colors.white,
@@ -104,21 +187,28 @@ class _TestpageWidgetState extends State<TestpageWidget> {
                                     tourListItem,
                                     r'''$.tourID''',
                                   ).toString();
+                                  FFAppState().appActiveConvoID = getJsonField(
+                                    tourListItem,
+                                    r'''$.conversation_id''',
+                                  ).toString();
                                   setState(() {});
                                   _model.apiResult42z = await ChatServicesGroup
-                                      .getConversationsCall
+                                      .getChainMessagesCall
                                       .call(
-                                    userID: currentUserUid,
-                                    tourID: FFAppState().appActiveTourID,
+                                    conversationId:
+                                        FFAppState().appActiveConvoID,
+                                    speaker: -1,
                                   );
                                   if ((_model.apiResult42z?.succeeded ??
                                       true)) {
-                                    FFAppState().appConversationsJSON =
-                                        (_model.apiResult42z?.jsonBody ?? '');
+                                    FFAppState().appConversationsList =
+                                        (_model.apiResult42z?.jsonBody ?? '')
+                                            .toList()
+                                            .cast<String>();
                                     setState(() {});
                                   }
 
-                                  context.pushNamed('testpageConvos');
+                                  context.pushNamed('chat_ai_Screen');
 
                                   setState(() {});
                                 },
@@ -126,7 +216,7 @@ class _TestpageWidgetState extends State<TestpageWidget> {
                                   title: Text(
                                     getJsonField(
                                       tourListItem,
-                                      r'''$.tourName''',
+                                      r'''$.conversation_id''',
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .titleLarge
@@ -138,7 +228,7 @@ class _TestpageWidgetState extends State<TestpageWidget> {
                                   subtitle: Text(
                                     getJsonField(
                                       tourListItem,
-                                      r'''$.tourID''',
+                                      r'''$.tourName''',
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
