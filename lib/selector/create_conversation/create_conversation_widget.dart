@@ -34,8 +34,8 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
     super.initState();
     _model = createModel(context, () => CreateConversationModel());
 
-    _model.convoIDTextController ??= TextEditingController();
-    _model.convoIDFocusNode ??= FocusNode();
+    _model.convoNameTextController ??= TextEditingController();
+    _model.convoNameFocusNode ??= FocusNode();
 
     _model.firstMessageTextController ??= TextEditingController();
     _model.firstMessageFocusNode ??= FocusNode();
@@ -185,8 +185,8 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 16.0, 0.0),
                         child: TextFormField(
-                          controller: _model.convoIDTextController,
-                          focusNode: _model.convoIDFocusNode,
+                          controller: _model.convoNameTextController,
+                          focusNode: _model.convoNameFocusNode,
                           textCapitalization: TextCapitalization.sentences,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -195,7 +195,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                       fontFamily: 'Readex Pro',
                                       letterSpacing: 0.0,
                                     ),
-                            hintText: 'Convo ID',
+                            hintText: 'Convo Name',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .labelLarge
                                 .override(
@@ -242,7 +242,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                   ),
                           maxLines: 2,
                           cursorColor: FlutterFlowTheme.of(context).primary,
-                          validator: _model.convoIDTextControllerValidator
+                          validator: _model.convoNameTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -319,15 +319,17 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                             FFAppState().appActiveTourID =
                                 _model.dropDownValue!;
                             FFAppState().appActiveConvoID =
-                                _model.convoIDTextController.text;
+                                _model.convoNameTextController.text;
                             setState(() {});
                             _model.apiResultomg =
                                 await ChatServicesGroup.addNewMessageCall.call(
                               newMessage:
                                   _model.firstMessageTextController.text,
                               tourID: FFAppState().appActiveTourID,
-                              conversationId: _model.convoIDTextController.text,
+                              conversationId: 'new',
                               userID: currentUserUid,
+                              conversationName:
+                                  _model.convoNameTextController.text,
                             );
                             if ((_model.apiResultomg?.succeeded ?? true)) {
                               FFAppState().appConversationsList =

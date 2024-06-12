@@ -11,10 +11,10 @@ class CreateConversationModel
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
-  // State field(s) for convoID widget.
-  FocusNode? convoIDFocusNode;
-  TextEditingController? convoIDTextController;
-  String? Function(BuildContext, String?)? convoIDTextControllerValidator;
+  // State field(s) for convoName widget.
+  FocusNode? convoNameFocusNode;
+  TextEditingController? convoNameTextController;
+  String? Function(BuildContext, String?)? convoNameTextControllerValidator;
   // State field(s) for firstMessage widget.
   FocusNode? firstMessageFocusNode;
   TextEditingController? firstMessageTextController;
@@ -27,8 +27,8 @@ class CreateConversationModel
 
   @override
   void dispose() {
-    convoIDFocusNode?.dispose();
-    convoIDTextController?.dispose();
+    convoNameFocusNode?.dispose();
+    convoNameTextController?.dispose();
 
     firstMessageFocusNode?.dispose();
     firstMessageTextController?.dispose();
