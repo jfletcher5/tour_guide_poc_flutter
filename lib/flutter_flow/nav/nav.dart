@@ -110,9 +110,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'NewLandingPage',
           path: '/NewLandingPage',
           requireAuth: true,
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'NewLandingPage')
-              : const NewLandingPageWidget(),
+          builder: (context, params) => const NewLandingPageWidget(),
         ),
         FFRoute(
           name: 'appLoader',

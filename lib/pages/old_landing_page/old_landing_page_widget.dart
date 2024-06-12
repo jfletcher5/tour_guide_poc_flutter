@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/selector/create_conversation/create_conversation_widget.dart';
+import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -50,8 +51,18 @@ class _OldLandingPageWidgetState extends State<OldLandingPageWidget> {
         Future(() async {
           _model.apiResultn00 = await ChatServicesGroup.getToursCall.call();
           if ((_model.apiResultn00?.succeeded ?? true)) {
-            FFAppState().appTourListJSON =
-                (_model.apiResultn00?.jsonBody ?? '');
+            FFAppState().appTourList = ChatServicesGroup.getToursCall
+                .tourList(
+                  (_model.apiResultn00?.jsonBody ?? ''),
+                )!
+                .toList()
+                .cast<String>();
+            FFAppState().appTourIDsList = ChatServicesGroup.getToursCall
+                .tourIDs(
+                  (_model.apiResultn00?.jsonBody ?? ''),
+                )!
+                .toList()
+                .cast<String>();
             setState(() {});
           }
         }),
@@ -83,7 +94,7 @@ class _OldLandingPageWidgetState extends State<OldLandingPageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Text(
-            '',
+            'Landing Page',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Colors.white,
@@ -100,12 +111,33 @@ class _OldLandingPageWidgetState extends State<OldLandingPageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Flexible(
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).accent1,
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      Divider(
+                        thickness: 1.0,
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
                       Flexible(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -152,9 +184,10 @@ class _OldLandingPageWidgetState extends State<OldLandingPageWidget> {
                           ),
                         ),
                       ),
-                      Divider(
+                      StyledDivider(
                         thickness: 2.0,
                         color: FlutterFlowTheme.of(context).primary,
+                        lineStyle: DividerLineStyle.dashed,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
