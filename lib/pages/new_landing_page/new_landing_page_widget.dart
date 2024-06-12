@@ -216,7 +216,7 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
                                   title: Text(
                                     getJsonField(
                                       tourListItem,
-                                      r'''$.conversation_id''',
+                                      r'''$.tourName''',
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .titleLarge
@@ -226,10 +226,7 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
                                         ),
                                   ),
                                   subtitle: Text(
-                                    getJsonField(
-                                      tourListItem,
-                                      r'''$.tourName''',
-                                    ).toString(),
+                                    tourListIndex.toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
