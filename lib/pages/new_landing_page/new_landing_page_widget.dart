@@ -1,10 +1,8 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/selector/create_conversation/create_conversation_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'new_landing_page_model.dart';
 export 'new_landing_page_model.dart';
@@ -25,37 +23,6 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NewLandingPageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await Future.wait([
-        Future(() async {
-          _model.getConvoByUserLoad =
-              await ChatServicesGroup.getConversationsByUserCall.call(
-            userID: currentUserUid,
-          );
-          if ((_model.getConvoByUserLoad?.succeeded ?? true)) {
-            FFAppState().appConversationsJSON =
-                (_model.getConvoByUserLoad?.jsonBody ?? '');
-            FFAppState().appConversationsList =
-                ChatServicesGroup.getConversationsByUserCall
-                    .conversationIDs(
-                      (_model.getConvoByUserLoad?.jsonBody ?? ''),
-                    )!
-                    .toList()
-                    .cast<String>();
-          }
-        }),
-        Future(() async {
-          _model.apiResultn00 = await ChatServicesGroup.getToursCall.call();
-          if ((_model.apiResultn00?.succeeded ?? true)) {
-            FFAppState().appTourListJSON =
-                (_model.apiResultn00?.jsonBody ?? '');
-            setState(() {});
-          }
-        }),
-      ]);
-    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

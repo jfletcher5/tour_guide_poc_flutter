@@ -531,7 +531,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                       }
 
                                                       context.goNamedAuth(
-                                                          'NewLandingPage',
+                                                          'OldLandingPage',
                                                           context.mounted);
                                                     },
                                                     text: 'Sign In',
@@ -727,7 +727,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                                   }
 
                                                                   context.goNamedAuth(
-                                                                      'NewLandingPage',
+                                                                      'OldLandingPage',
                                                                       context
                                                                           .mounted);
                                                                 },
@@ -1223,7 +1223,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                       }
 
                                                       context.goNamedAuth(
-                                                          'NewLandingPage',
+                                                          'OldLandingPage',
                                                           context.mounted);
                                                     },
                                                     text: 'Create Account',
@@ -1362,7 +1362,7 @@ class _SigninWidgetState extends State<SigninWidget>
                                                                   }
 
                                                                   context.goNamedAuth(
-                                                                      'NewLandingPage',
+                                                                      'OldLandingPage',
                                                                       context
                                                                           .mounted);
                                                                 },

@@ -114,7 +114,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'NewLandingPage';
+  String _currentPageName = 'OldLandingPage';
   late Widget? _currentPage;
 
   @override
@@ -128,6 +128,7 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'profile': const ProfileWidget(),
+      'OldLandingPage': const OldLandingPageWidget(),
       'NewLandingPage': const NewLandingPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -158,6 +159,14 @@ class _NavBarPageState extends State<NavBarPage> {
                 size: 24.0,
               ),
               label: 'Settings',
+              tooltip: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.list,
+                size: 24.0,
+              ),
+              label: 'Tours',
               tooltip: '',
             ),
             BottomNavigationBarItem(

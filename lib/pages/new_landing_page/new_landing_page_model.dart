@@ -7,10 +7,6 @@ class NewLandingPageModel extends FlutterFlowModel<NewLandingPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Backend Call - API (Get Conversations by User)] action in NewLandingPage widget.
-  ApiCallResponse? getConvoByUserLoad;
-  // Stores action output result for [Backend Call - API (Get Tours)] action in NewLandingPage widget.
-  ApiCallResponse? apiResultn00;
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in ListTile widget.
   ApiCallResponse? apiResult42z;
 
