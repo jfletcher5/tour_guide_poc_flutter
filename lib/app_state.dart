@@ -78,4 +78,33 @@ class FFAppState extends ChangeNotifier {
   set appConversationsJSON(dynamic value) {
     _appConversationsJSON = value;
   }
+
+  List<String> _appConversationsList = [];
+  List<String> get appConversationsList => _appConversationsList;
+  set appConversationsList(List<String> value) {
+    _appConversationsList = value;
+  }
+
+  void addToAppConversationsList(String value) {
+    _appConversationsList.add(value);
+  }
+
+  void removeFromAppConversationsList(String value) {
+    _appConversationsList.remove(value);
+  }
+
+  void removeAtIndexFromAppConversationsList(int index) {
+    _appConversationsList.removeAt(index);
+  }
+
+  void updateAppConversationsListAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    _appConversationsList[index] = updateFn(_appConversationsList[index]);
+  }
+
+  void insertAtIndexInAppConversationsList(int index, String value) {
+    _appConversationsList.insert(index, value);
+  }
 }

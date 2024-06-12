@@ -50,13 +50,13 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
             .cast<String>();
         FFAppState().appTourListJSON =
             (_model.getConvoByUserLoad?.jsonBody ?? '');
-        _model.conversations = ChatServicesGroup.getConversationsByUserCall
-            .conversationIDs(
-              (_model.getConvoByUserLoad?.jsonBody ?? ''),
-            )!
-            .toList()
-            .cast<String>();
-        setState(() {});
+        FFAppState().appConversationsList =
+            ChatServicesGroup.getConversationsByUserCall
+                .conversationIDs(
+                  (_model.getConvoByUserLoad?.jsonBody ?? ''),
+                )!
+                .toList()
+                .cast<String>();
       }
     });
 
@@ -163,15 +163,6 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
                                           ?.succeeded ??
                                       true)) {
                                     _model.enableConversations = true;
-                                    _model.conversations =
-                                        ChatServicesGroup.getConversationsCall
-                                            .conversations(
-                                              (_model.getConvosOnDropdownSelect
-                                                      ?.jsonBody ??
-                                                  ''),
-                                            )!
-                                            .toList()
-                                            .cast<String>();
                                     setState(() {});
                                   }
 
@@ -215,7 +206,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget>
                             child: FlutterFlowDropDown<String>(
                               controller: _model.dropDownValueController2 ??=
                                   FormFieldController<String>(null),
-                              options: _model.conversations,
+                              options: FFAppState().appConversationsList,
                               onChanged: (val) async {
                                 setState(() => _model.dropDownValue2 = val);
                                 FFAppState().appActiveConvoID =
