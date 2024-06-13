@@ -7,22 +7,7 @@ import 'package:flutter/material.dart';
 class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
   ///  Local state fields for this component.
 
-  List<dynamic> chatHistory = [];
-  void addToChatHistory(dynamic item) => chatHistory.add(item);
-  void removeFromChatHistory(dynamic item) => chatHistory.remove(item);
-  void removeAtIndexFromChatHistory(int index) => chatHistory.removeAt(index);
-  void insertAtIndexInChatHistory(int index, dynamic item) =>
-      chatHistory.insert(index, item);
-  void updateChatHistoryAtIndex(int index, Function(dynamic) updateFn) =>
-      chatHistory[index] = updateFn(chatHistory[index]);
-
   bool aiResponding = false;
-
-  String inputContent = '';
-
-  String? tourID = 'noID';
-
-  String? conversationID;
 
   ///  State fields for stateful widgets in this component.
 

@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -319,40 +318,34 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                             FFAppState().appActiveTourID =
                                 _model.dropDownValue!;
                             setState(() {});
+                            _model.uuidOutput =
+                                await ChatServicesGroup.createUuidCall.call();
                             _model.apiResultomg =
                                 await ChatServicesGroup.addNewMessageCall.call(
                               newMessage:
                                   _model.firstMessageTextController.text,
                               tourID: FFAppState().appActiveTourID,
-                              conversationId: 'new',
+                              conversationId:
+                                  (_model.uuidOutput?.jsonBody ?? '')
+                                      .toString(),
                               userID: currentUserUid,
                               conversationName:
                                   _model.convoNameTextController.text,
                             );
                             if ((_model.apiResultomg?.succeeded ?? true)) {
-                              FFAppState().appConversationsList =
+                              FFAppState().appActiveConvoID =
+                                  (_model.uuidOutput?.jsonBody ?? '')
+                                      .toString();
+                              FFAppState().appChatHistoryJSONList =
                                   (_model.apiResultomg?.jsonBody ?? '')
                                       .toList()
-                                      .cast<String>();
-                              FFAppState().appActiveConvoID = getJsonField(
-                                (_model.apiResultomg?.jsonBody ?? ''),
-                                r'''$''',
-                              ).toString();
+                                      .cast<dynamic>();
                               setState(() {});
-                              unawaited(
-                                () async {
-                                  await ChatServicesGroup
-                                      .getConversationsByUserCall
-                                      .call(
-                                    userID: currentUserUid,
-                                  );
-                                }(),
-                              );
                               if (Navigator.of(context).canPop()) {
                                 context.pop();
                               }
                               context.pushNamed(
-                                'OldLandingPage',
+                                'chat_ai_Screen',
                                 extra: <String, dynamic>{
                                   kTransitionInfoKey: const TransitionInfo(
                                     hasTransition: true,

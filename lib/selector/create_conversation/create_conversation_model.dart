@@ -19,6 +19,8 @@ class CreateConversationModel
   FocusNode? firstMessageFocusNode;
   TextEditingController? firstMessageTextController;
   String? Function(BuildContext, String?)? firstMessageTextControllerValidator;
+  // Stores action output result for [Backend Call - API (create uuid)] action in Button widget.
+  ApiCallResponse? uuidOutput;
   // Stores action output result for [Backend Call - API (Add New Message)] action in Button widget.
   ApiCallResponse? apiResultomg;
 

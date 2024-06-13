@@ -1,9 +1,9 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'old_landing_page_widget.dart' show OldLandingPageWidget;
+import 'landing_page_widget.dart' show LandingPageWidget;
 import 'package:flutter/material.dart';
 
-class OldLandingPageModel extends FlutterFlowModel<OldLandingPageWidget> {
+class LandingPageModel extends FlutterFlowModel<LandingPageWidget> {
   ///  Local state fields for this page.
 
   bool enableConversations = true;
@@ -11,9 +11,9 @@ class OldLandingPageModel extends FlutterFlowModel<OldLandingPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Backend Call - API (Get Conversations by User)] action in OldLandingPage widget.
+  // Stores action output result for [Backend Call - API (Get Conversations by User)] action in LandingPage widget.
   ApiCallResponse? getConvoByUserLoad;
-  // Stores action output result for [Backend Call - API (Get Tours)] action in OldLandingPage widget.
+  // Stores action output result for [Backend Call - API (Get Tours)] action in LandingPage widget.
   ApiCallResponse? apiResultn00;
 
   @override

@@ -114,7 +114,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'OldLandingPage';
+  String _currentPageName = 'LandingPage';
   late Widget? _currentPage;
 
   @override
@@ -127,7 +127,7 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'OldLandingPage': const OldLandingPageWidget(),
+      'LandingPage': const LandingPageWidget(),
       'profile': const ProfileWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);

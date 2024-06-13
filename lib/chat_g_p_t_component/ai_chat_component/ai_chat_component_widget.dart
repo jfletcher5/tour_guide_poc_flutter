@@ -42,7 +42,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
         conversationId: FFAppState().appActiveConvoID,
       );
       if ((_model.activeConvoLoad?.succeeded ?? true)) {
-        _model.chatHistory =
+        FFAppState().appChatHistoryJSONList =
             (_model.activeConvoLoad?.jsonBody ?? '').toList().cast<dynamic>();
         setState(() {});
       }
@@ -131,8 +131,9 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                           const AlignmentDirectional(0.0, -1.0),
                                       child: Builder(
                                         builder: (context) {
-                                          final chat =
-                                              _model.chatHistory.toList();
+                                          final chat = FFAppState()
+                                              .appChatHistoryJSONList
+                                              .toList();
                                           return ListView.builder(
                                             padding: const EdgeInsets.fromLTRB(
                                               0,
@@ -595,10 +596,11 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           );
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
                             _model.aiResponding = false;
-                            _model.chatHistory =
-                                (_model.chatGPTResponse?.jsonBody ?? '')
-                                    .toList()
-                                    .cast<dynamic>();
+                            setState(() {});
+                            FFAppState().appChatHistoryJSONList = FFAppState()
+                                .appChatHistoryJSONList
+                                .toList()
+                                .cast<dynamic>();
                             setState(() {});
                             setState(() {
                               _model.textController?.clear();

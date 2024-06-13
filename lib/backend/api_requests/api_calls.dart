@@ -23,6 +23,7 @@ class ChatServicesGroup {
   static GetConversationsByUserCall getConversationsByUserCall =
       GetConversationsByUserCall();
   static GetTourNameByIDCall getTourNameByIDCall = GetTourNameByIDCall();
+  static CreateUuidCall createUuidCall = CreateUuidCall();
 }
 
 class AddNewMessageCall {
@@ -329,6 +330,28 @@ class GetTourNameByIDCall {
       params: {
         'tourID': tourID,
       },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class CreateUuidCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'create uuid',
+      apiUrl: '$baseUrl/services/create_uuid',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

@@ -5,25 +5,25 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/selector/create_conversation/create_conversation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'new_landing_page_model.dart';
-export 'new_landing_page_model.dart';
+import 'conversation_list_model.dart';
+export 'conversation_list_model.dart';
 
-class NewLandingPageWidget extends StatefulWidget {
-  const NewLandingPageWidget({super.key});
+class ConversationListWidget extends StatefulWidget {
+  const ConversationListWidget({super.key});
 
   @override
-  State<NewLandingPageWidget> createState() => _NewLandingPageWidgetState();
+  State<ConversationListWidget> createState() => _ConversationListWidgetState();
 }
 
-class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
-  late NewLandingPageModel _model;
+class _ConversationListWidgetState extends State<ConversationListWidget> {
+  late ConversationListModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => NewLandingPageModel());
+    _model = createModel(context, () => ConversationListModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

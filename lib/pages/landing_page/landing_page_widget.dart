@@ -8,25 +8,25 @@ import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'old_landing_page_model.dart';
-export 'old_landing_page_model.dart';
+import 'landing_page_model.dart';
+export 'landing_page_model.dart';
 
-class OldLandingPageWidget extends StatefulWidget {
-  const OldLandingPageWidget({super.key});
+class LandingPageWidget extends StatefulWidget {
+  const LandingPageWidget({super.key});
 
   @override
-  State<OldLandingPageWidget> createState() => _OldLandingPageWidgetState();
+  State<LandingPageWidget> createState() => _LandingPageWidgetState();
 }
 
-class _OldLandingPageWidgetState extends State<OldLandingPageWidget> {
-  late OldLandingPageModel _model;
+class _LandingPageWidgetState extends State<LandingPageWidget> {
+  late LandingPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => OldLandingPageModel());
+    _model = createModel(context, () => LandingPageModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -144,7 +144,7 @@ class _OldLandingPageWidgetState extends State<OldLandingPageWidget> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               context.pushNamed(
-                                'NewLandingPage',
+                                'ConversationList',
                                 extra: <String, dynamic>{
                                   kTransitionInfoKey: const TransitionInfo(
                                     hasTransition: true,

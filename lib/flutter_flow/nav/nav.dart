@@ -86,12 +86,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SigninWidget(),
         ),
         FFRoute(
-          name: 'OldLandingPage',
-          path: '/OldlandingPage',
+          name: 'LandingPage',
+          path: '/LandingPage',
           requireAuth: true,
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'OldLandingPage')
-              : const OldLandingPageWidget(),
+              ? const NavBarPage(initialPage: 'LandingPage')
+              : const LandingPageWidget(),
         ),
         FFRoute(
           name: 'profile',
@@ -107,10 +107,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ChatAiScreenWidget(),
         ),
         FFRoute(
-          name: 'NewLandingPage',
-          path: '/NewLandingPage',
+          name: 'ConversationList',
+          path: '/ConversationList',
           requireAuth: true,
-          builder: (context, params) => const NewLandingPageWidget(),
+          builder: (context, params) => const ConversationListWidget(),
         ),
         FFRoute(
           name: 'appLoader',

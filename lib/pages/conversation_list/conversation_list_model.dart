@@ -1,9 +1,9 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'new_landing_page_widget.dart' show NewLandingPageWidget;
+import 'conversation_list_widget.dart' show ConversationListWidget;
 import 'package:flutter/material.dart';
 
-class NewLandingPageModel extends FlutterFlowModel<NewLandingPageWidget> {
+class ConversationListModel extends FlutterFlowModel<ConversationListWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
