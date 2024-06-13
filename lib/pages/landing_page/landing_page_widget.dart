@@ -173,10 +173,10 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                           ),
                           Flexible(
                             child: Align(
-                              alignment: const AlignmentDirectional(0.0, 1.0),
+                              alignment: const AlignmentDirectional(1.0, 1.0),
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
+                                    0.0, 0.0, 8.0, 8.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     await launchUrl(Uri(
@@ -203,17 +203,20 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                         24.0, 0.0, 24.0, 0.0),
                                     iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context).primary,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
                                           fontFamily: 'Readex Pro',
-                                          color: Colors.white,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
                                           letterSpacing: 0.0,
                                         ),
                                     elevation: 3.0,
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(8.0),
