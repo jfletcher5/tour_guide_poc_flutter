@@ -24,6 +24,8 @@ class ChatServicesGroup {
       GetConversationsByUserCall();
   static GetTourNameByIDCall getTourNameByIDCall = GetTourNameByIDCall();
   static CreateUuidCall createUuidCall = CreateUuidCall();
+  static DeleteConversationCall deleteConversationCall =
+      DeleteConversationCall();
 }
 
 class AddNewMessageCall {
@@ -352,6 +354,34 @@ class CreateUuidCall {
         'accept': 'application/json',
       },
       params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DeleteConversationCall {
+  Future<ApiCallResponse> call({
+    String? userID = '',
+    String? conversationID = '',
+  }) async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Delete Conversation',
+      apiUrl: '$baseUrl/services/delete_convo_from_user',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'userID': userID,
+        'conversation_id': conversationID,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

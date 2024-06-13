@@ -23,6 +23,8 @@ class CreateConversationModel
   ApiCallResponse? uuidOutput;
   // Stores action output result for [Backend Call - API (Add New Message)] action in Button widget.
   ApiCallResponse? apiResultomg;
+  // Stores action output result for [Backend Call - API (Get Conversations by User)] action in Button widget.
+  ApiCallResponse? apiResultdx1;
 
   @override
   void initState(BuildContext context) {}

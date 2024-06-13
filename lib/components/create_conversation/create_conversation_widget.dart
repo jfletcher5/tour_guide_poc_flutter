@@ -354,6 +354,17 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                   ),
                                 },
                               );
+
+                              _model.apiResultdx1 = await ChatServicesGroup
+                                  .getConversationsByUserCall
+                                  .call(
+                                userID: currentUserUid,
+                              );
+                              if ((_model.apiResultdx1?.succeeded ?? true)) {
+                                FFAppState().appConversationsJSON =
+                                    (_model.apiResultdx1?.jsonBody ?? '');
+                                setState(() {});
+                              }
                             }
 
                             setState(() {});
