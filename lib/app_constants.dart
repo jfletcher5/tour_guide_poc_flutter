@@ -1,4 +1,4 @@
 
 abstract class FFAppConstants {
-  static const bool gauthReady = false;
+  static const bool gauthReady = true;
 }
