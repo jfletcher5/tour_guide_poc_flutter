@@ -36,8 +36,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.conversationID = 'abc';
-      setState(() {});
       _model.activeConvoLoad =
           await ChatServicesGroup.getChainMessagesCall.call(
         speaker: -1,

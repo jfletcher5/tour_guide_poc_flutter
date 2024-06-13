@@ -318,8 +318,6 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                           onPressed: () async {
                             FFAppState().appActiveTourID =
                                 _model.dropDownValue!;
-                            FFAppState().appActiveConvoID =
-                                _model.convoNameTextController.text;
                             setState(() {});
                             _model.apiResultomg =
                                 await ChatServicesGroup.addNewMessageCall.call(
@@ -336,6 +334,10 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                   (_model.apiResultomg?.jsonBody ?? '')
                                       .toList()
                                       .cast<String>();
+                              FFAppState().appActiveConvoID = getJsonField(
+                                (_model.apiResultomg?.jsonBody ?? ''),
+                                r'''$''',
+                              ).toString();
                               setState(() {});
                               unawaited(
                                 () async {
@@ -350,7 +352,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                 context.pop();
                               }
                               context.pushNamed(
-                                'chat_ai_Screen',
+                                'OldLandingPage',
                                 extra: <String, dynamic>{
                                   kTransitionInfoKey: const TransitionInfo(
                                     hasTransition: true,

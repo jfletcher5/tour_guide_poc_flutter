@@ -127,6 +127,10 @@ class _OldLandingPageWidgetState extends State<OldLandingPageWidget> {
                   ),
                 ),
               ),
+              Divider(
+                thickness: 1.0,
+                color: FlutterFlowTheme.of(context).primary,
+              ),
               Expanded(
                 flex: 1,
                 child: Padding(
@@ -134,10 +138,6 @@ class _OldLandingPageWidgetState extends State<OldLandingPageWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Divider(
-                        thickness: 1.0,
-                        color: FlutterFlowTheme.of(context).primary,
-                      ),
                       Flexible(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),

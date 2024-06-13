@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/selector/create_conversation/create_conversation_widget.dart';
@@ -88,6 +89,20 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: const Icon(
+              Icons.arrow_left,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
+          ),
           title: Text(
             'My Conversations',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -98,7 +113,7 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
                 ),
           ),
           actions: const [],
-          centerTitle: false,
+          centerTitle: true,
           elevation: 2.0,
         ),
         body: SafeArea(
@@ -120,103 +135,110 @@ class _NewLandingPageWidgetState extends State<NewLandingPageWidget> {
                           color: FlutterFlowTheme.of(context).primary,
                         ),
                       ),
-                      child: Builder(
-                        builder: (context) {
-                          final userConversations =
-                              FFAppState().appConversationsJSON.toList();
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            scrollDirection: Axis.vertical,
-                            itemCount: userConversations.length,
-                            itemBuilder: (context, userConversationsIndex) {
-                              final userConversationsItem =
-                                  userConversations[userConversationsIndex];
-                              return InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  FFAppState().appActiveTourName = getJsonField(
-                                    userConversationsItem,
-                                    r'''$.tourName''',
-                                  ).toString();
-                                  FFAppState().appActiveTourID = getJsonField(
-                                    userConversationsItem,
-                                    r'''$.tourID''',
-                                  ).toString();
-                                  FFAppState().appActiveConvoID = getJsonField(
-                                    userConversationsItem,
-                                    r'''$.conversation_id''',
-                                  ).toString();
-                                  setState(() {});
-                                  _model.apiResult42z = await ChatServicesGroup
-                                      .getChainMessagesCall
-                                      .call(
-                                    conversationId:
-                                        FFAppState().appActiveConvoID,
-                                    speaker: -1,
-                                  );
-                                  if ((_model.apiResult42z?.succeeded ??
-                                      true)) {
-                                    FFAppState().appConversationsList =
-                                        (_model.apiResult42z?.jsonBody ?? '')
-                                            .toList()
-                                            .cast<String>();
-                                    setState(() {});
-                                  }
-
-                                  context.pushNamed('chat_ai_Screen');
-
-                                  setState(() {});
-                                },
-                                child: ListTile(
-                                  title: Text(
-                                    getJsonField(
-                                      userConversationsItem,
-                                      r'''$.conversation_name''',
-                                    ).toString(),
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleLarge
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                  subtitle: Text(
-                                    getJsonField(
+                      child: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                        child: Builder(
+                          builder: (context) {
+                            final userConversations =
+                                FFAppState().appConversationsJSON.toList();
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              scrollDirection: Axis.vertical,
+                              itemCount: userConversations.length,
+                              itemBuilder: (context, userConversationsIndex) {
+                                final userConversationsItem =
+                                    userConversations[userConversationsIndex];
+                                return InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    FFAppState().appActiveTourName =
+                                        getJsonField(
                                       userConversationsItem,
                                       r'''$.tourName''',
-                                    ).toString(),
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                  trailing: Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 20.0,
-                                  ),
-                                  tileColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  dense: false,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(0.0),
-                                      bottomRight: Radius.circular(0.0),
-                                      topLeft: Radius.circular(24.0),
-                                      topRight: Radius.circular(24.0),
+                                    ).toString();
+                                    FFAppState().appActiveTourID = getJsonField(
+                                      userConversationsItem,
+                                      r'''$.tourID''',
+                                    ).toString();
+                                    FFAppState().appActiveConvoID =
+                                        getJsonField(
+                                      userConversationsItem,
+                                      r'''$.conversation_id''',
+                                    ).toString();
+                                    setState(() {});
+                                    _model.apiResult42z =
+                                        await ChatServicesGroup
+                                            .getChainMessagesCall
+                                            .call(
+                                      conversationId:
+                                          FFAppState().appActiveConvoID,
+                                      speaker: -1,
+                                    );
+                                    if ((_model.apiResult42z?.succeeded ??
+                                        true)) {
+                                      FFAppState().appConversationsList =
+                                          (_model.apiResult42z?.jsonBody ?? '')
+                                              .toList()
+                                              .cast<String>();
+                                      setState(() {});
+                                    }
+
+                                    context.pushNamed('chat_ai_Screen');
+
+                                    setState(() {});
+                                  },
+                                  child: ListTile(
+                                    title: Text(
+                                      getJsonField(
+                                        userConversationsItem,
+                                        r'''$.conversation_name''',
+                                      ).toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleLarge
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                    subtitle: Text(
+                                      getJsonField(
+                                        userConversationsItem,
+                                        r'''$.tourName''',
+                                      ).toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                    trailing: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 20.0,
+                                    ),
+                                    tileColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    dense: false,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(0.0),
+                                        bottomRight: Radius.circular(0.0),
+                                        topLeft: Radius.circular(24.0),
+                                        topRight: Radius.circular(24.0),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

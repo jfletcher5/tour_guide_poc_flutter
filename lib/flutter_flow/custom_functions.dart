@@ -12,34 +12,7 @@ import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
-String? getTourID(
-  dynamic tours,
-  String? tourName,
-) {
-  // Ensure tours is a list by decoding the JSON if it's a string
-  List<dynamic> tourList;
-
-  if (tours is String) {
-    try {
-      tourList = jsonDecode(tours);
-    } catch (e) {
-      print('Error decoding JSON: $e');
-      return null;
-    }
-  } else if (tours is List) {
-    tourList = tours;
-  } else {
-    print('Invalid input: tours should be a JSON string or a list');
-    return null;
-  }
-
-  // Iterate through the list to find the matching tourName
-  for (var tour in tourList) {
-    if (tour is Map<String, dynamic> && tour['tourName'] == tourName) {
-      return tour['tourID'];
-    }
-  }
-
-  // If no matching tourName is found, return null
-  return null;
+String? createUUID() {
+  var uuid = Uuid();
+  return uuid.v4();
 }
