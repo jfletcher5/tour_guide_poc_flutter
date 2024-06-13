@@ -46,7 +46,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
             (_model.activeConvoLoad?.jsonBody ?? '').toList().cast<dynamic>();
         setState(() {});
       }
-      await Future.delayed(const Duration(milliseconds: 250));
+      await Future.delayed(const Duration(milliseconds: 700));
       await _model.listViewController?.animateTo(
         _model.listViewController!.position.maxScrollExtent,
         duration: const Duration(milliseconds: 100),
@@ -251,109 +251,153 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                                                   ),
                                                                 ),
                                                               ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
                                                                             2.0,
                                                                             0.0,
                                                                             0.0),
-                                                                child: InkWell(
-                                                                  splashColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  focusColor: Colors
-                                                                      .transparent,
-                                                                  hoverColor: Colors
-                                                                      .transparent,
-                                                                  highlightColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  onTap:
-                                                                      () async {
-                                                                    await Clipboard.setData(
-                                                                        ClipboardData(
-                                                                            text:
-                                                                                valueOrDefault<String>(
-                                                                      getJsonField(
-                                                                        chatItem,
-                                                                        r'''$['content']''',
-                                                                      )?.toString(),
-                                                                      '--',
-                                                                    )));
-                                                                    ScaffoldMessenger.of(
-                                                                            context)
-                                                                        .showSnackBar(
-                                                                      SnackBar(
-                                                                        content:
-                                                                            Text(
-                                                                          'Response copied to clipboard.',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Readex Pro',
-                                                                                color: FlutterFlowTheme.of(context).info,
-                                                                                fontSize: 12.0,
-                                                                                letterSpacing: 0.0,
-                                                                              ),
-                                                                        ),
-                                                                        duration:
-                                                                            const Duration(milliseconds: 2000),
-                                                                        backgroundColor:
-                                                                            FlutterFlowTheme.of(context).primary,
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    decoration:
-                                                                        const BoxDecoration(),
                                                                     child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          4.0,
-                                                                          12.0,
-                                                                          4.0),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.content_copy,
-                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                              size: 12.0,
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
+                                                                        InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      hoverColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      highlightColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      onTap:
+                                                                          () async {
+                                                                        await Clipboard.setData(ClipboardData(
+                                                                            text: valueOrDefault<String>(
+                                                                          getJsonField(
+                                                                            chatItem,
+                                                                            r'''$['content']''',
+                                                                          )?.toString(),
+                                                                          '--',
+                                                                        )));
+                                                                        ScaffoldMessenger.of(context)
+                                                                            .showSnackBar(
+                                                                          SnackBar(
+                                                                            content:
                                                                                 Text(
-                                                                              'Copy response',
-                                                                              style: FlutterFlowTheme.of(context).labelSmall.override(
+                                                                              'Response copied to clipboard.',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Readex Pro',
+                                                                                    color: FlutterFlowTheme.of(context).info,
+                                                                                    fontSize: 12.0,
                                                                                     letterSpacing: 0.0,
                                                                                   ),
                                                                             ),
+                                                                            duration:
+                                                                                const Duration(milliseconds: 2000),
+                                                                            backgroundColor:
+                                                                                FlutterFlowTheme.of(context).primary,
                                                                           ),
-                                                                        ],
+                                                                        );
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration:
+                                                                            const BoxDecoration(),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              4.0,
+                                                                              12.0,
+                                                                              4.0),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                                                child: Icon(
+                                                                                  Icons.content_copy,
+                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                  size: 12.0,
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  'Copy response',
+                                                                                  style: FlutterFlowTheme.of(context).labelSmall.override(
+                                                                                        fontFamily: 'Readex Pro',
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child:
+                                                                        Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                      ),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .thumb_up_sharp,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondary,
+                                                                        size:
+                                                                            20.0,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child:
+                                                                        Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                      ),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .thumb_down_off_alt,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .error,
+                                                                        size:
+                                                                            20.0,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ],
                                                           ),

@@ -8,6 +8,7 @@ import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'landing_page_model.dart';
 export 'landing_page_model.dart';
 
@@ -119,6 +120,109 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(
                         color: FlutterFlowTheme.of(context).primary,
+                      ),
+                    ),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          RichText(
+                            textScaler: MediaQuery.of(context).textScaler,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Tour Guide POC',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                ),
+                                const TextSpan(
+                                  text: ' - v0.1.3',
+                                  style: TextStyle(),
+                                )
+                              ],
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8.0, 8.0, 8.0, 0.0),
+                            child: Text(
+                              'The goal of this app is to demonstrate a proof of concept for a Tour Guide companion that uses RAG and LLM frameworks to guide the user through a controlled environment. It should also be tailored to each users preferences over time.\n\nPlease send feedback!',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Flexible(
+                            child: Align(
+                              alignment: const AlignmentDirectional(0.0, 1.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 8.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    await launchUrl(Uri(
+                                        scheme: 'mailto',
+                                        path: 'jon@llastmile.com',
+                                        query: {
+                                          'subject':
+                                              'Feedback on TourGuide POC',
+                                          'body': 'I Love it!',
+                                        }
+                                            .entries
+                                            .map((MapEntry<String, String> e) =>
+                                                '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                            .join('&')));
+                                  },
+                                  text: 'Email Jon',
+                                  icon: const Icon(
+                                    Icons.email_rounded,
+                                    size: 15.0,
+                                  ),
+                                  options: FFButtonOptions(
+                                    height: 40.0,
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        24.0, 0.0, 24.0, 0.0),
+                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    elevation: 3.0,
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
