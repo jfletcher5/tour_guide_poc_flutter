@@ -597,10 +597,10 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
                             _model.aiResponding = false;
                             setState(() {});
-                            FFAppState().appChatHistoryJSONList = FFAppState()
-                                .appChatHistoryJSONList
-                                .toList()
-                                .cast<dynamic>();
+                            FFAppState().appChatHistoryJSONList =
+                                (_model.chatGPTResponse?.jsonBody ?? '')
+                                    .toList()
+                                    .cast<dynamic>();
                             setState(() {});
                             setState(() {
                               _model.textController?.clear();

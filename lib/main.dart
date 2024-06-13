@@ -127,8 +127,8 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'LandingPage': const LandingPageWidget(),
       'profile': const ProfileWidget(),
+      'LandingPage': const LandingPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -154,18 +154,18 @@ class _NavBarPageState extends State<NavBarPage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.list,
-                size: 24.0,
-              ),
-              label: 'Tours',
-              tooltip: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
                 Icons.settings_sharp,
                 size: 24.0,
               ),
               label: 'Settings',
+              tooltip: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.list,
+                size: 24.0,
+              ),
+              label: 'Tours',
               tooltip: '',
             )
           ],
