@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class LandingPageModel extends FlutterFlowModel<LandingPageWidget> {
   ///  Local state fields for this page.
 
-  bool enableConversations = true;
+  bool convoButtonFlag = true;
 
   ///  State fields for stateful widgets in this page.
 

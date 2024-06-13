@@ -6,22 +6,7 @@ import 'package:flutter/material.dart';
 class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
   ///  Local state fields for this page.
 
-  String? inputContent = '';
-
-  List<dynamic> chatHistory = [];
-  void addToChatHistory(dynamic item) => chatHistory.add(item);
-  void removeFromChatHistory(dynamic item) => chatHistory.remove(item);
-  void removeAtIndexFromChatHistory(int index) => chatHistory.removeAt(index);
-  void insertAtIndexInChatHistory(int index, dynamic item) =>
-      chatHistory.insert(index, item);
-  void updateChatHistoryAtIndex(int index, Function(dynamic) updateFn) =>
-      chatHistory[index] = updateFn(chatHistory[index]);
-
   bool aiResponding = false;
-
-  String? conversationID;
-
-  String? tourID;
 
   ///  State fields for stateful widgets in this page.
 

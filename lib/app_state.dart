@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -13,76 +14,124 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
-  Future initializePersistedState() async {}
+  Future initializePersistedState() async {
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _appActiveConvoName =
+          prefs.getString('ff_appActiveConvoName') ?? _appActiveConvoName;
+    });
+    _safeInit(() {
+      _appActiveConvoID =
+          prefs.getString('ff_appActiveConvoID') ?? _appActiveConvoID;
+    });
+    _safeInit(() {
+      _appActiveTourName =
+          prefs.getString('ff_appActiveTourName') ?? _appActiveTourName;
+    });
+    _safeInit(() {
+      _appActiveTourID =
+          prefs.getString('ff_appActiveTourID') ?? _appActiveTourID;
+    });
+    _safeInit(() {
+      _appTourNameList =
+          prefs.getStringList('ff_appTourNameList') ?? _appTourNameList;
+    });
+    _safeInit(() {
+      _appTourIDsList =
+          prefs.getStringList('ff_appTourIDsList') ?? _appTourIDsList;
+    });
+  }
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
 
+  late SharedPreferences prefs;
+
+  String _appActiveConvoName = '';
+  String get appActiveConvoName => _appActiveConvoName;
+  set appActiveConvoName(String value) {
+    _appActiveConvoName = value;
+    prefs.setString('ff_appActiveConvoName', value);
+  }
+
   String _appActiveConvoID = '';
   String get appActiveConvoID => _appActiveConvoID;
   set appActiveConvoID(String value) {
     _appActiveConvoID = value;
+    prefs.setString('ff_appActiveConvoID', value);
   }
 
   String _appActiveTourName = '';
   String get appActiveTourName => _appActiveTourName;
   set appActiveTourName(String value) {
     _appActiveTourName = value;
+    prefs.setString('ff_appActiveTourName', value);
   }
 
   String _appActiveTourID = '';
   String get appActiveTourID => _appActiveTourID;
   set appActiveTourID(String value) {
     _appActiveTourID = value;
+    prefs.setString('ff_appActiveTourID', value);
   }
 
-  List<String> _appTourList = [];
-  List<String> get appTourList => _appTourList;
-  set appTourList(List<String> value) {
-    _appTourList = value;
+  List<String> _appTourNameList = [];
+  List<String> get appTourNameList => _appTourNameList;
+  set appTourNameList(List<String> value) {
+    _appTourNameList = value;
+    prefs.setStringList('ff_appTourNameList', value);
   }
 
-  void addToAppTourList(String value) {
-    appTourList.add(value);
+  void addToAppTourNameList(String value) {
+    appTourNameList.add(value);
+    prefs.setStringList('ff_appTourNameList', _appTourNameList);
   }
 
-  void removeFromAppTourList(String value) {
-    appTourList.remove(value);
+  void removeFromAppTourNameList(String value) {
+    appTourNameList.remove(value);
+    prefs.setStringList('ff_appTourNameList', _appTourNameList);
   }
 
-  void removeAtIndexFromAppTourList(int index) {
-    appTourList.removeAt(index);
+  void removeAtIndexFromAppTourNameList(int index) {
+    appTourNameList.removeAt(index);
+    prefs.setStringList('ff_appTourNameList', _appTourNameList);
   }
 
-  void updateAppTourListAtIndex(
+  void updateAppTourNameListAtIndex(
     int index,
     String Function(String) updateFn,
   ) {
-    appTourList[index] = updateFn(_appTourList[index]);
+    appTourNameList[index] = updateFn(_appTourNameList[index]);
+    prefs.setStringList('ff_appTourNameList', _appTourNameList);
   }
 
-  void insertAtIndexInAppTourList(int index, String value) {
-    appTourList.insert(index, value);
+  void insertAtIndexInAppTourNameList(int index, String value) {
+    appTourNameList.insert(index, value);
+    prefs.setStringList('ff_appTourNameList', _appTourNameList);
   }
 
   List<String> _appTourIDsList = [];
   List<String> get appTourIDsList => _appTourIDsList;
   set appTourIDsList(List<String> value) {
     _appTourIDsList = value;
+    prefs.setStringList('ff_appTourIDsList', value);
   }
 
   void addToAppTourIDsList(String value) {
     appTourIDsList.add(value);
+    prefs.setStringList('ff_appTourIDsList', _appTourIDsList);
   }
 
   void removeFromAppTourIDsList(String value) {
     appTourIDsList.remove(value);
+    prefs.setStringList('ff_appTourIDsList', _appTourIDsList);
   }
 
   void removeAtIndexFromAppTourIDsList(int index) {
     appTourIDsList.removeAt(index);
+    prefs.setStringList('ff_appTourIDsList', _appTourIDsList);
   }
 
   void updateAppTourIDsListAtIndex(
@@ -90,57 +139,18 @@ class FFAppState extends ChangeNotifier {
     String Function(String) updateFn,
   ) {
     appTourIDsList[index] = updateFn(_appTourIDsList[index]);
+    prefs.setStringList('ff_appTourIDsList', _appTourIDsList);
   }
 
   void insertAtIndexInAppTourIDsList(int index, String value) {
     appTourIDsList.insert(index, value);
-  }
-
-  dynamic _appTourListJSON;
-  dynamic get appTourListJSON => _appTourListJSON;
-  set appTourListJSON(dynamic value) {
-    _appTourListJSON = value;
+    prefs.setStringList('ff_appTourIDsList', _appTourIDsList);
   }
 
   dynamic _appConversationsJSON;
   dynamic get appConversationsJSON => _appConversationsJSON;
   set appConversationsJSON(dynamic value) {
     _appConversationsJSON = value;
-  }
-
-  List<String> _appConversationsList = [];
-  List<String> get appConversationsList => _appConversationsList;
-  set appConversationsList(List<String> value) {
-    _appConversationsList = value;
-  }
-
-  void addToAppConversationsList(String value) {
-    appConversationsList.add(value);
-  }
-
-  void removeFromAppConversationsList(String value) {
-    appConversationsList.remove(value);
-  }
-
-  void removeAtIndexFromAppConversationsList(int index) {
-    appConversationsList.removeAt(index);
-  }
-
-  void updateAppConversationsListAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
-    appConversationsList[index] = updateFn(_appConversationsList[index]);
-  }
-
-  void insertAtIndexInAppConversationsList(int index, String value) {
-    appConversationsList.insert(index, value);
-  }
-
-  dynamic _appChatHistory;
-  dynamic get appChatHistory => _appChatHistory;
-  set appChatHistory(dynamic value) {
-    _appChatHistory = value;
   }
 
   List<dynamic> _appChatHistoryJSONList = [];
@@ -171,4 +181,16 @@ class FFAppState extends ChangeNotifier {
   void insertAtIndexInAppChatHistoryJSONList(int index, dynamic value) {
     appChatHistoryJSONList.insert(index, value);
   }
+}
+
+void _safeInit(Function() initializeField) {
+  try {
+    initializeField();
+  } catch (_) {}
+}
+
+Future _safeInitAsync(Function() initializeField) async {
+  try {
+    await initializeField();
+  } catch (_) {}
 }

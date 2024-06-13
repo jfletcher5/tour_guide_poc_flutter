@@ -30,6 +30,9 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() {});
+      _model.convoButtonFlag = false;
+      setState(() {});
       await Future.wait([
         Future(() async {
           _model.getConvoByUserLoad =
@@ -39,19 +42,14 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
           if ((_model.getConvoByUserLoad?.succeeded ?? true)) {
             FFAppState().appConversationsJSON =
                 (_model.getConvoByUserLoad?.jsonBody ?? '');
-            FFAppState().appConversationsList =
-                ChatServicesGroup.getConversationsByUserCall
-                    .conversationIDs(
-                      (_model.getConvoByUserLoad?.jsonBody ?? ''),
-                    )!
-                    .toList()
-                    .cast<String>();
+            _model.convoButtonFlag = true;
+            setState(() {});
           }
         }),
         Future(() async {
           _model.apiResultn00 = await ChatServicesGroup.getToursCall.call();
           if ((_model.apiResultn00?.succeeded ?? true)) {
-            FFAppState().appTourList = ChatServicesGroup.getToursCall
+            FFAppState().appTourNameList = ChatServicesGroup.getToursCall
                 .tourList(
                   (_model.apiResultn00?.jsonBody ?? ''),
                 )!
@@ -119,7 +117,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).accent1,
-                      borderRadius: BorderRadius.circular(4.0),
+                      borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(
                         color: FlutterFlowTheme.of(context).primary,
                       ),
@@ -138,52 +136,91 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              context.pushNamed(
-                                'ConversationList',
-                                extra: <String, dynamic>{
-                                  kTransitionInfoKey: const TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType:
-                                        PageTransitionType.rightToLeft,
-                                  ),
-                                },
-                              );
-                            },
-                            text: 'Go To Conversations',
-                            icon: const Icon(
-                              Icons.done,
-                              size: 15.0,
-                            ),
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 60.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                      if (_model.convoButtonFlag)
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                context.pushNamed(
+                                  'ConversationList',
+                                  extra: <String, dynamic>{
+                                    kTransitionInfoKey: const TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType:
+                                          PageTransitionType.rightToLeft,
+                                    ),
+                                  },
+                                );
+                              },
+                              text: 'Go To Conversations',
+                              icon: const Icon(
+                                Icons.done,
+                                size: 15.0,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 60.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      if (!_model.convoButtonFlag)
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                              },
+                              text: 'LoadingConversations...',
+                              icon: const Icon(
+                                Icons.loop,
+                                size: 15.0,
+                              ),
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 60.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: const Color(0xFFEFB8A0),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                        ),
                       StyledDivider(
                         thickness: 2.0,
                         color: FlutterFlowTheme.of(context).primary,
@@ -225,7 +262,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                 24.0, 0.0, 24.0, 0.0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).alternate,
+                            color: FlutterFlowTheme.of(context).secondary,
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(

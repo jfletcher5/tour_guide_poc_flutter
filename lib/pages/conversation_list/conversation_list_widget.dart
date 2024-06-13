@@ -1,4 +1,4 @@
-import '/backend/api_requests/api_calls.dart';
+import '/components/no_convos_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -142,6 +142,9 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                           builder: (context) {
                             final userConversations =
                                 FFAppState().appConversationsJSON.toList();
+                            if (userConversations.isEmpty) {
+                              return const NoConvosWidget();
+                            }
                             return ListView.builder(
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.vertical,
@@ -170,26 +173,8 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                                       r'''$.conversation_id''',
                                     ).toString();
                                     setState(() {});
-                                    _model.apiResult42z =
-                                        await ChatServicesGroup
-                                            .getChainMessagesCall
-                                            .call(
-                                      conversationId:
-                                          FFAppState().appActiveConvoID,
-                                      speaker: -1,
-                                    );
-                                    if ((_model.apiResult42z?.succeeded ??
-                                        true)) {
-                                      FFAppState().appConversationsList =
-                                          (_model.apiResult42z?.jsonBody ?? '')
-                                              .toList()
-                                              .cast<String>();
-                                      setState(() {});
-                                    }
 
                                     context.pushNamed('chat_ai_Screen');
-
-                                    setState(() {});
                                   },
                                   child: ListTile(
                                     title: Text(
