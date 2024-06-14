@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/chat_g_p_t_component/ai_chat_component/ai_chat_component_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -5,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 import 'chat_ai_screen_model.dart';
 export 'chat_ai_screen_model.dart';
 
@@ -44,6 +46,8 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -56,16 +60,33 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              const Row(
+              Row(
                 mainAxisSize: MainAxisSize.max,
-                children: [],
+                children: [
+                  Container(
+                    height: 36.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                    ),
+                  ),
+                ],
               ),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      _model.apiResultlxf =
+                          await ChatServicesGroup.generateConvoSummaryCall.call(
+                        conversationId: FFAppState().appActiveConvoID,
+                      );
+                      if ((_model.apiResultlxf?.succeeded ?? true)) {
+                        FFAppState().appActiveConvoSummary =
+                            (_model.apiResultlxf?.jsonBody ?? '').toString();
+                        setState(() {});
+                      }
+
+                      setState(() {});
                     },
                     text: 'Generate Tour Summary',
                     options: FFButtonOptions(
@@ -89,6 +110,53 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width * 0.7,
+                height: MediaQuery.sizeOf(context).height * 0.8,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  borderRadius: BorderRadius.circular(24.0),
+                  border: Border.all(
+                    color: FlutterFlowTheme.of(context).primary,
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(0.0, -1.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 8.0, 0.0, 0.0),
+                          child: Text(
+                            'Chat Summary',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                  decoration: TextDecoration.underline,
+                                ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
+                        child: Text(
+                          FFAppState().appActiveConvoSummary,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

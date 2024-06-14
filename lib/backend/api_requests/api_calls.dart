@@ -26,6 +26,8 @@ class ChatServicesGroup {
   static CreateUuidCall createUuidCall = CreateUuidCall();
   static DeleteConversationCall deleteConversationCall =
       DeleteConversationCall();
+  static GenerateConvoSummaryCall generateConvoSummaryCall =
+      GenerateConvoSummaryCall();
 }
 
 class AddNewMessageCall {
@@ -381,6 +383,32 @@ class DeleteConversationCall {
       params: {
         'userID': userID,
         'conversation_id': conversationID,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GenerateConvoSummaryCall {
+  Future<ApiCallResponse> call({
+    String? conversationId = '',
+  }) async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'generate convo summary',
+      apiUrl: '$baseUrl/services/get_conversation_summary',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'conversation_id': conversationId,
       },
       returnBody: true,
       encodeBodyUtf8: false,

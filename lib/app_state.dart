@@ -181,6 +181,12 @@ class FFAppState extends ChangeNotifier {
   void insertAtIndexInAppChatHistoryJSONList(int index, dynamic value) {
     appChatHistoryJSONList.insert(index, value);
   }
+
+  String _appActiveConvoSummary = '';
+  String get appActiveConvoSummary => _appActiveConvoSummary;
+  set appActiveConvoSummary(String value) {
+    _appActiveConvoSummary = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {
