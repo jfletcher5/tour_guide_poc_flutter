@@ -276,7 +276,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 0.0, 0.0),
                                             child: Text(
-                                              'My Account',
+                                              'My Account (coming soon)',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -344,7 +344,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 0.0, 0.0),
                                             child: Text(
-                                              'Settings',
+                                              'Settings (coming soon)',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -412,7 +412,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 0.0, 0.0),
                                             child: Text(
-                                              'Billing Details',
+                                              'Billing Details (coming soon)',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -711,41 +711,45 @@ class _ProfileWidgetState extends State<ProfileWidget>
                   ),
                 ),
               ),
-              Flexible(
-                child: Align(
-                  alignment: const AlignmentDirectional(0.0, 1.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        context.pushNamed('tourAdmin');
-                      },
-                      text: 'Admin Page',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 40.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            24.0, 0.0, 24.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
+              if (valueOrDefault(currentUserDocument?.role, '') == 'admin')
+                Flexible(
+                  child: Align(
+                    alignment: const AlignmentDirectional(0.0, 1.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: AuthUserStreamWidget(
+                        builder: (context) => FFButtonWidget(
+                          onPressed: () async {
+                            context.pushNamed('tourAdmin');
+                          },
+                          text: 'Admin Page',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 40.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
                                   fontFamily: 'Readex Pro',
                                   color: Colors.white,
                                   letterSpacing: 0.0,
                                 ),
-                        elevation: 3.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                            elevation: 3.0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
