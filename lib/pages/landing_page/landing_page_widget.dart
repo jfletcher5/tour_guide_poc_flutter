@@ -61,6 +61,8 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                 )!
                 .toList()
                 .cast<String>();
+            FFAppState().appAllToursJSON =
+                (_model.apiResultn00?.jsonBody ?? '');
             setState(() {});
           }
         }),

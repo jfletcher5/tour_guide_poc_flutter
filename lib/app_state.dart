@@ -188,33 +188,10 @@ class FFAppState extends ChangeNotifier {
     _appActiveConvoSummary = value;
   }
 
-  List<dynamic> _appAllToursJSONList = [];
-  List<dynamic> get appAllToursJSONList => _appAllToursJSONList;
-  set appAllToursJSONList(List<dynamic> value) {
-    _appAllToursJSONList = value;
-  }
-
-  void addToAppAllToursJSONList(dynamic value) {
-    appAllToursJSONList.add(value);
-  }
-
-  void removeFromAppAllToursJSONList(dynamic value) {
-    appAllToursJSONList.remove(value);
-  }
-
-  void removeAtIndexFromAppAllToursJSONList(int index) {
-    appAllToursJSONList.removeAt(index);
-  }
-
-  void updateAppAllToursJSONListAtIndex(
-    int index,
-    dynamic Function(dynamic) updateFn,
-  ) {
-    appAllToursJSONList[index] = updateFn(_appAllToursJSONList[index]);
-  }
-
-  void insertAtIndexInAppAllToursJSONList(int index, dynamic value) {
-    appAllToursJSONList.insert(index, value);
+  dynamic _appAllToursJSON;
+  dynamic get appAllToursJSON => _appAllToursJSON;
+  set appAllToursJSON(dynamic value) {
+    _appAllToursJSON = value;
   }
 }
 

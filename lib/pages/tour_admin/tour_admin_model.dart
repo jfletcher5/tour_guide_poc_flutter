@@ -9,6 +9,8 @@ class TourAdminModel extends FlutterFlowModel<TourAdminWidget> {
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (Get Tours)] action in tourAdmin widget.
   ApiCallResponse? apiResultm6b;
+  // Stores action output result for [Backend Call - API (Delete Tour)] action in SlidableActionWidget widget.
+  ApiCallResponse? apiResultl3d;
 
   @override
   void initState(BuildContext context) {}
