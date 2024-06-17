@@ -31,6 +31,7 @@ dependencies:
   cloud_firestore_platform_interface: 6.1.8
   cloud_firestore_web: 3.10.7
   collection: 1.18.0
+  cross_file: 0.3.3+7
   dropdown_button2: 2.3.9
   easy_debounce: 2.0.1
   equatable: 2.0.5
@@ -66,6 +67,10 @@ dependencies:
   path_provider_platform_interface: 2.0.6
   plugin_platform_interface: 2.1.8
   provider: 6.0.5
+  record: 5.0.4
+  record_android: 1.0.4
+  record_platform_interface: 1.0.2
+  record_web: 1.0.4
   rxdart: 0.27.7
   shared_preferences: 2.2.2
   shared_preferences_android: 2.2.1

@@ -3,6 +3,7 @@ import '/chat_g_p_t_component/ai_chat_component/ai_chat_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'chat_ai_screen_widget.dart' show ChatAiScreenWidget;
 import 'package:flutter/material.dart';
+import 'package:record/record.dart';
 
 class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
   ///  Local state fields for this page.
@@ -15,7 +16,8 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
   // Model for aiChat_Component component.
   late AiChatComponentModel aiChatComponentModel;
   // Stores action output result for [Backend Call - API (generate convo summary)] action in Button widget.
-  ApiCallResponse? apiResultlxf;
+  ApiCallResponse? apiResultpxi;
+  AudioRecorder? audioRecorder;
 
   @override
   void initState(BuildContext context) {

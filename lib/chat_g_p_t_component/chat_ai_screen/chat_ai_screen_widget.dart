@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:record/record.dart';
 import 'chat_ai_screen_model.dart';
 export 'chat_ai_screen_model.dart';
 
@@ -76,13 +77,16 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                   padding: const EdgeInsets.all(8.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      _model.apiResultlxf =
+                      _model.apiResultpxi =
                           await ChatServicesGroup.generateConvoSummaryCall.call(
                         conversationId: FFAppState().appActiveConvoID,
+                        modelName: 'gpt-3.5-turbo',
                       );
-                      if ((_model.apiResultlxf?.succeeded ?? true)) {
-                        FFAppState().appActiveConvoSummary =
-                            (_model.apiResultlxf?.jsonBody ?? '').toString();
+                      if ((_model.apiResultpxi?.succeeded ?? true)) {
+                        FFAppState().appActiveConvoSummary = getJsonField(
+                          (_model.apiResultpxi?.jsonBody ?? ''),
+                          r'''$.summary''',
+                        ).toString();
                         setState(() {});
                       }
 
@@ -159,6 +163,24 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                     ],
                   ),
                 ),
+              ),
+              FlutterFlowIconButton(
+                borderColor: FlutterFlowTheme.of(context).primary,
+                borderRadius: 20.0,
+                borderWidth: 1.0,
+                buttonSize: 40.0,
+                fillColor: FlutterFlowTheme.of(context).accent1,
+                icon: Icon(
+                  Icons.add,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  size: 24.0,
+                ),
+                onPressed: () async {
+                  await startAudioRecording(
+                    context,
+                    audioRecorder: _model.audioRecorder ??= AudioRecorder(),
+                  );
+                },
               ),
             ],
           ),

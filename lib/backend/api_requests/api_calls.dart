@@ -30,6 +30,8 @@ class ChatServicesGroup {
       GenerateConvoSummaryCall();
   static AddNewTourCall addNewTourCall = AddNewTourCall();
   static DeleteTourCall deleteTourCall = DeleteTourCall();
+  static GetConversationSummaryCall getConversationSummaryCall =
+      GetConversationSummaryCall();
 }
 
 class AddNewMessageCall {
@@ -398,20 +400,26 @@ class DeleteConversationCall {
 class GenerateConvoSummaryCall {
   Future<ApiCallResponse> call({
     String? conversationId = '',
+    String? modelName = '',
   }) async {
     final baseUrl = ChatServicesGroup.getBaseUrl();
 
+    final ffApiRequestBody = '''
+{
+  "conversation_id": "$conversationId",
+  "model_name": "$modelName"
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'generate convo summary',
-      apiUrl: '$baseUrl/services/get_conversation_summary',
-      callType: ApiCallType.GET,
+      apiUrl: '${baseUrl}services/create_conversation_summary',
+      callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json',
       },
-      params: {
-        'conversation_id': conversationId,
-      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -474,6 +482,37 @@ class DeleteTourCall {
       alwaysAllowBody: false,
     );
   }
+}
+
+class GetConversationSummaryCall {
+  Future<ApiCallResponse> call({
+    String? conversationId = '',
+  }) async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Conversation Summary',
+      apiUrl: '$baseUrl/services/get_conversation_summary',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'conversation_id': conversationId,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? summaryContent(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.summary''',
+      ));
 }
 
 /// End Chat Services Group Code

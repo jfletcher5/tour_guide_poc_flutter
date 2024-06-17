@@ -3,6 +3,7 @@ import '/chat_g_p_t_component/writing_indicator/writing_indicator_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'ai_chat_component_widget.dart' show AiChatComponentWidget;
 import 'package:flutter/material.dart';
+import 'package:record/record.dart';
 
 class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
   ///  Local state fields for this component.
@@ -13,6 +14,8 @@ class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
 
   // Stores action output result for [Backend Call - API (Get Chain Messages)] action in aiChat_Component widget.
   ApiCallResponse? activeConvoLoad;
+  // Stores action output result for [Backend Call - API (Get Conversation Summary)] action in aiChat_Component widget.
+  ApiCallResponse? apiResult3pe;
   // State field(s) for ListView widget.
   ScrollController? listViewController;
   // Model for writingIndicator component.
@@ -23,6 +26,7 @@ class AiChatComponentModel extends FlutterFlowModel<AiChatComponentWidget> {
   String? Function(BuildContext, String?)? textControllerValidator;
   // Stores action output result for [Backend Call - API (Add New Message)] action in IconButton widget.
   ApiCallResponse? chatGPTResponse;
+  AudioRecorder? audioRecorder;
 
   @override
   void initState(BuildContext context) {

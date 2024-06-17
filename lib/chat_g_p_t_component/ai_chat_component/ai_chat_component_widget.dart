@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:record/record.dart';
 import 'ai_chat_component_model.dart';
 export 'ai_chat_component_model.dart';
 
@@ -36,22 +37,39 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.activeConvoLoad =
-          await ChatServicesGroup.getChainMessagesCall.call(
-        speaker: -1,
-        conversationId: FFAppState().appActiveConvoID,
-      );
-      if ((_model.activeConvoLoad?.succeeded ?? true)) {
-        FFAppState().appChatHistoryJSONList =
-            (_model.activeConvoLoad?.jsonBody ?? '').toList().cast<dynamic>();
-        setState(() {});
-      }
-      await Future.delayed(const Duration(milliseconds: 700));
-      await _model.listViewController?.animateTo(
-        _model.listViewController!.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.ease,
-      );
+      await Future.wait([
+        Future(() async {
+          _model.activeConvoLoad =
+              await ChatServicesGroup.getChainMessagesCall.call(
+            speaker: -1,
+            conversationId: FFAppState().appActiveConvoID,
+          );
+          if ((_model.activeConvoLoad?.succeeded ?? true)) {
+            FFAppState().appChatHistoryJSONList =
+                (_model.activeConvoLoad?.jsonBody ?? '')
+                    .toList()
+                    .cast<dynamic>();
+            setState(() {});
+            _model.apiResult3pe =
+                await ChatServicesGroup.getConversationSummaryCall.call(
+              conversationId: FFAppState().appActiveConvoID,
+            );
+            if ((_model.apiResult3pe?.succeeded ?? true)) {
+              FFAppState().appActiveConvoSummary = getJsonField(
+                (_model.apiResult3pe?.jsonBody ?? ''),
+                r'''$.summary''',
+              ).toString().toString();
+              setState(() {});
+            }
+          }
+          await Future.delayed(const Duration(milliseconds: 700));
+          await _model.listViewController?.animateTo(
+            _model.listViewController!.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 100),
+            curve: Curves.ease,
+          );
+        }),
+      ]);
     });
 
     _model.textController ??= TextEditingController();
@@ -683,6 +701,25 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           setState(() {});
                         },
                       ),
+                    ),
+                    FlutterFlowIconButton(
+                      borderColor: FlutterFlowTheme.of(context).primary,
+                      borderRadius: 20.0,
+                      borderWidth: 1.0,
+                      buttonSize: 40.0,
+                      fillColor: FlutterFlowTheme.of(context).accent1,
+                      icon: Icon(
+                        Icons.add,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        await startAudioRecording(
+                          context,
+                          audioRecorder: _model.audioRecorder ??=
+                              AudioRecorder(),
+                        );
+                      },
                     ),
                   ],
                 ),

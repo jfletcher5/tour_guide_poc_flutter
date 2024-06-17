@@ -63,6 +63,12 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_appActiveConvoID', value);
   }
 
+  String _appActiveConvoSummary = '';
+  String get appActiveConvoSummary => _appActiveConvoSummary;
+  set appActiveConvoSummary(String value) {
+    _appActiveConvoSummary = value;
+  }
+
   String _appActiveTourName = '';
   String get appActiveTourName => _appActiveTourName;
   set appActiveTourName(String value) {
@@ -180,12 +186,6 @@ class FFAppState extends ChangeNotifier {
 
   void insertAtIndexInAppChatHistoryJSONList(int index, dynamic value) {
     appChatHistoryJSONList.insert(index, value);
-  }
-
-  String _appActiveConvoSummary = '';
-  String get appActiveConvoSummary => _appActiveConvoSummary;
-  set appActiveConvoSummary(String value) {
-    _appActiveConvoSummary = value;
   }
 
   dynamic _appAllToursJSON;
