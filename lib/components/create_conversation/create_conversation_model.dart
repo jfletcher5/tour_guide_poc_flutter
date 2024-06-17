@@ -8,6 +8,10 @@ class CreateConversationModel
     extends FlutterFlowModel<CreateConversationWidget> {
   ///  State fields for stateful widgets in this component.
 
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController1;
+  String? Function(BuildContext, String?)? textController1Validator;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
@@ -31,6 +35,9 @@ class CreateConversationModel
 
   @override
   void dispose() {
+    textFieldFocusNode?.dispose();
+    textController1?.dispose();
+
     convoNameFocusNode?.dispose();
     convoNameTextController?.dispose();
 

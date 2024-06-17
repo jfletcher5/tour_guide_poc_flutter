@@ -7,3 +7,4 @@ export '/chat_g_p_t_component/chat_ai_screen/chat_ai_screen_widget.dart'
 export '/pages/conversation_list/conversation_list_widget.dart'
     show ConversationListWidget;
 export '/pages/app_loader/app_loader_widget.dart' show AppLoaderWidget;
+export '/pages/tour_admin/tour_admin_widget.dart' show TourAdminWidget;

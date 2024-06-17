@@ -28,6 +28,7 @@ class ChatServicesGroup {
       DeleteConversationCall();
   static GenerateConvoSummaryCall generateConvoSummaryCall =
       GenerateConvoSummaryCall();
+  static AddNewTourCall addNewTourCall = AddNewTourCall();
 }
 
 class AddNewMessageCall {
@@ -410,6 +411,35 @@ class GenerateConvoSummaryCall {
       params: {
         'conversation_id': conversationId,
       },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AddNewTourCall {
+  Future<ApiCallResponse> call({
+    String? tourName = '',
+    FFUploadedFile? file,
+  }) async {
+    final baseUrl = ChatServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add New Tour',
+      apiUrl: '$baseUrl/services/add_tour',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'tourName': tourName,
+        'file': file,
+      },
+      bodyType: BodyType.MULTIPART,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

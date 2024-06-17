@@ -162,7 +162,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 8.0, 8.0, 8.0, 0.0),
                             child: Text(
-                              'The goal of this app is to demonstrate a proof of concept for a Tour Guide companion that uses RAG and LLM frameworks to guide the user through a controlled environment. It should also be tailored to each users preferences over time.\n\nPlease send feedback!',
+                              'The goal of this app is to demonstrate a proof of concept for a Tour Guide companion that uses RAG and LLM frameworks to guide the user through a controlled environment. It should also be tailored to each user\'s preferences over time.\n\nPlease send feedback!',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(

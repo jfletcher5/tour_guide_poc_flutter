@@ -117,6 +117,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/appLoader',
           requireAuth: true,
           builder: (context, params) => const AppLoaderWidget(),
+        ),
+        FFRoute(
+          name: 'tourAdmin',
+          path: '/tourAdmin',
+          builder: (context, params) => const TourAdminWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
