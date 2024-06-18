@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:record/record.dart';
 import 'ai_chat_component_model.dart';
 export 'ai_chat_component_model.dart';
 
@@ -701,25 +700,6 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                           setState(() {});
                         },
                       ),
-                    ),
-                    FlutterFlowIconButton(
-                      borderColor: FlutterFlowTheme.of(context).primary,
-                      borderRadius: 20.0,
-                      borderWidth: 1.0,
-                      buttonSize: 40.0,
-                      fillColor: FlutterFlowTheme.of(context).accent1,
-                      icon: Icon(
-                        Icons.add,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 24.0,
-                      ),
-                      onPressed: () async {
-                        await startAudioRecording(
-                          context,
-                          audioRecorder: _model.audioRecorder ??=
-                              AudioRecorder(),
-                        );
-                      },
                     ),
                   ],
                 ),

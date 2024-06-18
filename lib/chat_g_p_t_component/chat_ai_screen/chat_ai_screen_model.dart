@@ -10,6 +10,8 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
 
   bool aiResponding = false;
 
+  bool activeRecording = true;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

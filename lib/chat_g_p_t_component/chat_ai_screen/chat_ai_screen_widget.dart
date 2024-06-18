@@ -37,6 +37,7 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       // showProgressDots
       _model.aiResponding = false;
+      _model.activeRecording = false;
       setState(() {});
     });
 
@@ -175,91 +176,95 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    FlutterFlowIconButton(
-                      borderColor: FlutterFlowTheme.of(context).primary,
-                      borderRadius: 20.0,
-                      borderWidth: 1.0,
-                      buttonSize: 40.0,
-                      fillColor: FlutterFlowTheme.of(context).accent1,
-                      icon: Icon(
-                        Icons.mic_none,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 24.0,
+                    if (!_model.activeRecording)
+                      FlutterFlowIconButton(
+                        borderColor: FlutterFlowTheme.of(context).primary,
+                        borderRadius: 20.0,
+                        borderWidth: 1.0,
+                        buttonSize: 40.0,
+                        fillColor: FlutterFlowTheme.of(context).accent1,
+                        icon: Icon(
+                          Icons.mic_none,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 24.0,
+                        ),
+                        onPressed: () async {
+                          _model.activeRecording = true;
+                          setState(() {});
+                          await startAudioRecording(
+                            context,
+                            audioRecorder: _model.audioRecorder ??=
+                                AudioRecorder(),
+                          );
+                        },
                       ),
-                      onPressed: () async {
-                        await startAudioRecording(
-                          context,
-                          audioRecorder: _model.audioRecorder ??=
-                              AudioRecorder(),
-                        );
-                      },
-                    ),
-                    FlutterFlowIconButton(
-                      borderColor: FlutterFlowTheme.of(context).primary,
-                      borderRadius: 20.0,
-                      borderWidth: 1.0,
-                      buttonSize: 40.0,
-                      fillColor: FlutterFlowTheme.of(context).error,
-                      icon: Icon(
-                        Icons.stop_rounded,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 24.0,
+                    if (_model.activeRecording)
+                      FlutterFlowIconButton(
+                        borderColor: FlutterFlowTheme.of(context).primary,
+                        borderRadius: 20.0,
+                        borderWidth: 1.0,
+                        buttonSize: 40.0,
+                        fillColor: FlutterFlowTheme.of(context).error,
+                        icon: Icon(
+                          Icons.stop_rounded,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 24.0,
+                        ),
+                        onPressed: () async {
+                          await stopAudioRecording(
+                            audioRecorder: _model.audioRecorder,
+                            audioName: 'recordedFileBytes.mp3',
+                            onRecordingComplete: (audioFilePath, audioBytes) {
+                              _model.recordingOutput = audioFilePath;
+                              _model.recordedFileBytes = audioBytes;
+                            },
+                          );
+
+                          FFAppState().appHumanAudioRecording =
+                              _model.recordingOutput!;
+                          setState(() {});
+                          {
+                            setState(() => _model.isDataUploading = true);
+                            var selectedUploadedFiles = <FFUploadedFile>[];
+                            var selectedFiles = <SelectedFile>[];
+                            var downloadUrls = <String>[];
+                            try {
+                              selectedUploadedFiles =
+                                  _model.recordedFileBytes.bytes!.isNotEmpty
+                                      ? [_model.recordedFileBytes]
+                                      : <FFUploadedFile>[];
+                              selectedFiles = selectedFilesFromUploadedFiles(
+                                selectedUploadedFiles,
+                              );
+                              downloadUrls = (await Future.wait(
+                                selectedFiles.map(
+                                  (f) async =>
+                                      await uploadData(f.storagePath, f.bytes),
+                                ),
+                              ))
+                                  .where((u) => u != null)
+                                  .map((u) => u!)
+                                  .toList();
+                            } finally {
+                              _model.isDataUploading = false;
+                            }
+                            if (selectedUploadedFiles.length ==
+                                    selectedFiles.length &&
+                                downloadUrls.length == selectedFiles.length) {
+                              setState(() {
+                                _model.uploadedLocalFile =
+                                    selectedUploadedFiles.first;
+                                _model.uploadedFileUrl = downloadUrls.first;
+                              });
+                            } else {
+                              setState(() {});
+                              return;
+                            }
+                          }
+
+                          setState(() {});
+                        },
                       ),
-                      onPressed: () async {
-                        await stopAudioRecording(
-                          audioRecorder: _model.audioRecorder,
-                          audioName: 'recordedFileBytes.mp3',
-                          onRecordingComplete: (audioFilePath, audioBytes) {
-                            _model.recordingOutput = audioFilePath;
-                            _model.recordedFileBytes = audioBytes;
-                          },
-                        );
-
-                        FFAppState().appHumanAudioRecording =
-                            _model.recordingOutput!;
-                        setState(() {});
-                        {
-                          setState(() => _model.isDataUploading = true);
-                          var selectedUploadedFiles = <FFUploadedFile>[];
-                          var selectedFiles = <SelectedFile>[];
-                          var downloadUrls = <String>[];
-                          try {
-                            selectedUploadedFiles =
-                                _model.recordedFileBytes.bytes!.isNotEmpty
-                                    ? [_model.recordedFileBytes]
-                                    : <FFUploadedFile>[];
-                            selectedFiles = selectedFilesFromUploadedFiles(
-                              selectedUploadedFiles,
-                            );
-                            downloadUrls = (await Future.wait(
-                              selectedFiles.map(
-                                (f) async =>
-                                    await uploadData(f.storagePath, f.bytes),
-                              ),
-                            ))
-                                .where((u) => u != null)
-                                .map((u) => u!)
-                                .toList();
-                          } finally {
-                            _model.isDataUploading = false;
-                          }
-                          if (selectedUploadedFiles.length ==
-                                  selectedFiles.length &&
-                              downloadUrls.length == selectedFiles.length) {
-                            setState(() {
-                              _model.uploadedLocalFile =
-                                  selectedUploadedFiles.first;
-                              _model.uploadedFileUrl = downloadUrls.first;
-                            });
-                          } else {
-                            setState(() {});
-                            return;
-                          }
-                        }
-
-                        setState(() {});
-                      },
-                    ),
                     FlutterFlowIconButton(
                       borderColor: FlutterFlowTheme.of(context).primary,
                       borderRadius: 20.0,
