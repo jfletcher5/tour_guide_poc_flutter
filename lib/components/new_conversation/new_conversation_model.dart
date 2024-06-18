@@ -1,21 +1,20 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'create_conversation_widget.dart' show CreateConversationWidget;
+import 'new_conversation_widget.dart' show NewConversationWidget;
 import 'package:flutter/material.dart';
 
-class CreateConversationModel
-    extends FlutterFlowModel<CreateConversationWidget> {
-  ///  Local state fields for this component.
-
-  bool? searchQR = true;
-
+class NewConversationModel extends FlutterFlowModel<NewConversationWidget> {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for tourSearch widget.
   FocusNode? tourSearchFocusNode;
   TextEditingController? tourSearchTextController;
   String? Function(BuildContext, String?)? tourSearchTextControllerValidator;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered = false;
+  // Stores action output result for [Backend Call - API (Get Tour by Code Filter)] action in Icon widget.
+  ApiCallResponse? apiResult31x;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;

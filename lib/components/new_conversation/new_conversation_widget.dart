@@ -6,23 +6,21 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'dart:ui';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'create_conversation_model.dart';
-export 'create_conversation_model.dart';
+import 'new_conversation_model.dart';
+export 'new_conversation_model.dart';
 
-class CreateConversationWidget extends StatefulWidget {
-  const CreateConversationWidget({super.key});
+class NewConversationWidget extends StatefulWidget {
+  const NewConversationWidget({super.key});
 
   @override
-  State<CreateConversationWidget> createState() =>
-      _CreateConversationWidgetState();
+  State<NewConversationWidget> createState() => _NewConversationWidgetState();
 }
 
-class _CreateConversationWidgetState extends State<CreateConversationWidget> {
-  late CreateConversationModel _model;
+class _NewConversationWidgetState extends State<NewConversationWidget> {
+  late NewConversationModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -33,13 +31,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateConversationModel());
-
-    // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.searchQR = false;
-      setState(() {});
-    });
+    _model = createModel(context, () => NewConversationModel());
 
     _model.tourSearchTextController ??= TextEditingController();
     _model.tourSearchFocusNode ??= FocusNode();
@@ -126,7 +118,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 0.0, 0.0),
                         child: Text(
-                          'Conversation Details',
+                          'New Conversation Details',
                           style: FlutterFlowTheme.of(context)
                               .headlineSmall
                               .override(
@@ -153,126 +145,230 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: _model.tourSearchTextController,
-                                focusNode: _model.tourSearchFocusNode,
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.tourSearchTextController',
-                                  const Duration(milliseconds: 2000),
-                                  () async {
-                                    if (_model.tourSearchTextController.text ==
-                                        '') {
-                                      _model.searchQR = false;
-                                      setState(() {});
-                                    } else {
-                                      _model.searchQR = true;
-                                      setState(() {});
-                                    }
-                                  },
-                                ),
-                                autofocus: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Enter Tour Code!',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        letterSpacing: 0.0,
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  8.0, 4.0, 8.0, 4.0),
+                              child: Icon(
+                                Icons.qr_code,
+                                color: FlutterFlowTheme.of(context).alternate,
+                                size: 40.0,
+                              ),
+                            ),
+                            Flexible(
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(),
+                                    child: Align(
+                                      alignment: const AlignmentDirectional(1.0, 0.0),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: TextFormField(
+                                          controller:
+                                              _model.tourSearchTextController,
+                                          focusNode: _model.tourSearchFocusNode,
+                                          autofocus: false,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            isDense: false,
+                                            labelText: 'Enter Tour Code!',
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                          maxLength: 10,
+                                          maxLengthEnforcement:
+                                              MaxLengthEnforcement.enforced,
+                                          buildCounter: (context,
+                                                  {required currentLength,
+                                                  required isFocused,
+                                                  maxLength}) =>
+                                              null,
+                                          cursorColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          validator: _model
+                                              .tourSearchTextControllerValidator
+                                              .asValidator(context),
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp('[a-zA-Z0-9]'))
+                                          ],
+                                        ),
                                       ),
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      width: 2.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      width: 2.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 2.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 2.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  suffixIcon: _model.tourSearchTextController!
-                                          .text.isNotEmpty
-                                      ? InkWell(
+                                  Align(
+                                    alignment: const AlignmentDirectional(1.0, 0.0),
+                                    child: MouseRegion(
+                                      opaque: true,
+                                      cursor: SystemMouseCursors.click ??
+                                          MouseCursor.defer,
+                                      onEnter: ((event) async {
+                                        setState(() =>
+                                            _model.mouseRegionHovered = true);
+                                      }),
+                                      onExit: ((event) async {
+                                        setState(() =>
+                                            _model.mouseRegionHovered = false);
+                                      }),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 4.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            _model.tourSearchTextController
-                                                ?.clear();
                                             if (_model.tourSearchTextController
                                                     .text ==
                                                 '') {
-                                              _model.searchQR = false;
-                                              setState(() {});
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: const Text('Notice'),
+                                                    content: const Text(
+                                                        'Please enter a tour code to search!'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: const Text('Ok'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
                                             } else {
-                                              _model.searchQR = true;
-                                              setState(() {});
+                                              _model.apiResult31x =
+                                                  await TourServicesGroup
+                                                      .getTourByCodeFilterCall
+                                                      .call(
+                                                filter: _model
+                                                    .tourSearchTextController
+                                                    .text,
+                                              );
+
+                                              if ((_model.apiResult31x
+                                                      ?.succeeded ??
+                                                  true)) {
+                                                var confirmDialogResponse =
+                                                    await showDialog<bool>(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              title: const Text(
+                                                                  'Add to your Tours?'),
+                                                              content: Text(
+                                                                  TourServicesGroup
+                                                                      .getTourByCodeFilterCall
+                                                                      .tourName(
+                                                                (_model.apiResult31x
+                                                                        ?.jsonBody ??
+                                                                    ''),
+                                                              )!),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                  child: const Text(
+                                                                      'Cancel'),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                  child: const Text(
+                                                                      'Confirm'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        ) ??
+                                                        false;
+                                              }
                                             }
 
                                             setState(() {});
                                           },
                                           child: const Icon(
-                                            Icons.clear,
-                                            size: 22,
+                                            Icons.manage_search,
+                                            color: Color(0xCB4B39EF),
+                                            size: 48.0,
                                           ),
-                                        )
-                                      : null,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
+                                        ),
+                                      ),
                                     ),
-                                validator: _model
-                                    .tourSearchTextControllerValidator
-                                    .asValidator(context),
+                                  ),
+                                ],
                               ),
                             ),
-                            if (!_model.searchQR!)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 0.0, 0.0),
-                                child: Icon(
-                                  Icons.qr_code,
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                  size: 48.0,
-                                ),
-                              ),
-                            if (_model.searchQR ?? true)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 0.0, 0.0),
-                                child: Icon(
-                                  Icons.manage_search,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 48.0,
-                                ),
-                              ),
                           ],
                         ),
                       ),
@@ -379,7 +475,6 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0.0,
                                   ),
-                          maxLines: 2,
                           cursorColor: FlutterFlowTheme.of(context).primary,
                           validator: _model.convoNameTextControllerValidator
                               .asValidator(context),
@@ -444,7 +539,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0.0,
                                   ),
-                          maxLines: 2,
+                          maxLines: 3,
                           cursorColor: FlutterFlowTheme.of(context).primary,
                           validator: _model.firstMessageTextControllerValidator
                               .asValidator(context),
@@ -460,6 +555,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                             setState(() {});
                             _model.uuidOutput =
                                 await ChatServicesGroup.createUuidCall.call();
+
                             _model.apiResultomg =
                                 await ChatServicesGroup.addNewMessageCall.call(
                               newMessage:
@@ -472,6 +568,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                               conversationName:
                                   _model.convoNameTextController.text,
                             );
+
                             if ((_model.apiResultomg?.succeeded ?? true)) {
                               FFAppState().appActiveConvoID =
                                   (_model.uuidOutput?.jsonBody ?? '')
@@ -500,6 +597,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                   .call(
                                 userID: currentUserUid,
                               );
+
                               if ((_model.apiResultdx1?.succeeded ?? true)) {
                                 FFAppState().appConversationsJSON =
                                     (_model.apiResultdx1?.jsonBody ?? '');

@@ -68,6 +68,7 @@ class AddNewMessageCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -115,6 +116,7 @@ class GetChainMessagesCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: true,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -192,6 +194,7 @@ class GetToursCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -243,6 +246,7 @@ class GetConversationsCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -279,6 +283,7 @@ class GetConversationsByUserCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -342,6 +347,7 @@ class GetTourNameByIDCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -364,6 +370,7 @@ class CreateUuidCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -392,6 +399,7 @@ class DeleteConversationCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -424,6 +432,7 @@ class GenerateConvoSummaryCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -453,6 +462,7 @@ class AddNewTourCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -479,6 +489,7 @@ class DeleteTourCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -505,6 +516,7 @@ class GetConversationSummaryCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -516,6 +528,106 @@ class GetConversationSummaryCall {
 }
 
 /// End Chat Services Group Code
+
+/// Start Tour Services Group Code
+
+class TourServicesGroup {
+  static String getBaseUrl() => 'https://tour-guide-poc.uk.r.appspot.com/';
+  static Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    'accept': 'application/json',
+  };
+  static GetTourByCodeFilterCall getTourByCodeFilterCall =
+      GetTourByCodeFilterCall();
+}
+
+class GetTourByCodeFilterCall {
+  Future<ApiCallResponse> call({
+    String? filter = '',
+  }) async {
+    final baseUrl = TourServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Tour by Code Filter',
+      apiUrl: '${baseUrl}services/get_tours_by_filter',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'filter': filter,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? tourID(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.tourID''',
+      ));
+  String? tourName(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.tourName''',
+      ));
+  String? tourCode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.tourCode''',
+      ));
+}
+
+/// End Tour Services Group Code
+
+/// Start User Services Group Code
+
+class UserServicesGroup {
+  static String getBaseUrl() => 'https://tour-guide-poc.uk.r.appspot.com/';
+  static Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    'accept': 'application/json',
+  };
+  static AddTourToUserCall addTourToUserCall = AddTourToUserCall();
+}
+
+class AddTourToUserCall {
+  Future<ApiCallResponse> call({
+    String? userID = '',
+    String? tourID = '',
+  }) async {
+    final baseUrl = UserServicesGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "userID": "$userID",
+  "tourID": "$tourID"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add tour to User',
+      apiUrl: '${baseUrl}services/add_tour_to_user',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End User Services Group Code
 
 class ApiPagingParams {
   int nextPageNumber = 0;

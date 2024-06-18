@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/components/create_conversation/create_conversation_widget.dart';
+import '/components/new_conversation/new_conversation_widget.dart';
 import '/components/no_convos/no_convos_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -64,7 +64,7 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                       : FocusScope.of(context).unfocus(),
                   child: Padding(
                     padding: MediaQuery.viewInsetsOf(context),
-                    child: const CreateConversationWidget(),
+                    child: const NewConversationWidget(),
                   ),
                 );
               },
@@ -163,6 +163,7 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                                       .call(
                                     userID: currentUserUid,
                                   );
+
                                   if ((_model.apiResultm6b?.succeeded ??
                                       true)) {
                                     FFAppState().appConversationsJSON =
@@ -233,6 +234,7 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                                                         r'''$.conversation_id''',
                                                       ).toString(),
                                                     );
+
                                                     if ((_model.apiResultgx3
                                                             ?.succeeded ??
                                                         true)) {
@@ -242,6 +244,7 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                                                               .call(
                                                         userID: currentUserUid,
                                                       );
+
                                                       if ((_model.apiResultv7q
                                                               ?.succeeded ??
                                                           true)) {

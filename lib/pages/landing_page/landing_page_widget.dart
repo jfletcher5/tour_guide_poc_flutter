@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/components/create_conversation/create_conversation_widget.dart';
+import '/components/new_conversation/new_conversation_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -39,6 +39,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
               await ChatServicesGroup.getConversationsByUserCall.call(
             userID: currentUserUid,
           );
+
           if ((_model.getConvoByUserLoad?.succeeded ?? true)) {
             FFAppState().appConversationsJSON =
                 (_model.getConvoByUserLoad?.jsonBody ?? '');
@@ -48,6 +49,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
         }),
         Future(() async {
           _model.apiResultn00 = await ChatServicesGroup.getToursCall.call();
+
           if ((_model.apiResultn00?.succeeded ?? true)) {
             FFAppState().appTourNameList = ChatServicesGroup.getToursCall
                 .tourList(
@@ -352,7 +354,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                           : FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
-                                    child: const CreateConversationWidget(),
+                                    child: const NewConversationWidget(),
                                   ),
                                 );
                               },

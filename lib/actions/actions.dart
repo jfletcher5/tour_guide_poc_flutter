@@ -9,6 +9,7 @@ Future refreshUserConversationList(BuildContext context) async {
   getConvoByUser = await ChatServicesGroup.getConversationsByUserCall.call(
     userID: currentUserUid,
   );
+
   if ((getConvoByUser.jsonBody ?? '')) {
     FFAppState().appConversationsJSON = (getConvoByUser.jsonBody ?? '');
     FFAppState().update(() {});

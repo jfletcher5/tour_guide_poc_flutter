@@ -89,6 +89,7 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                         conversationId: FFAppState().appActiveConvoID,
                         modelName: 'gpt-3.5-turbo',
                       );
+
                       if ((_model.apiResultpxi?.succeeded ?? true)) {
                         FFAppState().appActiveConvoSummary = getJsonField(
                           (_model.apiResultpxi?.jsonBody ?? ''),

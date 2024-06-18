@@ -31,6 +31,7 @@ class _TourAdminWidgetState extends State<TourAdminWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.apiResultm6b = await ChatServicesGroup.getToursCall.call();
+
       if ((_model.apiResultm6b?.succeeded ?? true)) {
         setState(() {});
       }
@@ -131,6 +132,7 @@ class _TourAdminWidgetState extends State<TourAdminWidget> {
                                         r'''$.tourID''',
                                       ).toString(),
                                     );
+
                                     if ((_model.apiResultl3d?.succeeded ??
                                         true)) {
                                       ScaffoldMessenger.of(context)

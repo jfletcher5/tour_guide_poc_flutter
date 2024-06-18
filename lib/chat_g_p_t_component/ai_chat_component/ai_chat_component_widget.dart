@@ -43,6 +43,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
             speaker: -1,
             conversationId: FFAppState().appActiveConvoID,
           );
+
           if ((_model.activeConvoLoad?.succeeded ?? true)) {
             FFAppState().appChatHistoryJSONList =
                 (_model.activeConvoLoad?.jsonBody ?? '')
@@ -53,6 +54,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                 await ChatServicesGroup.getConversationSummaryCall.call(
               conversationId: FFAppState().appActiveConvoID,
             );
+
             if ((_model.apiResult3pe?.succeeded ?? true)) {
               FFAppState().appActiveConvoSummary = getJsonField(
                 (_model.apiResult3pe?.jsonBody ?? ''),
@@ -655,6 +657,7 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                             conversationId: FFAppState().appActiveConvoID,
                             userID: currentUserUid,
                           );
+
                           if ((_model.chatGPTResponse?.succeeded ?? true)) {
                             _model.aiResponding = false;
                             setState(() {});
