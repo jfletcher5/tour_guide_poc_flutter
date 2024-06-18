@@ -3,6 +3,7 @@ import '/chat_g_p_t_component/ai_chat_component/ai_chat_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'chat_ai_screen_widget.dart' show ChatAiScreenWidget;
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:record/record.dart';
 
 class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
@@ -27,6 +28,8 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
+
+  AudioPlayer? soundPlayer;
 
   @override
   void initState(BuildContext context) {

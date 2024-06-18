@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -262,6 +263,9 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                             }
                           }
 
+                          _model.activeRecording = true;
+                          setState(() {});
+
                           setState(() {});
                         },
                       ),
@@ -301,8 +305,15 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                         color: FlutterFlowTheme.of(context).primaryText,
                         size: 24.0,
                       ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
+                      onPressed: () async {
+                        _model.soundPlayer ??= AudioPlayer();
+                        if (_model.soundPlayer!.playing) {
+                          await _model.soundPlayer!.stop();
+                        }
+                        _model.soundPlayer!.setVolume(1.0);
+                        _model.soundPlayer!
+                            .setUrl(_model.recordingOutput!)
+                            .then((_) => _model.soundPlayer!.play());
                       },
                     ),
                   ].divide(const SizedBox(width: 8.0)),
