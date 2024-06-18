@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/chat_g_p_t_component/ai_chat_component/ai_chat_component_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'chat_ai_screen_model.dart';
 export 'chat_ai_screen_model.dart';
 
@@ -164,23 +166,81 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                   ),
                 ),
               ),
-              FlutterFlowIconButton(
-                borderColor: FlutterFlowTheme.of(context).primary,
-                borderRadius: 20.0,
-                borderWidth: 1.0,
-                buttonSize: 40.0,
-                fillColor: FlutterFlowTheme.of(context).accent1,
-                icon: Icon(
-                  Icons.add,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    FlutterFlowIconButton(
+                      borderColor: FlutterFlowTheme.of(context).primary,
+                      borderRadius: 20.0,
+                      borderWidth: 1.0,
+                      buttonSize: 40.0,
+                      fillColor: FlutterFlowTheme.of(context).accent1,
+                      icon: Icon(
+                        Icons.mic_none,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        await startAudioRecording(
+                          context,
+                          audioRecorder: _model.audioRecorder ??=
+                              AudioRecorder(),
+                        );
+                      },
+                    ),
+                    FlutterFlowIconButton(
+                      borderColor: FlutterFlowTheme.of(context).primary,
+                      borderRadius: 20.0,
+                      borderWidth: 1.0,
+                      buttonSize: 40.0,
+                      fillColor: FlutterFlowTheme.of(context).error,
+                      icon: Icon(
+                        Icons.stop_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        await stopAudioRecording(
+                          audioRecorder: _model.audioRecorder,
+                          audioName: 'recordedFileBytes.mp3',
+                          onRecordingComplete: (audioFilePath, audioBytes) {
+                            _model.recordingOutput = audioFilePath;
+                            _model.recordedFileBytes = audioBytes;
+                          },
+                        );
+
+                        setState(() {});
+                      },
+                    ),
+                    FlutterFlowIconButton(
+                      borderColor: FlutterFlowTheme.of(context).primary,
+                      borderRadius: 20.0,
+                      borderWidth: 1.0,
+                      buttonSize: 40.0,
+                      fillColor: FlutterFlowTheme.of(context).secondary,
+                      icon: Icon(
+                        Icons.email,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        await launchUrl(Uri(
+                            scheme: 'mailto',
+                            path: currentUserEmail,
+                            query: {
+                              'subject': 'tour summary',
+                              'body': FFAppState().appActiveConvoSummary,
+                            }
+                                .entries
+                                .map((MapEntry<String, String> e) =>
+                                    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                .join('&')));
+                      },
+                    ),
+                  ].divide(const SizedBox(width: 8.0)),
                 ),
-                onPressed: () async {
-                  await startAudioRecording(
-                    context,
-                    audioRecorder: _model.audioRecorder ??= AudioRecorder(),
-                  );
-                },
               ),
             ],
           ),

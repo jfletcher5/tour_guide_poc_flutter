@@ -18,6 +18,9 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
   // Stores action output result for [Backend Call - API (generate convo summary)] action in Button widget.
   ApiCallResponse? apiResultpxi;
   AudioRecorder? audioRecorder;
+  String? recordingOutput;
+  FFUploadedFile recordedFileBytes =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
 
   @override
   void initState(BuildContext context) {
