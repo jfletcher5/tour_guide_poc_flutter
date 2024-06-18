@@ -539,6 +539,7 @@ class TourServicesGroup {
   };
   static GetTourByCodeFilterCall getTourByCodeFilterCall =
       GetTourByCodeFilterCall();
+  static GetUserToursCall getUserToursCall = GetUserToursCall();
 }
 
 class GetTourByCodeFilterCall {
@@ -578,6 +579,42 @@ class GetTourByCodeFilterCall {
   String? tourCode(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.tourCode''',
+      ));
+}
+
+class GetUserToursCall {
+  Future<ApiCallResponse> call({
+    String? userID = '',
+  }) async {
+    final baseUrl = TourServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get User Tours',
+      apiUrl: '$baseUrl/services/get_tours_by_user',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'userID': userID,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? tourIDs(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].tourID''',
+      ));
+  String? tourNames(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].tourName''',
       ));
 }
 

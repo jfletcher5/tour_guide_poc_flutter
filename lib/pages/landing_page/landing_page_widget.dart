@@ -68,6 +68,35 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
             setState(() {});
           }
         }),
+        Future(() async {
+          _model.apiResultgwr = await TourServicesGroup.getUserToursCall.call(
+            userID: currentUserUid,
+          );
+
+          if ((_model.apiResultgwr?.succeeded ?? true)) {
+            FFAppState().appUserTourNameList = (getJsonField(
+              (_model.apiResultgwr?.jsonBody ?? ''),
+              r'''$[:].tourName''',
+              true,
+            ) as List)
+                .map<String>((s) => s.toString())
+                .toList()
+                .toList()
+                .cast<String>();
+            FFAppState().appUserTourIDList = (getJsonField(
+              (_model.apiResultgwr?.jsonBody ?? ''),
+              r'''$[:].tourID''',
+              true,
+            ) as List)
+                .map<String>((s) => s.toString())
+                .toList()
+                .toList()
+                .cast<String>();
+            FFAppState().appUserAllToursJSON =
+                (_model.apiResultgwr?.jsonBody ?? '');
+            setState(() {});
+          }
+        }),
       ]);
     });
 

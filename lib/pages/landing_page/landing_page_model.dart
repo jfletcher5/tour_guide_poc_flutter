@@ -15,6 +15,8 @@ class LandingPageModel extends FlutterFlowModel<LandingPageWidget> {
   ApiCallResponse? getConvoByUserLoad;
   // Stores action output result for [Backend Call - API (Get Tours)] action in LandingPage widget.
   ApiCallResponse? apiResultn00;
+  // Stores action output result for [Backend Call - API (Get User Tours)] action in LandingPage widget.
+  ApiCallResponse? apiResultgwr;
 
   @override
   void initState(BuildContext context) {}

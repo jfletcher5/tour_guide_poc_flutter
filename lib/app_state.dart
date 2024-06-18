@@ -199,6 +199,70 @@ class FFAppState extends ChangeNotifier {
   set appHumanAudioRecording(String value) {
     _appHumanAudioRecording = value;
   }
+
+  List<String> _appUserTourNameList = [];
+  List<String> get appUserTourNameList => _appUserTourNameList;
+  set appUserTourNameList(List<String> value) {
+    _appUserTourNameList = value;
+  }
+
+  void addToAppUserTourNameList(String value) {
+    appUserTourNameList.add(value);
+  }
+
+  void removeFromAppUserTourNameList(String value) {
+    appUserTourNameList.remove(value);
+  }
+
+  void removeAtIndexFromAppUserTourNameList(int index) {
+    appUserTourNameList.removeAt(index);
+  }
+
+  void updateAppUserTourNameListAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    appUserTourNameList[index] = updateFn(_appUserTourNameList[index]);
+  }
+
+  void insertAtIndexInAppUserTourNameList(int index, String value) {
+    appUserTourNameList.insert(index, value);
+  }
+
+  List<String> _appUserTourIDList = [];
+  List<String> get appUserTourIDList => _appUserTourIDList;
+  set appUserTourIDList(List<String> value) {
+    _appUserTourIDList = value;
+  }
+
+  void addToAppUserTourIDList(String value) {
+    appUserTourIDList.add(value);
+  }
+
+  void removeFromAppUserTourIDList(String value) {
+    appUserTourIDList.remove(value);
+  }
+
+  void removeAtIndexFromAppUserTourIDList(int index) {
+    appUserTourIDList.removeAt(index);
+  }
+
+  void updateAppUserTourIDListAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    appUserTourIDList[index] = updateFn(_appUserTourIDList[index]);
+  }
+
+  void insertAtIndexInAppUserTourIDList(int index, String value) {
+    appUserTourIDList.insert(index, value);
+  }
+
+  dynamic _appUserAllToursJSON;
+  dynamic get appUserAllToursJSON => _appUserAllToursJSON;
+  set appUserAllToursJSON(dynamic value) {
+    _appUserAllToursJSON = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

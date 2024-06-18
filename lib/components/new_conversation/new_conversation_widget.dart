@@ -172,7 +172,8 @@ class _NewConversationWidgetState extends State<NewConversationWidget> {
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             isDense: false,
-                                            labelText: 'Enter Tour Code!',
+                                            labelText:
+                                                'Enter Tour Code to Add!',
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
@@ -314,46 +315,213 @@ class _NewConversationWidgetState extends State<NewConversationWidget> {
                                               if ((_model.apiResult31x
                                                       ?.succeeded ??
                                                   true)) {
-                                                var confirmDialogResponse =
-                                                    await showDialog<bool>(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: const Text(
-                                                                  'Add to your Tours?'),
-                                                              content: Text(
-                                                                  TourServicesGroup
-                                                                      .getTourByCodeFilterCall
-                                                                      .tourName(
-                                                                (_model.apiResult31x
+                                                if (TourServicesGroup
+                                                        .getTourByCodeFilterCall
+                                                        .tourName(
+                                                      (_model.apiResult31x
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                    ) ==
+                                                    'No tour found') {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text('Response'),
+                                                        content: const Text(
+                                                            'No tour found'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text('Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                } else {
+                                                  var confirmDialogResponse =
+                                                      await showDialog<bool>(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return AlertDialog(
+                                                                title: const Text(
+                                                                    'Add to your Tours?'),
+                                                                content: Text(
+                                                                    TourServicesGroup
+                                                                        .getTourByCodeFilterCall
+                                                                        .tourName(
+                                                                  (_model.apiResult31x
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                )!),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                    child: const Text(
+                                                                        'Cancel'),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                    child: const Text(
+                                                                        'Confirm'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          ) ??
+                                                          false;
+                                                  if (confirmDialogResponse) {
+                                                    _model.apiResultpu4 =
+                                                        await UserServicesGroup
+                                                            .addTourToUserCall
+                                                            .call(
+                                                      userID: currentUserUid,
+                                                      tourID: TourServicesGroup
+                                                          .getTourByCodeFilterCall
+                                                          .tourID(
+                                                        (_model.apiResult31x
+                                                                ?.jsonBody ??
+                                                            ''),
+                                                      ),
+                                                    );
+
+                                                    if ((_model.apiResultpu4
+                                                            ?.succeeded ??
+                                                        true)) {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title:
+                                                                const Text('notice'),
+                                                            content: Text((_model
+                                                                        .apiResultpu4
                                                                         ?.jsonBody ??
-                                                                    ''),
-                                                              )!),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                  child: const Text(
-                                                                      'Cancel'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child: const Text(
-                                                                      'Confirm'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        ) ??
-                                                        false;
+                                                                    '')
+                                                                .toString()),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    const Text('Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                      _model.refreshusertours =
+                                                          await TourServicesGroup
+                                                              .getUserToursCall
+                                                              .call(
+                                                        userID: currentUserUid,
+                                                      );
+
+                                                      if ((_model
+                                                              .refreshusertours
+                                                              ?.succeeded ??
+                                                          true)) {
+                                                        FFAppState()
+                                                                .appUserTourNameList =
+                                                            (getJsonField(
+                                                          (_model.refreshusertours
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                          r'''$[:].tourName''',
+                                                          true,
+                                                        ) as List)
+                                                                .map<String>((s) =>
+                                                                    s.toString())
+                                                                .toList()
+                                                                .toList()
+                                                                .cast<String>();
+                                                        FFAppState()
+                                                                .appUserTourIDList =
+                                                            (getJsonField(
+                                                          (_model.refreshusertours
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                          r'''$[:].tourID''',
+                                                          true,
+                                                        ) as List)
+                                                                .map<String>((s) =>
+                                                                    s.toString())
+                                                                .toList()
+                                                                .toList()
+                                                                .cast<String>();
+                                                        FFAppState()
+                                                            .appUserAllToursJSON = (_model
+                                                                .refreshusertours
+                                                                ?.jsonBody ??
+                                                            '');
+                                                        setState(() {});
+                                                      }
+                                                    } else {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title:
+                                                                const Text('notice'),
+                                                            content: Text((_model
+                                                                        .apiResultpu4
+                                                                        ?.jsonBody ??
+                                                                    '')
+                                                                .toString()),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    const Text('Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                  } else {
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title:
+                                                              const Text('Not Added'),
+                                                          content: const Text(
+                                                              'Tour not added'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext),
+                                                              child: const Text('Ok'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+                                                }
                                               }
                                             }
+
+                                            FFAppState().update(() {});
 
                                             setState(() {});
                                           },
@@ -381,8 +549,8 @@ class _NewConversationWidgetState extends State<NewConversationWidget> {
                             _model.dropDownValue ??= '',
                           ),
                           options:
-                              List<String>.from(FFAppState().appTourIDsList),
-                          optionLabels: FFAppState().appTourNameList,
+                              List<String>.from(FFAppState().appUserTourIDList),
+                          optionLabels: FFAppState().appUserTourNameList,
                           onChanged: (val) async {
                             setState(() => _model.dropDownValue = val);
                             FFAppState().appActiveTourName =
@@ -396,7 +564,7 @@ class _NewConversationWidgetState extends State<NewConversationWidget> {
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0.0,
                                   ),
-                          hintText: 'Select a prior Tour',
+                          hintText: 'Select one of your Tours',
                           icon: Icon(
                             Icons.keyboard_arrow_down_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,

@@ -15,6 +15,10 @@ class NewConversationModel extends FlutterFlowModel<NewConversationWidget> {
   bool mouseRegionHovered = false;
   // Stores action output result for [Backend Call - API (Get Tour by Code Filter)] action in Icon widget.
   ApiCallResponse? apiResult31x;
+  // Stores action output result for [Backend Call - API (Add tour to User)] action in Icon widget.
+  ApiCallResponse? apiResultpu4;
+  // Stores action output result for [Backend Call - API (Get User Tours)] action in Icon widget.
+  ApiCallResponse? refreshusertours;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
