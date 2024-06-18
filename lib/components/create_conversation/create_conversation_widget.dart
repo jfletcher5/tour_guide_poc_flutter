@@ -253,7 +253,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                     .asValidator(context),
                               ),
                             ),
-                            if (!_model.searchQR)
+                            if (!_model.searchQR!)
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 0.0, 0.0),
@@ -263,7 +263,7 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                   size: 48.0,
                                 ),
                               ),
-                            if (_model.searchQR)
+                            if (_model.searchQR ?? true)
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 0.0, 0.0),

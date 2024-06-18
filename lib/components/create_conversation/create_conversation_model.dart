@@ -8,7 +8,7 @@ class CreateConversationModel
     extends FlutterFlowModel<CreateConversationWidget> {
   ///  Local state fields for this component.
 
-  bool searchQR = true;
+  bool? searchQR = true;
 
   ///  State fields for stateful widgets in this component.
 
