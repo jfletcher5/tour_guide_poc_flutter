@@ -334,18 +334,6 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
-                        child: Text(
-                          '[chat summary]',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -355,6 +343,7 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                   _model.recordingOutput!,
                   metas: Metas(
                     id: '2vqf7_-3b0806d0',
+                    title: 'test',
                   ),
                 ),
                 titleTextStyle:
