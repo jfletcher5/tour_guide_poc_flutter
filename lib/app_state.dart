@@ -193,6 +193,12 @@ class FFAppState extends ChangeNotifier {
   set appAllToursJSON(dynamic value) {
     _appAllToursJSON = value;
   }
+
+  String _appHumanAudioRecording = '';
+  String get appHumanAudioRecording => _appHumanAudioRecording;
+  set appHumanAudioRecording(String value) {
+    _appHumanAudioRecording = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

@@ -1,10 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/chat_g_p_t_component/ai_chat_component/ai_chat_component_widget.dart';
+import '/flutter_flow/flutter_flow_audio_player.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -121,7 +124,7 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
               ),
               Container(
                 width: MediaQuery.sizeOf(context).width * 0.7,
-                height: MediaQuery.sizeOf(context).height * 0.8,
+                height: MediaQuery.sizeOf(context).height * 0.4,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   borderRadius: BorderRadius.circular(24.0),
@@ -170,6 +173,7 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FlutterFlowIconButton(
                       borderColor: FlutterFlowTheme.of(context).primary,
@@ -211,6 +215,48 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                           },
                         );
 
+                        FFAppState().appHumanAudioRecording =
+                            _model.recordingOutput!;
+                        setState(() {});
+                        {
+                          setState(() => _model.isDataUploading = true);
+                          var selectedUploadedFiles = <FFUploadedFile>[];
+                          var selectedFiles = <SelectedFile>[];
+                          var downloadUrls = <String>[];
+                          try {
+                            selectedUploadedFiles =
+                                _model.recordedFileBytes.bytes!.isNotEmpty
+                                    ? [_model.recordedFileBytes]
+                                    : <FFUploadedFile>[];
+                            selectedFiles = selectedFilesFromUploadedFiles(
+                              selectedUploadedFiles,
+                            );
+                            downloadUrls = (await Future.wait(
+                              selectedFiles.map(
+                                (f) async =>
+                                    await uploadData(f.storagePath, f.bytes),
+                              ),
+                            ))
+                                .where((u) => u != null)
+                                .map((u) => u!)
+                                .toList();
+                          } finally {
+                            _model.isDataUploading = false;
+                          }
+                          if (selectedUploadedFiles.length ==
+                                  selectedFiles.length &&
+                              downloadUrls.length == selectedFiles.length) {
+                            setState(() {
+                              _model.uploadedLocalFile =
+                                  selectedUploadedFiles.first;
+                              _model.uploadedFileUrl = downloadUrls.first;
+                            });
+                          } else {
+                            setState(() {});
+                            return;
+                          }
+                        }
+
                         setState(() {});
                       },
                     ),
@@ -239,8 +285,93 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                                 .join('&')));
                       },
                     ),
+                    FlutterFlowIconButton(
+                      borderColor: FlutterFlowTheme.of(context).primary,
+                      borderRadius: 20.0,
+                      borderWidth: 1.0,
+                      buttonSize: 40.0,
+                      fillColor: FlutterFlowTheme.of(context).accent1,
+                      icon: Icon(
+                        Icons.play_circle,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 24.0,
+                      ),
+                      onPressed: () {
+                        print('IconButton pressed ...');
+                      },
+                    ),
                   ].divide(const SizedBox(width: 8.0)),
                 ),
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width * 0.7,
+                height: MediaQuery.sizeOf(context).height * 0.4,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  borderRadius: BorderRadius.circular(24.0),
+                  border: Border.all(
+                    color: FlutterFlowTheme.of(context).primary,
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(0.0, -1.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 8.0, 0.0, 0.0),
+                          child: Text(
+                            'Recording Test',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                  decoration: TextDecoration.underline,
+                                ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
+                        child: Text(
+                          '[chat summary]',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              FlutterFlowAudioPlayer(
+                audio: Audio.network(
+                  _model.recordingOutput!,
+                  metas: Metas(
+                    id: '2vqf7_-3b0806d0',
+                  ),
+                ),
+                titleTextStyle:
+                    FlutterFlowTheme.of(context).titleLarge.override(
+                          fontFamily: 'Outfit',
+                          letterSpacing: 0.0,
+                        ),
+                playbackDurationTextStyle:
+                    FlutterFlowTheme.of(context).labelMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                playbackButtonColor: FlutterFlowTheme.of(context).primary,
+                activeTrackColor: FlutterFlowTheme.of(context).alternate,
+                elevation: 4.0,
+                playInBackground: PlayInBackground.disabledRestoreOnForeground,
               ),
             ],
           ),
@@ -277,22 +408,27 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
             ],
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 16.0, 8.0),
-              child: FlutterFlowIconButton(
-                borderColor: FlutterFlowTheme.of(context).primary,
-                borderRadius: 12.0,
-                borderWidth: 1.0,
-                buttonSize: 40.0,
-                fillColor: FlutterFlowTheme.of(context).accent1,
-                icon: Icon(
-                  Icons.menu_open,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
+            Visibility(
+              visible: valueOrDefault(currentUserDocument?.role, '') == 'admin',
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 16.0, 8.0),
+                child: AuthUserStreamWidget(
+                  builder: (context) => FlutterFlowIconButton(
+                    borderColor: FlutterFlowTheme.of(context).primary,
+                    borderRadius: 12.0,
+                    borderWidth: 1.0,
+                    buttonSize: 40.0,
+                    fillColor: FlutterFlowTheme.of(context).accent1,
+                    icon: Icon(
+                      Icons.menu_open,
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      size: 24.0,
+                    ),
+                    onPressed: () async {
+                      scaffoldKey.currentState!.openEndDrawer();
+                    },
+                  ),
                 ),
-                onPressed: () async {
-                  scaffoldKey.currentState!.openEndDrawer();
-                },
               ),
             ),
           ],

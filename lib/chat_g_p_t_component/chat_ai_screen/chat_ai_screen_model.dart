@@ -21,6 +21,10 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
   String? recordingOutput;
   FFUploadedFile recordedFileBytes =
       FFUploadedFile(bytes: Uint8List.fromList([]));
+  bool isDataUploading = false;
+  FFUploadedFile uploadedLocalFile =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl = '';
 
   @override
   void initState(BuildContext context) {
