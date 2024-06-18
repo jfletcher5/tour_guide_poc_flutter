@@ -6,12 +6,16 @@ import 'package:flutter/material.dart';
 
 class CreateConversationModel
     extends FlutterFlowModel<CreateConversationWidget> {
+  ///  Local state fields for this component.
+
+  bool searchQR = true;
+
   ///  State fields for stateful widgets in this component.
 
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
+  // State field(s) for tourSearch widget.
+  FocusNode? tourSearchFocusNode;
+  TextEditingController? tourSearchTextController;
+  String? Function(BuildContext, String?)? tourSearchTextControllerValidator;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
@@ -35,8 +39,8 @@ class CreateConversationModel
 
   @override
   void dispose() {
-    textFieldFocusNode?.dispose();
-    textController1?.dispose();
+    tourSearchFocusNode?.dispose();
+    tourSearchTextController?.dispose();
 
     convoNameFocusNode?.dispose();
     convoNameTextController?.dispose();

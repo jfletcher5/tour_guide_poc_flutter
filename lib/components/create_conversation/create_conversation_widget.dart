@@ -8,6 +8,7 @@ import '/flutter_flow/form_field_controller.dart';
 import 'dart:ui';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'create_conversation_model.dart';
 export 'create_conversation_model.dart';
@@ -34,8 +35,14 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
     super.initState();
     _model = createModel(context, () => CreateConversationModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
+    // On component load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.searchQR = false;
+      setState(() {});
+    });
+
+    _model.tourSearchTextController ??= TextEditingController();
+    _model.tourSearchFocusNode ??= FocusNode();
 
     _model.convoNameTextController ??= TextEditingController();
     _model.convoNameFocusNode ??= FocusNode();
@@ -148,12 +155,21 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                           children: [
                             Expanded(
                               child: TextFormField(
-                                controller: _model.textController1,
-                                focusNode: _model.textFieldFocusNode,
+                                controller: _model.tourSearchTextController,
+                                focusNode: _model.tourSearchFocusNode,
                                 onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.textController1',
+                                  '_model.tourSearchTextController',
                                   const Duration(milliseconds: 2000),
-                                  () => setState(() {}),
+                                  () async {
+                                    if (_model.tourSearchTextController.text ==
+                                        '') {
+                                      _model.searchQR = false;
+                                      setState(() {});
+                                    } else {
+                                      _model.searchQR = true;
+                                      setState(() {});
+                                    }
+                                  },
                                 ),
                                 autofocus: true,
                                 obscureText: false,
@@ -201,19 +217,30 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                     ),
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  suffixIcon:
-                                      _model.textController1!.text.isNotEmpty
-                                          ? InkWell(
-                                              onTap: () async {
-                                                _model.textController1?.clear();
-                                                setState(() {});
-                                              },
-                                              child: const Icon(
-                                                Icons.clear,
-                                                size: 22,
-                                              ),
-                                            )
-                                          : null,
+                                  suffixIcon: _model.tourSearchTextController!
+                                          .text.isNotEmpty
+                                      ? InkWell(
+                                          onTap: () async {
+                                            _model.tourSearchTextController
+                                                ?.clear();
+                                            if (_model.tourSearchTextController
+                                                    .text ==
+                                                '') {
+                                              _model.searchQR = false;
+                                              setState(() {});
+                                            } else {
+                                              _model.searchQR = true;
+                                              setState(() {});
+                                            }
+
+                                            setState(() {});
+                                          },
+                                          child: const Icon(
+                                            Icons.clear,
+                                            size: 22,
+                                          ),
+                                        )
+                                      : null,
                                 ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -221,19 +248,31 @@ class _CreateConversationWidgetState extends State<CreateConversationWidget> {
                                       fontFamily: 'Readex Pro',
                                       letterSpacing: 0.0,
                                     ),
-                                validator: _model.textController1Validator
+                                validator: _model
+                                    .tourSearchTextControllerValidator
                                     .asValidator(context),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 0.0, 0.0, 0.0),
-                              child: Icon(
-                                Icons.qr_code,
-                                color: FlutterFlowTheme.of(context).tertiary,
-                                size: 48.0,
+                            if (!_model.searchQR)
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 0.0, 0.0, 0.0),
+                                child: Icon(
+                                  Icons.qr_code,
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  size: 48.0,
+                                ),
                               ),
-                            ),
+                            if (_model.searchQR)
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 0.0, 0.0, 0.0),
+                                child: Icon(
+                                  Icons.manage_search,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 48.0,
+                                ),
+                              ),
                           ],
                         ),
                       ),

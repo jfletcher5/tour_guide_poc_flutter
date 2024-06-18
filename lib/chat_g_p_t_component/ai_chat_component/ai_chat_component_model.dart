@@ -1,5 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
-import '/chat_g_p_t_component/writing_indicator/writing_indicator_widget.dart';
+import '/components/writing_indicator/writing_indicator_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'ai_chat_component_widget.dart' show AiChatComponentWidget;
 import 'package:flutter/material.dart';
