@@ -530,9 +530,19 @@ class _SigninWidgetState extends State<SigninWidget>
                                                         return;
                                                       }
 
-                                                      context.goNamedAuth(
-                                                          'LandingPage',
-                                                          context.mounted);
+                                                      if (valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.role,
+                                                              '') ==
+                                                          'admin') {
+                                                        context.pushNamedAuth(
+                                                            'LandingPage',
+                                                            context.mounted);
+                                                      } else {
+                                                        context.pushNamedAuth(
+                                                            'guestLandingPage',
+                                                            context.mounted);
+                                                      }
                                                     },
                                                     text: 'Sign In',
                                                     options: FFButtonOptions(
@@ -725,11 +735,21 @@ class _SigninWidgetState extends State<SigninWidget>
                                                                       null) {
                                                                     return;
                                                                   }
-
-                                                                  context.goNamedAuth(
-                                                                      'LandingPage',
-                                                                      context
-                                                                          .mounted);
+                                                                  if (valueOrDefault(
+                                                                          currentUserDocument
+                                                                              ?.role,
+                                                                          '') ==
+                                                                      'admin') {
+                                                                    context.pushNamedAuth(
+                                                                        'LandingPage',
+                                                                        context
+                                                                            .mounted);
+                                                                  } else {
+                                                                    context.pushNamedAuth(
+                                                                        'guestLandingPage',
+                                                                        context
+                                                                            .mounted);
+                                                                  }
                                                                 },
                                                                 text:
                                                                     'Continue with Google',
@@ -1222,9 +1242,19 @@ class _SigninWidgetState extends State<SigninWidget>
                                                         return;
                                                       }
 
-                                                      context.goNamedAuth(
-                                                          'LandingPage',
-                                                          context.mounted);
+                                                      if (valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.role,
+                                                              '') ==
+                                                          'admin') {
+                                                        context.pushNamedAuth(
+                                                            'LandingPage',
+                                                            context.mounted);
+                                                      } else {
+                                                        context.pushNamedAuth(
+                                                            'guestLandingPage',
+                                                            context.mounted);
+                                                      }
                                                     },
                                                     text: 'Create Account',
                                                     options: FFButtonOptions(
@@ -1360,11 +1390,21 @@ class _SigninWidgetState extends State<SigninWidget>
                                                                       null) {
                                                                     return;
                                                                   }
-
-                                                                  context.goNamedAuth(
-                                                                      'LandingPage',
-                                                                      context
-                                                                          .mounted);
+                                                                  if (valueOrDefault(
+                                                                          currentUserDocument
+                                                                              ?.role,
+                                                                          '') ==
+                                                                      'admin') {
+                                                                    context.pushNamedAuth(
+                                                                        'LandingPage',
+                                                                        context
+                                                                            .mounted);
+                                                                  } else {
+                                                                    context.pushNamedAuth(
+                                                                        'guestLandingPage',
+                                                                        context
+                                                                            .mounted);
+                                                                  }
                                                                 },
                                                                 text:
                                                                     'Continue with Google',

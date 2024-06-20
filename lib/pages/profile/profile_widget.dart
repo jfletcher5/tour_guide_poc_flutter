@@ -711,45 +711,85 @@ class _ProfileWidgetState extends State<ProfileWidget>
                   ),
                 ),
               ),
-              if (valueOrDefault(currentUserDocument?.role, '') == 'admin')
-                Flexible(
-                  child: Align(
-                    alignment: const AlignmentDirectional(0.0, 1.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AuthUserStreamWidget(
-                        builder: (context) => FFButtonWidget(
-                          onPressed: () async {
-                            context.pushNamed('tourAdmin');
-                          },
-                          text: 'Admin Page',
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 40.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 24.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
+              Flexible(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    if (valueOrDefault(currentUserDocument?.role, '') ==
+                        'admin')
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: AuthUserStreamWidget(
+                            builder: (context) => FFButtonWidget(
+                              onPressed: () async {
+                                context.pushNamed('guestLandingPage');
+                              },
+                              text: 'Guest Landing Page',
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 40.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
                                 ),
-                            elevation: 3.0,
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    if (valueOrDefault(currentUserDocument?.role, '') ==
+                        'admin')
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AuthUserStreamWidget(
+                          builder: (context) => FFButtonWidget(
+                            onPressed: () async {
+                              context.pushNamed('tourAdmin');
+                            },
+                            text: 'Admin Page',
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 40.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 24.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
+              ),
             ],
           ),
         ),

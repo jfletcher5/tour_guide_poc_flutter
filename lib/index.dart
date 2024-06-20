@@ -8,3 +8,5 @@ export '/pages/conversation_list/conversation_list_widget.dart'
     show ConversationListWidget;
 export '/pages/app_loader/app_loader_widget.dart' show AppLoaderWidget;
 export '/pages/tour_admin/tour_admin_widget.dart' show TourAdminWidget;
+export '/pages/guest_landing_page/guest_landing_page_widget.dart'
+    show GuestLandingPageWidget;

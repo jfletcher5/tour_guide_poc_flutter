@@ -122,9 +122,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'tourAdmin',
           path: '/tourAdmin',
           builder: (context, params) => const TourAdminWidget(),
+        ),
+        FFRoute(
+          name: 'guestLandingPage',
+          path: '/guestLandingPage',
+          builder: (context, params) => const GuestLandingPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {

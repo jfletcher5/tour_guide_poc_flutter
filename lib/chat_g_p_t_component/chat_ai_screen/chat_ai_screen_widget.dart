@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/chat_g_p_t_component/ai_chat_component/ai_chat_component_widget.dart';
-import '/flutter_flow/flutter_flow_audio_player.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,7 +9,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -178,7 +176,7 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (!_model.activeRecording)
+                    if (!_model.activeRecording!)
                       FlutterFlowIconButton(
                         borderColor: FlutterFlowTheme.of(context).primary,
                         borderRadius: 20.0,
@@ -200,7 +198,7 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                           );
                         },
                       ),
-                    if (_model.activeRecording)
+                    if (_model.activeRecording ?? true)
                       FlutterFlowIconButton(
                         borderColor: FlutterFlowTheme.of(context).primary,
                         borderRadius: 20.0,
@@ -295,28 +293,6 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                                 .join('&')));
                       },
                     ),
-                    FlutterFlowIconButton(
-                      borderColor: FlutterFlowTheme.of(context).primary,
-                      borderRadius: 20.0,
-                      borderWidth: 1.0,
-                      buttonSize: 40.0,
-                      fillColor: FlutterFlowTheme.of(context).accent1,
-                      icon: Icon(
-                        Icons.play_circle,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 24.0,
-                      ),
-                      onPressed: () async {
-                        _model.soundPlayer ??= AudioPlayer();
-                        if (_model.soundPlayer!.playing) {
-                          await _model.soundPlayer!.stop();
-                        }
-                        _model.soundPlayer!.setVolume(1.0);
-                        _model.soundPlayer!
-                            .setUrl(_model.recordingOutput!)
-                            .then((_) => _model.soundPlayer!.play());
-                      },
-                    ),
                   ].divide(const SizedBox(width: 8.0)),
                 ),
               ),
@@ -354,30 +330,6 @@ class _ChatAiScreenWidgetState extends State<ChatAiScreenWidget> {
                     ],
                   ),
                 ),
-              ),
-              FlutterFlowAudioPlayer(
-                audio: Audio.network(
-                  _model.recordingOutput!,
-                  metas: Metas(
-                    id: '2vqf7_-3b0806d0',
-                    title: 'test',
-                  ),
-                ),
-                titleTextStyle:
-                    FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Outfit',
-                          letterSpacing: 0.0,
-                        ),
-                playbackDurationTextStyle:
-                    FlutterFlowTheme.of(context).labelMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0.0,
-                        ),
-                fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                playbackButtonColor: FlutterFlowTheme.of(context).primary,
-                activeTrackColor: FlutterFlowTheme.of(context).alternate,
-                elevation: 4.0,
-                playInBackground: PlayInBackground.disabledRestoreOnForeground,
               ),
             ],
           ),
