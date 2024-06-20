@@ -332,8 +332,8 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                                         ),
                                         const Divider(
                                           thickness: 1.0,
-                                          indent: 4.0,
-                                          endIndent: 4.0,
+                                          indent: 6.0,
+                                          endIndent: 6.0,
                                           color: Color(0xBA4B39EF),
                                         ),
                                       ],
