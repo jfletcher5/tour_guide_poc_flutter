@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:styled_divider/styled_divider.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +32,6 @@ class _GuestLandingPageWidgetState extends State<GuestLandingPageWidget> {
 
     _model.tourSearchTextController ??= TextEditingController();
     _model.tourSearchFocusNode ??= FocusNode();
-
-    _model.firstMessageTextController ??= TextEditingController();
-    _model.firstMessageFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -553,112 +549,13 @@ class _GuestLandingPageWidgetState extends State<GuestLandingPageWidget> {
                         color: Color(0x8D4B39EF),
                         lineStyle: DividerLineStyle.dotted,
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flexible(
-                            child: Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 24.0, 16.0, 0.0),
-                                child: Text(
-                                  'Start your tour, ask your first question!',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        fontSize: 18.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 0.0),
-                        child: TextFormField(
-                          controller: _model.firstMessageTextController,
-                          focusNode: _model.firstMessageFocusNode,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            '_model.firstMessageTextController',
-                            const Duration(milliseconds: 2000),
-                            () async {
-                              setState(() {
-                                _model.choiceChipsValueController?.reset();
-                              });
-                            },
-                          ),
-                          textCapitalization: TextCapitalization.sentences,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
-                                    ),
-                            hintText: 'Create your own message here...',
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .labelLarge
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primary,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            filled: true,
-                            fillColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            contentPadding: const EdgeInsets.all(12.0),
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
-                          maxLines: 3,
-                          cursorColor: FlutterFlowTheme.of(context).primary,
-                          validator: _model.firstMessageTextControllerValidator
-                              .asValidator(context),
-                        ),
-                      ),
                       Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 24.0, 16.0, 0.0),
                           child: Text(
-                            'Or choose a starter question below:',
+                            'Choose a starter question below:',
                             textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -678,8 +575,12 @@ class _GuestLandingPageWidgetState extends State<GuestLandingPageWidget> {
                             ChipData('How old is this place?'),
                             ChipData('How does this work?')
                           ],
-                          onChanged: (val) => setState(
-                              () => _model.choiceChipsValue = val?.firstOrNull),
+                          onChanged: (val) async {
+                            setState(() =>
+                                _model.choiceChipsValue = val?.firstOrNull);
+                            _model.firstMessage = _model.choiceChipsValue;
+                            setState(() {});
+                          },
                           selectedChipStyle: ChipStyle(
                             backgroundColor:
                                 FlutterFlowTheme.of(context).secondary,
@@ -742,8 +643,7 @@ class _GuestLandingPageWidgetState extends State<GuestLandingPageWidget> {
                                 _model.apiResultomg = await ChatServicesGroup
                                     .addNewMessageCall
                                     .call(
-                                  newMessage:
-                                      _model.firstMessageTextController.text,
+                                  newMessage: _model.firstMessage,
                                   tourID: FFAppState().appActiveTourID,
                                   conversationId:
                                       (_model.uuidOutput?.jsonBody ?? '')

@@ -5,6 +5,10 @@ import 'guest_landing_page_widget.dart' show GuestLandingPageWidget;
 import 'package:flutter/material.dart';
 
 class GuestLandingPageModel extends FlutterFlowModel<GuestLandingPageWidget> {
+  ///  Local state fields for this page.
+
+  String? firstMessage;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
@@ -23,10 +27,6 @@ class GuestLandingPageModel extends FlutterFlowModel<GuestLandingPageWidget> {
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
-  // State field(s) for firstMessage widget.
-  FocusNode? firstMessageFocusNode;
-  TextEditingController? firstMessageTextController;
-  String? Function(BuildContext, String?)? firstMessageTextControllerValidator;
   // State field(s) for ChoiceChips widget.
   FormFieldController<List<String>>? choiceChipsValueController;
   String? get choiceChipsValue =>
@@ -48,8 +48,5 @@ class GuestLandingPageModel extends FlutterFlowModel<GuestLandingPageWidget> {
     unfocusNode.dispose();
     tourSearchFocusNode?.dispose();
     tourSearchTextController?.dispose();
-
-    firstMessageFocusNode?.dispose();
-    firstMessageTextController?.dispose();
   }
 }

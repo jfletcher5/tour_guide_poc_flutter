@@ -102,7 +102,7 @@ class GetChainMessagesCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Chain Messages',
-      apiUrl: '$baseUrl/services/get_chain_by_conversationID',
+      apiUrl: '${baseUrl}services/get_chain_by_conversationID',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -232,7 +232,7 @@ class GetConversationsCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Conversations',
-      apiUrl: '$baseUrl/services/get_conversations',
+      apiUrl: '${baseUrl}services/get_conversations',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -270,7 +270,7 @@ class GetConversationsByUserCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Conversations by User',
-      apiUrl: '$baseUrl/services/get_conversations_user',
+      apiUrl: '${baseUrl}services/get_conversations_user',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -334,7 +334,7 @@ class GetTourNameByIDCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Tour Name by ID',
-      apiUrl: '$baseUrl/services/get_tour_name',
+      apiUrl: '${baseUrl}services/get_tour_name',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -359,7 +359,7 @@ class CreateUuidCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'create uuid',
-      apiUrl: '$baseUrl/services/create_uuid',
+      apiUrl: '${baseUrl}services/create_uuid',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -385,7 +385,7 @@ class DeleteConversationCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Delete Conversation',
-      apiUrl: '$baseUrl/services/delete_convo_from_user',
+      apiUrl: '${baseUrl}services/delete_convo_from_user',
       callType: ApiCallType.DELETE,
       headers: {
         'Content-Type': 'application/json',
@@ -447,7 +447,7 @@ class AddNewTourCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Add New Tour',
-      apiUrl: '$baseUrl/services/add_tour',
+      apiUrl: '${baseUrl}services/add_tour',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -476,7 +476,7 @@ class DeleteTourCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Delete Tour',
-      apiUrl: '$baseUrl/services/delete_tour',
+      apiUrl: '${baseUrl}services/delete_tour',
       callType: ApiCallType.DELETE,
       headers: {
         'Content-Type': 'application/json',
@@ -503,7 +503,7 @@ class GetConversationSummaryCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get Conversation Summary',
-      apiUrl: '$baseUrl/services/get_conversation_summary',
+      apiUrl: '${baseUrl}services/get_conversation_summary',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -590,7 +590,7 @@ class GetUserToursCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get User Tours',
-      apiUrl: '$baseUrl/services/get_tours_by_user',
+      apiUrl: '${baseUrl}services/get_tours_by_user',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
