@@ -12,18 +12,6 @@ class GuestLandingPageModel extends FlutterFlowModel<GuestLandingPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for tourSearch widget.
-  FocusNode? tourSearchFocusNode;
-  TextEditingController? tourSearchTextController;
-  String? Function(BuildContext, String?)? tourSearchTextControllerValidator;
-  // State field(s) for MouseRegion widget.
-  bool mouseRegionHovered = false;
-  // Stores action output result for [Backend Call - API (Get Tour by Code Filter)] action in Icon widget.
-  ApiCallResponse? apiResult31x;
-  // Stores action output result for [Backend Call - API (Add tour to User)] action in Icon widget.
-  ApiCallResponse? apiResultpu4;
-  // Stores action output result for [Backend Call - API (Get User Tours)] action in Icon widget.
-  ApiCallResponse? refreshusertours;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
@@ -46,7 +34,5 @@ class GuestLandingPageModel extends FlutterFlowModel<GuestLandingPageWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    tourSearchFocusNode?.dispose();
-    tourSearchTextController?.dispose();
   }
 }

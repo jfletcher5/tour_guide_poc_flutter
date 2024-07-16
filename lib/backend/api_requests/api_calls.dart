@@ -540,6 +540,7 @@ class TourServicesGroup {
   static GetTourByCodeFilterCall getTourByCodeFilterCall =
       GetTourByCodeFilterCall();
   static GetUserToursCall getUserToursCall = GetUserToursCall();
+  static UploadTourCall uploadTourCall = UploadTourCall();
 }
 
 class GetTourByCodeFilterCall {
@@ -616,6 +617,38 @@ class GetUserToursCall {
         response,
         r'''$[:].tourName''',
       ));
+}
+
+class UploadTourCall {
+  Future<ApiCallResponse> call({
+    FFUploadedFile? file,
+    String? tourName = 'testTour',
+    String? tourCode = 'testCode',
+  }) async {
+    final baseUrl = TourServicesGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Upload Tour',
+      apiUrl: '${baseUrl}add_tour',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {
+        'file': file,
+        'tourName': tourName,
+        'tourCode': tourCode,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 /// End Tour Services Group Code
