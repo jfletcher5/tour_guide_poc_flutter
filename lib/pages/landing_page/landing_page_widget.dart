@@ -179,7 +179,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                       ),
                                 ),
                                 const TextSpan(
-                                  text: ' - v0.1.3',
+                                  text: ' - v0.6.18',
                                   style: TextStyle(),
                                 )
                               ],
