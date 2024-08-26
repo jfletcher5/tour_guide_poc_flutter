@@ -210,9 +210,8 @@ class _AiChatComponentWidgetState extends State<AiChatComponentWidget> {
                                                                 ),
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .accent1,
+                                                                  color: const Color(
+                                                                      0x885B2333),
                                                                   borderRadius:
                                                                       const BorderRadius
                                                                           .only(

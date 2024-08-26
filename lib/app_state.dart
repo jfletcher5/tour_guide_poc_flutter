@@ -263,6 +263,12 @@ class FFAppState extends ChangeNotifier {
   set appUserAllToursJSON(dynamic value) {
     _appUserAllToursJSON = value;
   }
+
+  bool _expandableFAB = false;
+  bool get expandableFAB => _expandableFAB;
+  set expandableFAB(bool value) {
+    _expandableFAB = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

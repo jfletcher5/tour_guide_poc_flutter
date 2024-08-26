@@ -126,7 +126,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'guestLandingPage',
           path: '/guestLandingPage',
+          requireAuth: true,
           builder: (context, params) => const GuestLandingPageWidget(),
+        ),
+        FFRoute(
+          name: 'guestSignIn',
+          path: '/guestSignIn',
+          builder: (context, params) => const GuestSignInWidget(),
+        ),
+        FFRoute(
+          name: 'HomePage',
+          path: '/homePage',
+          builder: (context, params) => const HomePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

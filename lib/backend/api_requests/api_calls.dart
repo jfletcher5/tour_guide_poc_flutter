@@ -540,7 +540,8 @@ class TourServicesGroup {
   static GetTourByCodeFilterCall getTourByCodeFilterCall =
       GetTourByCodeFilterCall();
   static GetUserToursCall getUserToursCall = GetUserToursCall();
-  static UploadTourCall uploadTourCall = UploadTourCall();
+  static UploadTourPDFCall uploadTourPDFCall = UploadTourPDFCall();
+  static AddWithFilepathCall addWithFilepathCall = AddWithFilepathCall();
 }
 
 class GetTourByCodeFilterCall {
@@ -619,17 +620,15 @@ class GetUserToursCall {
       ));
 }
 
-class UploadTourCall {
+class UploadTourPDFCall {
   Future<ApiCallResponse> call({
     FFUploadedFile? file,
-    String? tourName = 'testTour',
-    String? tourCode = 'testCode',
   }) async {
     final baseUrl = TourServicesGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
-      callName: 'Upload Tour',
-      apiUrl: '${baseUrl}add_tour',
+      callName: 'Upload Tour PDF',
+      apiUrl: '${baseUrl}services/upload_tour',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -637,8 +636,6 @@ class UploadTourCall {
       },
       params: {
         'file': file,
-        'tourName': tourName,
-        'tourCode': tourCode,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,
@@ -649,6 +646,46 @@ class UploadTourCall {
       alwaysAllowBody: false,
     );
   }
+}
+
+class AddWithFilepathCall {
+  Future<ApiCallResponse> call({
+    String? tourName = '',
+    String? filePath = '',
+    String? tourCode = '',
+  }) async {
+    final baseUrl = TourServicesGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "tourName": "$tourName",
+  "file_path": "$filePath",
+  "tourCode": "$tourCode"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add with filepath',
+      apiUrl: '${baseUrl}services/add_tour_with_path',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? tourID(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.tourID''',
+      ));
 }
 
 /// End Tour Services Group Code

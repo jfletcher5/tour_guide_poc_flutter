@@ -19,12 +19,28 @@ class AddTourBottomSheetModel
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // Stores action output result for [Backend Call - API (Upload Tour)] action in Button widget.
+  // Stores action output result for [Backend Call - API (Upload Tour PDF)] action in Button widget.
   ApiCallResponse? apiResultlwm;
+  // State field(s) for TourName widget.
+  FocusNode? tourNameFocusNode;
+  TextEditingController? tourNameTextController;
+  String? Function(BuildContext, String?)? tourNameTextControllerValidator;
+  // State field(s) for TourCode widget.
+  FocusNode? tourCodeFocusNode;
+  TextEditingController? tourCodeTextController;
+  String? Function(BuildContext, String?)? tourCodeTextControllerValidator;
+  // Stores action output result for [Backend Call - API (Add with filepath)] action in Button widget.
+  ApiCallResponse? apiResult4sn;
 
   @override
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {}
+  void dispose() {
+    tourNameFocusNode?.dispose();
+    tourNameTextController?.dispose();
+
+    tourCodeFocusNode?.dispose();
+    tourCodeTextController?.dispose();
+  }
 }

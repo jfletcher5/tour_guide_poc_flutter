@@ -63,9 +63,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -229,209 +227,6 @@ class _ProfileWidgetState extends State<ProfileWidget>
                             const Divider(
                               thickness: 1.0,
                               color: Color(0xFFE0E3E7),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 12.0, 4.0),
-                              child: MouseRegion(
-                                opaque: false,
-                                cursor: MouseCursor.defer ?? MouseCursor.defer,
-                                onEnter: ((event) async {
-                                  setState(
-                                      () => _model.mouseRegionHovered1 = true);
-                                }),
-                                onExit: ((event) async {
-                                  setState(
-                                      () => _model.mouseRegionHovered1 = false);
-                                }),
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 150),
-                                  curve: Curves.easeInOut,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: _model.mouseRegionHovered1
-                                        ? const Color(0xFFF1F4F8)
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 8.0, 0.0, 8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        const Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 0.0, 0.0, 0.0),
-                                          child: Icon(
-                                            Icons.account_circle_outlined,
-                                            color: Color(0xFF14181B),
-                                            size: 20.0,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12.0, 0.0, 0.0, 0.0),
-                                            child: Text(
-                                              'My Account (coming soon)',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 12.0, 4.0),
-                              child: MouseRegion(
-                                opaque: false,
-                                cursor: SystemMouseCursors.basic ??
-                                    MouseCursor.defer,
-                                onEnter: ((event) async {
-                                  setState(
-                                      () => _model.mouseRegionHovered2 = true);
-                                }),
-                                onExit: ((event) async {
-                                  setState(
-                                      () => _model.mouseRegionHovered2 = false);
-                                }),
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 150),
-                                  curve: Curves.easeInOut,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: _model.mouseRegionHovered2
-                                        ? const Color(0xFFF1F4F8)
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 8.0, 0.0, 8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        const Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 0.0, 0.0, 0.0),
-                                          child: Icon(
-                                            Icons.settings_outlined,
-                                            color: Color(0xFF14181B),
-                                            size: 20.0,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12.0, 0.0, 0.0, 0.0),
-                                            child: Text(
-                                              'Settings (coming soon)',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 12.0, 4.0),
-                              child: MouseRegion(
-                                opaque: false,
-                                cursor: SystemMouseCursors.click ??
-                                    MouseCursor.defer,
-                                onEnter: ((event) async {
-                                  setState(
-                                      () => _model.mouseRegionHovered3 = true);
-                                }),
-                                onExit: ((event) async {
-                                  setState(
-                                      () => _model.mouseRegionHovered3 = false);
-                                }),
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 150),
-                                  curve: Curves.easeInOut,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: _model.mouseRegionHovered3
-                                        ? const Color(0xFFF1F4F8)
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 8.0, 0.0, 8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        const Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 0.0, 0.0, 0.0),
-                                          child: Icon(
-                                            Icons.attach_money_rounded,
-                                            color: Color(0xFF14181B),
-                                            size: 20.0,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12.0, 0.0, 0.0, 0.0),
-                                            child: Text(
-                                              'Billing Details (coming soon)',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
                             ),
                             Align(
                               alignment: const AlignmentDirectional(0.0, 0.0),
@@ -628,18 +423,18 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                     MouseCursor.defer,
                                 onEnter: ((event) async {
                                   setState(
-                                      () => _model.mouseRegionHovered4 = true);
+                                      () => _model.mouseRegionHovered = true);
                                 }),
                                 onExit: ((event) async {
                                   setState(
-                                      () => _model.mouseRegionHovered4 = false);
+                                      () => _model.mouseRegionHovered = false);
                                 }),
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 150),
                                   curve: Curves.easeInOut,
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: _model.mouseRegionHovered4
+                                    color: _model.mouseRegionHovered
                                         ? const Color(0xFFF1F4F8)
                                         : Colors.white,
                                     borderRadius: BorderRadius.circular(8.0),

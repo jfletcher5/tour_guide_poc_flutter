@@ -43,9 +43,7 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -59,9 +57,7 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
               context: context,
               builder: (context) {
                 return GestureDetector(
-                  onTap: () => _model.unfocusNode.canRequestFocus
-                      ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-                      : FocusScope.of(context).unfocus(),
+                  onTap: () => FocusScope.of(context).unfocus(),
                   child: Padding(
                     padding: MediaQuery.viewInsetsOf(context),
                     child: const NewConversationWidget(),
@@ -148,7 +144,7 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                         ),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 24.0, 0.0, 0.0),
+                              0.0, 18.0, 0.0, 18.0),
                           child: Builder(
                             builder: (context) {
                               final userConversations =
@@ -182,10 +178,20 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                                     final userConversationsItem =
                                         userConversations[
                                             userConversationsIndex];
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
+                                        ),
+                                        child: Padding(
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   16.0, 8.0, 16.0, 8.0),
@@ -319,9 +325,6 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                                                       .primary,
                                                   size: 20.0,
                                                 ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
                                                 dense: false,
                                                 shape: const RoundedRectangleBorder(
                                                   borderRadius:
@@ -340,13 +343,7 @@ class _ConversationListWidgetState extends State<ConversationListWidget> {
                                             ),
                                           ),
                                         ),
-                                        const Divider(
-                                          thickness: 1.0,
-                                          indent: 16.0,
-                                          endIndent: 16.0,
-                                          color: Color(0xBA4B39EF),
-                                        ),
-                                      ],
+                                      ),
                                     );
                                   },
                                 ),

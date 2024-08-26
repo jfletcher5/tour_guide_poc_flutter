@@ -54,6 +54,12 @@ abstract class FlutterFlowTheme {
   late Color error;
   late Color info;
 
+  late Color wine;
+  late Color whiteSmoke;
+  late Color mint;
+  late Color gunmetal;
+  late Color blackOlive;
+
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
   @Deprecated('Use displaySmall instead')
@@ -125,10 +131,10 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF4B39EF);
-  late Color secondary = const Color(0xFF39D2C0);
-  late Color tertiary = const Color(0xFFEE8B60);
-  late Color alternate = const Color(0xFFE0E3E7);
+  late Color primary = const Color(0xFF5B2333);
+  late Color secondary = const Color(0xFFF7F4F3);
+  late Color tertiary = const Color(0xFF62A87C);
+  late Color alternate = const Color(0xD806849E);
   late Color primaryText = const Color(0xFF14181B);
   late Color secondaryText = const Color(0xFF57636C);
   late Color primaryBackground = const Color(0xFFF1F4F8);
@@ -141,6 +147,12 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
   late Color info = const Color(0xFFFFFFFF);
+
+  late Color wine = const Color(0xFF5B2333);
+  late Color whiteSmoke = const Color(0xFFF7F4F3);
+  late Color mint = const Color(0xFF62A87C);
+  late Color gunmetal = const Color(0xFF002A32);
+  late Color blackOlive = const Color(0xFF303A2B);
 }
 
 abstract class Typography {
@@ -312,6 +324,12 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
   late Color info = const Color(0xFFFFFFFF);
+
+  late Color wine = const Color(0xFF5B2333);
+  late Color whiteSmoke = const Color(0xFFF7F4F3);
+  late Color mint = const Color(0xFF62A87C);
+  late Color gunmetal = const Color(0xFF002A32);
+  late Color blackOlive = const Color(0xFF303A2B);
 }
 
 extension TextStyleHelper on TextStyle {

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class TourAdminModel extends FlutterFlowModel<TourAdminWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (Get Tours)] action in tourAdmin widget.
   ApiCallResponse? apiResultm6b;
   // Stores action output result for [Backend Call - API (Delete Tour)] action in SlidableActionWidget widget.
@@ -16,7 +15,5 @@ class TourAdminModel extends FlutterFlowModel<TourAdminWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 }

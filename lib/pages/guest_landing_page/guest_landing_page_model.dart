@@ -11,7 +11,8 @@ class GuestLandingPageModel extends FlutterFlowModel<GuestLandingPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
+  // Stores action output result for [Backend Call - API (Get Tours)] action in guestLandingPage widget.
+  ApiCallResponse? apiResult57n;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
@@ -32,7 +33,5 @@ class GuestLandingPageModel extends FlutterFlowModel<GuestLandingPageWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 }

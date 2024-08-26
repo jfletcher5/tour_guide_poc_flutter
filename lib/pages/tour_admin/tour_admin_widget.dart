@@ -52,9 +52,7 @@ class _TourAdminWidgetState extends State<TourAdminWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -105,120 +103,125 @@ class _TourAdminWidgetState extends State<TourAdminWidget> {
                       color: FlutterFlowTheme.of(context).primary,
                     ),
                   ),
-                  child: Builder(
-                    builder: (context) {
-                      final tourList = FFAppState().appAllToursJSON.toList();
+                  child: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 0.0),
+                    child: Builder(
+                      builder: (context) {
+                        final tourList = FFAppState().appAllToursJSON.toList();
 
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.vertical,
-                        itemCount: tourList.length,
-                        itemBuilder: (context, tourListIndex) {
-                          final tourListItem = tourList[tourListIndex];
-                          return Slidable(
-                            endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              extentRatio: 0.25,
-                              children: [
-                                SlidableAction(
-                                  label: 'Delete',
-                                  backgroundColor: const Color(0xFFF1868C),
-                                  icon: Icons.delete_forever,
-                                  onPressed: (_) async {
-                                    _model.apiResultl3d =
-                                        await ChatServicesGroup.deleteTourCall
-                                            .call(
-                                      tourID: getJsonField(
-                                        tourListItem,
-                                        r'''$.tourID''',
-                                      ).toString(),
-                                    );
-
-                                    if ((_model.apiResultl3d?.succeeded ??
-                                        true)) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'success',
-                                            style: TextStyle(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                            ),
-                                          ),
-                                          duration:
-                                              const Duration(milliseconds: 4000),
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondary,
-                                        ),
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: tourList.length,
+                          itemBuilder: (context, tourListIndex) {
+                            final tourListItem = tourList[tourListIndex];
+                            return Slidable(
+                              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                extentRatio: 0.25,
+                                children: [
+                                  SlidableAction(
+                                    label: 'Delete',
+                                    backgroundColor: const Color(0xFFF1868C),
+                                    icon: Icons.delete_forever,
+                                    onPressed: (_) async {
+                                      _model.apiResultl3d =
+                                          await ChatServicesGroup.deleteTourCall
+                                              .call(
+                                        tourID: getJsonField(
+                                          tourListItem,
+                                          r'''$.tourID''',
+                                        ).toString(),
                                       );
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'failure',
-                                            style: TextStyle(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                            ),
-                                          ),
-                                          duration:
-                                              const Duration(milliseconds: 4000),
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondary,
-                                        ),
-                                      );
-                                    }
 
-                                    setState(() {});
-                                  },
+                                      if ((_model.apiResultl3d?.succeeded ??
+                                          true)) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'success',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                const Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'failure',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                const Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
+                                      }
+
+                                      setState(() {});
+                                    },
+                                  ),
+                                ],
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  getJsonField(
+                                    tourListItem,
+                                    r'''$.tourName''',
+                                  ).toString(),
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleLarge
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
-                              ],
-                            ),
-                            child: ListTile(
-                              title: Text(
-                                getJsonField(
-                                  tourListItem,
-                                  r'''$.tourName''',
-                                ).toString(),
-                                style: FlutterFlowTheme.of(context)
-                                    .titleLarge
-                                    .override(
-                                      fontFamily: 'Outfit',
-                                      letterSpacing: 0.0,
-                                    ),
+                                subtitle: Text(
+                                  getJsonField(
+                                    tourListItem,
+                                    r'''$.tourID''',
+                                  ).toString(),
+                                  style: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 20.0,
+                                ),
+                                tileColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                dense: false,
                               ),
-                              subtitle: Text(
-                                getJsonField(
-                                  tourListItem,
-                                  r'''$.tourID''',
-                                ).toString(),
-                                style: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 20.0,
-                              ),
-                              tileColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              dense: false,
-                            ),
-                          );
-                        },
-                      );
-                    },
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -230,14 +233,10 @@ class _TourAdminWidgetState extends State<TourAdminWidget> {
                       await showModalBottomSheet(
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,
-                        enableDrag: false,
                         context: context,
                         builder: (context) {
                           return GestureDetector(
-                            onTap: () => _model.unfocusNode.canRequestFocus
-                                ? FocusScope.of(context)
-                                    .requestFocus(_model.unfocusNode)
-                                : FocusScope.of(context).unfocus(),
+                            onTap: () => FocusScope.of(context).unfocus(),
                             child: Padding(
                               padding: MediaQuery.viewInsetsOf(context),
                               child: const AddTourBottomSheetWidget(),

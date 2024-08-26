@@ -14,7 +14,6 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // Model for aiChat_Component component.
   late AiChatComponentModel aiChatComponentModel;
   // Stores action output result for [Backend Call - API (generate convo summary)] action in Button widget.
@@ -35,7 +34,6 @@ class ChatAiScreenModel extends FlutterFlowModel<ChatAiScreenWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     aiChatComponentModel.dispose();
   }
 }

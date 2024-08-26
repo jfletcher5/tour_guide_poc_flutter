@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 class SigninModel extends FlutterFlowModel<SigninWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for TabBar widget.
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
 
+  // State field(s) for guestName widget.
+  FocusNode? guestNameFocusNode;
+  TextEditingController? guestNameTextController;
+  String? Function(BuildContext, String?)? guestNameTextControllerValidator;
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode;
   TextEditingController? emailAddressTextController;
@@ -47,8 +50,10 @@ class SigninModel extends FlutterFlowModel<SigninWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     tabBarController?.dispose();
+    guestNameFocusNode?.dispose();
+    guestNameTextController?.dispose();
+
     emailAddressFocusNode?.dispose();
     emailAddressTextController?.dispose();
 

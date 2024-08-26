@@ -549,8 +549,8 @@ class _NewConversationWidgetState extends State<NewConversationWidget> {
                             _model.dropDownValue ??= '',
                           ),
                           options:
-                              List<String>.from(FFAppState().appUserTourIDList),
-                          optionLabels: FFAppState().appUserTourNameList,
+                              List<String>.from(FFAppState().appTourIDsList),
+                          optionLabels: FFAppState().appTourNameList,
                           onChanged: (val) async {
                             setState(() => _model.dropDownValue = val);
                             FFAppState().appActiveTourName =

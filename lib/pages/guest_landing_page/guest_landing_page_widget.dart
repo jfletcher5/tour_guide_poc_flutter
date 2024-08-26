@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'guest_landing_page_model.dart';
 export 'guest_landing_page_model.dart';
@@ -29,6 +30,27 @@ class _GuestLandingPageWidgetState extends State<GuestLandingPageWidget> {
     super.initState();
     _model = createModel(context, () => GuestLandingPageModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiResult57n = await ChatServicesGroup.getToursCall.call();
+
+      if ((_model.apiResult57n?.succeeded ?? true)) {
+        FFAppState().appTourNameList = ChatServicesGroup.getToursCall
+            .tourList(
+              (_model.apiResult57n?.jsonBody ?? ''),
+            )!
+            .toList()
+            .cast<String>();
+        FFAppState().appTourIDsList = ChatServicesGroup.getToursCall
+            .tourIDs(
+              (_model.apiResult57n?.jsonBody ?? ''),
+            )!
+            .toList()
+            .cast<String>();
+        setState(() {});
+      }
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -44,9 +66,7 @@ class _GuestLandingPageWidgetState extends State<GuestLandingPageWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -101,8 +121,8 @@ class _GuestLandingPageWidgetState extends State<GuestLandingPageWidget> {
                             _model.dropDownValue ??= '',
                           ),
                           options:
-                              List<String>.from(FFAppState().appTourNameList),
-                          optionLabels: FFAppState().appUserTourNameList,
+                              List<String>.from(FFAppState().appTourIDsList),
+                          optionLabels: FFAppState().appTourNameList,
                           onChanged: (val) async {
                             setState(() => _model.dropDownValue = val);
                             FFAppState().appActiveTourName =
